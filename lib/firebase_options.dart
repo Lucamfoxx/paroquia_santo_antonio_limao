@@ -44,42 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDjRAH2EJa8QL4vTbppEbPIDKgtZwD8CHU',
-    appId: '1:570436647717:web:765549a3a0fcdc65f578cc',
-    messagingSenderId: '570436647717',
-    projectId: 'paroquia-sao-jose-osasco',
-    authDomain: 'paroquia-sao-jose-osasco.firebaseapp.com',
-    databaseURL: 'https://paroquia-sao-jose-osasco-default-rtdb.firebaseio.com',
-    storageBucket: 'paroquia-sao-jose-osasco.appspot.com',
-    measurementId: 'G-M53S5Q93X5',
+    apiKey: 'AIzaSyDn-ZjS50Cxqn9EazG-dizYLaxhC8iqEK4',
+    appId: '1:725786636481:web:e2dc15c6de662a3bad6440',
+    messagingSenderId: '725786636481',
+    projectId: 'paroquaia-santo-antonio-limao',
+    authDomain: 'paroquaia-santo-antonio-limao.firebaseapp.com',
+    databaseURL: 'https://paroquaia-santo-antonio-limao-default-rtdb.firebaseio.com',
+    storageBucket: 'paroquaia-santo-antonio-limao.appspot.com',
+    measurementId: 'G-ZRVSH73Z5D',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAUduZDQmbTVRwRqFFOgkEGPF1afUc7ZQ4',
-    appId: '1:570436647717:android:71791627818ea666f578cc',
-    messagingSenderId: '570436647717',
-    projectId: 'paroquia-sao-jose-osasco',
-    databaseURL: 'https://paroquia-sao-jose-osasco-default-rtdb.firebaseio.com',
-    storageBucket: 'paroquia-sao-jose-osasco.appspot.com',
+    apiKey: 'AIzaSyBdN-fUf3jggQxPfVDMPRP912JRIdITruE',
+    appId: '1:725786636481:android:529305467b355611ad6440',
+    messagingSenderId: '725786636481',
+    projectId: 'paroquaia-santo-antonio-limao',
+    databaseURL: 'https://paroquaia-santo-antonio-limao-default-rtdb.firebaseio.com',
+    storageBucket: 'paroquaia-santo-antonio-limao.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAYUq9Qtab9GUcNy4yA8mHOeBF6gToXU6k',
-    appId: '1:570436647717:ios:8df12bbc39277da9f578cc',
-    messagingSenderId: '570436647717',
-    projectId: 'paroquia-sao-jose-osasco',
-    databaseURL: 'https://paroquia-sao-jose-osasco-default-rtdb.firebaseio.com',
-    storageBucket: 'paroquia-sao-jose-osasco.appspot.com',
+    apiKey: 'AIzaSyBEOoUEg_xlQBbU2sFTV7BM6GCH7JYFSVU',
+    appId: '1:725786636481:ios:d78b3dbf67cce30fad6440',
+    messagingSenderId: '725786636481',
+    projectId: 'paroquaia-santo-antonio-limao',
+    databaseURL: 'https://paroquaia-santo-antonio-limao-default-rtdb.firebaseio.com',
+    storageBucket: 'paroquaia-santo-antonio-limao.appspot.com',
     iosBundleId: 'com.example.paroquiaSantoAntonioLimao',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAYUq9Qtab9GUcNy4yA8mHOeBF6gToXU6k',
-    appId: '1:570436647717:ios:0de6f0525b786addf578cc',
-    messagingSenderId: '570436647717',
-    projectId: 'paroquia-sao-jose-osasco',
-    databaseURL: 'https://paroquia-sao-jose-osasco-default-rtdb.firebaseio.com',
-    storageBucket: 'paroquia-sao-jose-osasco.appspot.com',
+    apiKey: 'AIzaSyBEOoUEg_xlQBbU2sFTV7BM6GCH7JYFSVU',
+    appId: '1:725786636481:ios:cbe6a06fb385b386ad6440',
+    messagingSenderId: '725786636481',
+    projectId: 'paroquaia-santo-antonio-limao',
+    databaseURL: 'https://paroquaia-santo-antonio-limao-default-rtdb.firebaseio.com',
+    storageBucket: 'paroquaia-santo-antonio-limao.appspot.com',
     iosBundleId: 'com.example.paroquiaSantoAntonioLimao.RunnerTests',
   );
 }

@@ -17,13 +17,14 @@ class ParoquiasPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ParoquiaSetorTile(
-                setor: 'Setor Casa Verde',
+                setor: 'Decanato São Pedro',
                 paroquias: {
                   
-                  'Decanato São Pedro': '''
+                  'Paróquia Santo Antônio': '''
 Festa litúrgica: 13 de Junho
 
-Endereço: Avenida Professor Celestino Bourroul - 715 - - Limão - São Paulo - - SP - 02710-001
+Endereço: Avenida Professor Celestino Bourroul - 715 
+Limão - São Paulo - SP - 02710-001
 
 Horário de Missas
 Segundas-feiras : 19h30
@@ -38,7 +39,7 @@ SECRETARIA
 Terça a Sexta das 8hs ás 18hs
 Sábado das 8hs ás 12hs e das 13hs às 17hs
 
-Pároco: Pe. Marcos Luis Erustes Polonio
+Pároco: Pe. ALDO
 ''',
 
 

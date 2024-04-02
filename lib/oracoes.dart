@@ -549,7 +549,7 @@ class _OracaoPageState extends State<OracaoPage> {
           ),
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 0, 63, 117), // Definindo a cor de fundo da página
+      backgroundColor: Color.fromARGB(255, 212, 177, 116), // Definindo a cor de fundo da página
       body: FutureBuilder(
         future: rootBundle.loadString(widget.arquivo),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {

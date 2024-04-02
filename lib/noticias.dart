@@ -83,7 +83,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
       ),
       body: StreamBuilder(
         stream: _eventosRef.onValue,
-        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot){
+        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.hasData && !snapshot.hasError) {
             DataSnapshot dataSnapshot = snapshot.data!.snapshot;
             if (dataSnapshot.value != null) {
@@ -92,7 +92,9 @@ class _NoticiasPageState extends State<NoticiasPage> {
               eventosMap.forEach((key, value) {
                 DataSnapshot eventSnapshot = dataSnapshot.child(key);
                 Evento evento = Evento.fromSnapshot(eventSnapshot);
-                eventos.add(evento);
+                if (DateTime.now().isBefore(evento.dataFim)) { // Verificando se a data atual é antes da data final do evento
+                  eventos.add(evento);
+                }
               });
               
               eventos.sort((a, b) => a.dataInicio.compareTo(b.dataInicio));
@@ -115,6 +117,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
     );
   }
 }
+
 
 class EventoTile extends StatefulWidget {
   final Evento evento;

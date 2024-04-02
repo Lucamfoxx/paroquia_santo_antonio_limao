@@ -87,7 +87,7 @@ class MissaDiariaApp extends StatelessWidget {
                 MenuButton('Bíblia', '/biblia'),
                 MenuButton('Santo do Dia', '/santo_do_dia'),
                 MenuButton('Orações', '/oracoes'),
-                MenuButton('Decanato', '/paroquias'),
+                MenuButton('Decanato São Pedro', '/paroquias'),
                 MenuButton('Provérbios', '/proverbios'),
                 MenuButton('Notícias', '/noticias'),
                 MenuButton('Horários', '/horarios'), // Botão para Horários
