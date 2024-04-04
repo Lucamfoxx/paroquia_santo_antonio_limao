@@ -361,6 +361,13 @@ class _ChapterPageState extends State<ChapterPage> {
       appBar: AppBar(
         title: Text(_fileName),
         actions: [
+                    IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: _grade > 1 ? () {
+              _loadChapterText(_grade - 1);
+              _scrollToTop();
+            } : null,
+          ),
           IconButton(
             icon: Icon(Icons.zoom_in),
             onPressed: _increaseFontSize,
@@ -368,13 +375,6 @@ class _ChapterPageState extends State<ChapterPage> {
           IconButton(
             icon: Icon(Icons.zoom_out),
             onPressed: _decreaseFontSize,
-          ),
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: _grade > 1 ? () {
-              _loadChapterText(_grade - 1);
-              _scrollToTop();
-            } : null,
           ),
           IconButton(
             icon: Icon(Icons.arrow_forward),
