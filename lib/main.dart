@@ -1,22 +1,20 @@
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'missa_diaria.dart';
-import 'salmos.dart';
 import 'biblia.dart';
 import 'santo_do_dia.dart';
 import 'oracoes.dart';
 import 'paroquias.dart';
-import 'proverbios.dart';
 import 'noticias.dart';
-import 'salmo_layout.dart';
+import 'inscricoes.dart'; // Importe a página inscricoes.dart
 import 'package:firebase_core/firebase_core.dart';
-import 'horarios.dart'; // Importação da página horarios.dart
+import 'horarios.dart';
 import 'historiaparoquia.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
-// Importe o pacote flutter/services.dart para carregar a imagem.
- // Importação do url_launcher para abrir links
- // Importação da página historiaparoquia.dart
+import 'inscricoes_batismo.dart';
+import 'inscricoes_catequese.dart';
+import 'inscricoes_casamento.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,18 +46,18 @@ class MyApp extends StatelessWidget {
           },
         ),
         '/missa_diaria': (context) => MissaDiariaPage(),
-        '/salmos': (context) => SalmosPage(),
         '/biblia': (context) => BibliaPage(),
         '/santo_do_dia': (context) => SantoDoDiaPage(),
         '/oracoes': (context) => OracoesPage(),
         '/paroquias': (context) => ParoquiasPage(),
-        '/proverbios': (context) => ProverbiosPage(proverbioNumber: 1),
-        '/salmo_layout': (context) => SalmoPage(salmoNumber: 1),
-        for (int i = 1; i <= 150; i++)
-          '/salmo_$i': (context) => SalmoPage(salmoNumber: i),
         '/noticias': (context) => NoticiasPage(),
         '/horarios': (context) => HorariosPage(), // Rota para a página horarios.dart
-        '/historiaparoquia': (context) => HistoriaParoquiaPage(), // Rota para a página historiaparoquia.dart
+        '/historiaparoquia': (context) => HistoriaParoquiaPage(),
+        '/inscricoes': (context) => InscricoesPage(), // Rota para a página inscricoes.dart
+        '/inscricoes_catequese': (context) => InscricoesCatequesePage(),
+        '/inscricoes_batismo': (context) => InscricoesBatismoPage(),
+        '/inscricoes_casamento': (context) => InscricoesCasamentoPage(),
+
       },
     );
   }
@@ -82,13 +80,12 @@ class MissaDiariaApp extends StatelessWidget {
               children: [
                 Image.asset('assets/logo.png'),
                 SizedBox(height: 20),
+                MenuButton('Inscrições', '/inscricoes'), // Botão para Inscrições
                 MenuButton('Liturgia Diária', '/missa_diaria'),
-                MenuButton('Salmos', '/salmos'),
                 MenuButton('Bíblia', '/biblia'),
                 MenuButton('Santo do Dia', '/santo_do_dia'),
                 MenuButton('Orações', '/oracoes'),
                 MenuButton('Decanato São Pedro', '/paroquias'),
-                MenuButton('Provérbios', '/proverbios'),
                 MenuButton('Notícias', '/noticias'),
                 MenuButton('Horários', '/horarios'), // Botão para Horários
                 MenuButton('História da Paróquia', '/historiaparoquia'), // Botão para História da Paróquia
