@@ -29,7 +29,7 @@ class HistoriaParoquiaPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildTitleWithImage(
-                    'Paróquia São José (Vila São José)',
+                    'Paróquia São Santo Antonio do Limão',
                     '''
 
 

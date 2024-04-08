@@ -15,15 +15,23 @@ class MissaDiariaPage extends StatefulWidget {
 }
 
 class _MissaDiariaPageState extends State<MissaDiariaPage> {
-  List<String> _missaDiariaParts = ['Carregando...']; // Inicialização aqui
+  List<String> _missaDiariaParts = ['Carregando...'];
   double _fontSize = 16.0;
   late DateTime _selectedDate;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
     _loadCachedContent(_selectedDate);
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadCachedContent(DateTime date) async {
@@ -170,6 +178,7 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
         ],
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -200,6 +209,7 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
                   const SizedBox(height: 20.0),
                   ListView.builder(
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: _missaDiariaParts.length,
                     itemBuilder: (BuildContext context, int index) {
                       String buttonText;

@@ -15,6 +15,10 @@ import 'package:flutter/services.dart';
 import 'inscricoes_batismo.dart';
 import 'inscricoes_catequese.dart';
 import 'inscricoes_casamento.dart';
+import 'missas_intencoes.dart';
+import 'pedido_missas.dart';
+import 'pedido_intencoes.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +61,10 @@ class MyApp extends StatelessWidget {
         '/inscricoes_catequese': (context) => InscricoesCatequesePage(),
         '/inscricoes_batismo': (context) => InscricoesBatismoPage(),
         '/inscricoes_casamento': (context) => InscricoesCasamentoPage(),
+        '/missas_intencoes': (context) => MissasIntencoesPage(),
+        '/pedido_missas': (context) => PedidoMissasPage(),
+        '/pedido_intencoes': (context) => PedidoIntencoesPage(),
+
 
       },
     );
@@ -80,7 +88,8 @@ class MissaDiariaApp extends StatelessWidget {
               children: [
                 Image.asset('assets/logo.png'),
                 SizedBox(height: 20),
-                MenuButton('Inscrições', '/inscricoes'), // Botão para Inscrições
+                MenuButton('Inscrições', '/inscricoes'),
+                MenuButton('Missas e Intenções', '/missas_intencoes'),
                 MenuButton('Liturgia Diária', '/missa_diaria'),
                 MenuButton('Bíblia', '/biblia'),
                 MenuButton('Santo do Dia', '/santo_do_dia'),
@@ -134,86 +143,94 @@ class MenuButton extends StatelessWidget {
   }
 }
 
-
 class ContactInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            launch("tel://1132912400");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.phone, // Ícone de telefone padrão do Flutter
-                color: Colors.blue,
-              ),
-              SizedBox(width: 5),
-              Text(
-                "(11) 4563-5838",
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ],
+    return Container(
+      width: double.infinity, // Define a largura total da página
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Image.asset(
+            'assets/logo2.png', // Caminho para a imagem logo2.png
+            fit: BoxFit.fill, // Preenche toda a área disponível
           ),
-        ),
-        SizedBox(height: 10),
-        InkWell(
-          onTap: () {
-            launch("https://wa.me/5511976992158");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/whatsapp1.png', // Caminho para o ícone do WhatsApp personalizado
-                width: 36, // Largura do ícone
-                height: 36, // Altura do ícone
-                color: Colors.green, // Cor do ícone
-              ),
-              SizedBox(width: 5),
-              Text(
-                "(11) 97699-2158",
-                style: TextStyle(
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              launch("tel://1132912400");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.phone, // Ícone de telefone padrão do Flutter
                   color: Colors.blue,
-                  decoration: TextDecoration.underline,
                 ),
-              ),
-            ],
+                SizedBox(width: 5),
+                Text(
+                  "(11) 4563-5838",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-        InkWell(
-          onTap: () {
-            launch("https://maps.app.goo.gl/tC6Tme5cTsyy5mDe6");
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.location_on, // Ícone de localização padrão do Flutter
-                color: Colors.blue,
-              ),
-              SizedBox(width: 5),
-              Text(
-                '''
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              launch("https://wa.me/5511976992158");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/whatsapp1.png', // Caminho para o ícone do WhatsApp personalizado
+                  width: 36, // Largura do ícone
+                  height: 36, // Altura do ícone
+                  color: Colors.green, // Cor do ícone
+                ),
+                SizedBox(width: 5),
+                Text(
+                  "(11) 97699-2158",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              launch("https://maps.app.goo.gl/tC6Tme5cTsyy5mDe6");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_on, // Ícone de localização padrão do Flutter
+                  color: Colors.blue,
+                ),
+                SizedBox(width: 5),
+                Text(
+                  '''
 Av. Prof. Celestino Bourroul, 715 
 Limão, São Paulo - SP, 02710-001''',
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
