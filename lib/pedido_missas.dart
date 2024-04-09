@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-class PedidoMissasPage extends StatelessWidget {
+class PedidoMissasPage extends StatefulWidget {
+  @override
+  _PedidoMissasPageState createState() => _PedidoMissasPageState();
+}
+
+class _PedidoMissasPageState extends State<PedidoMissasPage> {
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _pedidoController = TextEditingController();
+  bool _enviandoEmail = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +58,22 @@ class PedidoMissasPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: _enviandoEmail ? null : () async {
+                setState(() {
+                  _enviandoEmail = true;
+                });
                 bool enviado = await _enviarPedidoPorEmail();
+                setState(() {
+                  _enviandoEmail = false;
+                });
                 if (enviado) {
                   _mostrarDialogo(context, 'Email enviado', 'O pedido foi enviado com sucesso.');
+                  _limparCampos(); // Limpa os campos após o envio bem-sucedido
                 } else {
                   _mostrarDialogo(context, 'Erro', 'Ocorreu um erro ao enviar o pedido.');
                 }
               },
-              child: Text('Enviar Pedido'),
+              child: _enviandoEmail ? CircularProgressIndicator() : Text('Enviar Pedido'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
@@ -79,8 +92,8 @@ class PedidoMissasPage extends StatelessWidget {
     );
 
     final message = Message()
-      ..from = Address('pythonmgo@gmail.com', 'Your Name')
-      ..recipients.add('pythonmgo@gmail.com')
+      ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
+      ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Novo pedido de missas'
       ..text = '''
         Nome do Solicitante: ${_nomeController.text}
@@ -95,6 +108,11 @@ class PedidoMissasPage extends StatelessWidget {
       print('Error sending email: $e');
       return false;
     }
+  }
+
+  void _limparCampos() {
+    _nomeController.clear();
+    _pedidoController.clear();
   }
 
   void _mostrarDialogo(BuildContext context, String titulo, String mensagem) {

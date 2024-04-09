@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-class PedidoIntencoesPage extends StatelessWidget {
+class PedidoIntencoesPage extends StatefulWidget {
+  @override
+  _PedidoIntencoesPageState createState() => _PedidoIntencoesPageState();
+}
+
+class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _pedidoController = TextEditingController();
+  bool _enviandoEmail = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +58,23 @@ class PedidoIntencoesPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: _enviandoEmail ? null : () async {
+                setState(() {
+                  _enviandoEmail = true;
+                });
                 bool enviado = await _enviarPedidoPorEmail();
+                setState(() {
+                  _enviandoEmail = false;
+                });
                 if (enviado) {
-                  _mostrarDialogo(context, 'Email enviado', 'O pedido foi enviado com sucesso.');
+                  _mostrarDialogo(
+                      context, 'Email enviado', 'O pedido foi enviado com sucesso.');
+                  _limparCampos(); // Reiniciar a página após envio bem-sucedido
                 } else {
                   _mostrarDialogo(context, 'Erro', 'Ocorreu um erro ao enviar o pedido.');
                 }
               },
-              child: Text('Enviar Pedido'),
+              child: _enviandoEmail ? CircularProgressIndicator() : Text('Enviar Pedido'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
@@ -72,15 +86,16 @@ class PedidoIntencoesPage extends StatelessWidget {
   }
 
   Future<bool> _enviarPedidoPorEmail() async {
-    final smtpServer = SmtpServer('smtp.sendgrid.net',
+    final smtpServer = SmtpServer(
+      'smtp.sendgrid.net',
       username: 'apikey',
       password: '',
       port: 587,
     );
 
     final message = Message()
-      ..from = Address('pythonmgo@gmail.com', 'Your Name')
-      ..recipients.add('pythonmgo@gmail.com')
+      ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
+      ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Novo pedido de intenção'
       ..text = '''
         Nome do Pedinte: ${_nomeController.text}
@@ -95,6 +110,11 @@ class PedidoIntencoesPage extends StatelessWidget {
       print('Error sending email: $e');
       return false;
     }
+  }
+
+  void _limparCampos() {
+    _nomeController.clear();
+    _pedidoController.clear();
   }
 
   void _mostrarDialogo(BuildContext context, String titulo, String mensagem) {

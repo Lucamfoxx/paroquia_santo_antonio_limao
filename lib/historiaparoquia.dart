@@ -101,7 +101,7 @@ A história da Paróquia Santo Antônio do Limão confunde-se com a história do
         SizedBox(height: 10),
         Text(
           text,
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 18),
           textAlign: TextAlign.left,
         ),
       ],

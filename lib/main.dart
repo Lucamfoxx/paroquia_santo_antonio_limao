@@ -18,8 +18,8 @@ import 'inscricoes_casamento.dart';
 import 'missas_intencoes.dart';
 import 'pedido_missas.dart';
 import 'pedido_intencoes.dart';
-
-
+import 'santo_padroeiro.dart';
+import 'sacramentos.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
         '/missas_intencoes': (context) => MissasIntencoesPage(),
         '/pedido_missas': (context) => PedidoMissasPage(),
         '/pedido_intencoes': (context) => PedidoIntencoesPage(),
-
+        '/santo_padroeiro': (context) => SantoPadroeiro(),
+        '/sacramentos': (context) => SacramentosPage(),
 
       },
     );
@@ -90,6 +91,8 @@ class MissaDiariaApp extends StatelessWidget {
                 SizedBox(height: 20),
                 MenuButton('Inscrições', '/inscricoes'),
                 MenuButton('Missas e Intenções', '/missas_intencoes'),
+                MenuButton('Santo Padroeiro', '/santo_padroeiro'),
+                MenuButton('Sacramentos', '/sacramentos'),
                 MenuButton('Liturgia Diária', '/missa_diaria'),
                 MenuButton('Bíblia', '/biblia'),
                 MenuButton('Santo do Dia', '/santo_do_dia'),

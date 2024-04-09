@@ -20,6 +20,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   TextEditingController _dddController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
   List<XFile> fotos = [];
+  bool _enviandoEmail = false;
 
   @override
   Widget build(BuildContext context) {
@@ -178,19 +179,59 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                     ),
                   ),
                 ],
-              ),
-              SizedBox(height: 20),
-              // Botão para adicionar foto
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    await _selecionarImagem(ImageSource.camera);
-                  }
-                },
-                child: Text('Adicionar Foto'),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+              ),SizedBox(height: 20),
+              // Container com dicas para tirar uma boa foto
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20.0),
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Documentos necessarios',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '- RG',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      '- Comprovante de Residência',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      '- Certidão de Batismo',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      '- Certidão de Nascimento',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),
@@ -248,25 +289,16 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              // Botão para enviar a inscrição
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
-                    bool enviado = await _enviarInscricaoPorEmail();
-                    if (enviado) {
-                      _mostrarDialogo(context, 'Email enviado',
-                          'O email foi enviado com sucesso.');
-                    } else {
-                      _mostrarDialogo(context, 'Erro',
-                          'Ocorreu um erro ao enviar o email.');
-                    }
+                    await _selecionarImagem(ImageSource.camera);
                   }
                 },
-                child: Text('Enviar Inscrição'),
+                child: Text('Adicionar Foto'),
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.blue),
                 ),
               ),
               SizedBox(height: 20),
@@ -298,6 +330,36 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                     ],
                   ),
                 ),
+              SizedBox(height: 20),
+              // Botão para enviar a inscrição
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    setState(() {
+                      _enviandoEmail = true;
+                    });
+                    bool enviado = await _enviarInscricaoPorEmail();
+                    setState(() {
+                      _enviandoEmail = false;
+                    });
+                    if (enviado) {
+                      _mostrarDialogo(context, 'Email enviado',
+                          'O email foi enviado com sucesso.');
+                      _limparCampos(); // Reiniciar a página de cadastro
+                    } else {
+                      _mostrarDialogo(context, 'Erro',
+                          'Ocorreu um erro ao enviar o email.');
+                    }
+                  }
+                },
+                child: _enviandoEmail
+                    ? CircularProgressIndicator() // Mostra o indicador de carregamento se estiver enviando
+                    : Text('Enviar Inscrição'),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
+              ),
             ],
           ),
         ),
@@ -325,15 +387,16 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
 
   // Função para enviar a inscrição por e-mail
   Future<bool> _enviarInscricaoPorEmail() async {
-    final smtpServer = SmtpServer('smtp.sendgrid.net',
+    final smtpServer = SmtpServer(
+      'smtp.sendgrid.net',
       username: 'apikey',
       password: '',
       port: 587,
     );
 
     final message = Message()
-      ..from = Address('pythonmgo@gmail.com', 'Your Name')
-      ..recipients.add('pythonmgo@gmail.com')
+      ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
+      ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Nova inscrição de catequese'
       ..text = '''
         Nome: ${_nomeController.text}
@@ -355,6 +418,19 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
       print('Error sending email: $e');
       return false;
     }
+  }
+
+  // Função para limpar os controladores de texto e a lista de fotos
+  void _limparCampos() {
+    _nomeController.clear();
+    _idadeController.clear();
+    _enderecoController.clear();
+    _emailController.clear();
+    _dddController.clear();
+    _telefoneController.clear();
+    setState(() {
+      fotos.clear();
+    });
   }
 
   // Função para mostrar um diálogo na tela

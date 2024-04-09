@@ -29,13 +29,14 @@ class HorariosPage extends StatelessWidget {
               _buildHorario(
                 titulo: 'Pároco',
                 texto: '''
-Aldenor Alves De Lima 
-Pe.Aldo  (Aldo)''',
+Pe. Aldenor Alves De Lima.
+(Aldo)
+''',
               ),
               SizedBox(height: 20),
               _buildHorario(
-                titulo: 'Padre Coordenador Pastoral',
-                texto: 'Adriano Robson',
+                titulo: 'Padre Cooperador Pastoral',
+                texto: 'Pe. Adriano Robson',
               ),
               SizedBox(height: 20),
               _buildHorario(
@@ -50,17 +51,11 @@ Domingo : 08h - 11h e 19h''',
               _buildHorario(
                 titulo: 'Horário de Atendimento',
                 texto: '''
-
-Terça-feira: 08h00 as 12h00
-Terça-feira: 14h00 as 18h00
-Quarta-feira: 08h00 as 12h00
-Quarta-feira: 14h00 as 18h00
-Quinta-feira: 08h00 as 12h00
-Quinta-feira: 14h00 as 18h00
-Sexta-feira: 08h00 as 12h00
-Sexta-feira: 14h00 as 18h00
-Sábado: 08h00 as 12h00
-Sábado: 14h00 as 18h00
+Terça-feira: 08h as 12h e 14h as 18h
+Quarta-feira: 08h as 12h e 14h as 18h
+Quinta-feira: 08h as 12h e 14h as 18h
+Sexta-feira: 08h as 12h e 14h as 18h
+Sábado: 08h as 12h e 14h as 18h
 ''',
               ),
             ],
