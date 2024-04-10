@@ -13,14 +13,48 @@ class InscricoesBatismoPage extends StatefulWidget {
 class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
-  TextEditingController _idadeController = TextEditingController();
+  TextEditingController _dataController = TextEditingController();
   TextEditingController _enderecoController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _dddController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
+  TextEditingController _localnascController = TextEditingController();
+  TextEditingController _bairroController = TextEditingController();
+  TextEditingController _cepController = TextEditingController();
+  TextEditingController _cidadeController = TextEditingController();
+  TextEditingController _nomePaiController = TextEditingController();
+  TextEditingController _nomeMaeController = TextEditingController();
+  TextEditingController _batismoPaiController = TextEditingController();
+  TextEditingController _batismoMaeController = TextEditingController();
+  TextEditingController _casadosreligiosoController = TextEditingController();
+  TextEditingController _paroquiaCasamentoController = TextEditingController();
+  TextEditingController _diocesecasamentoController = TextEditingController();
+  TextEditingController _cidadeparoquiaController = TextEditingController();
+  TextEditingController _bairroparoquiaController = TextEditingController();
+  TextEditingController _nomepadrinhoController = TextEditingController();
+  TextEditingController _telefonepadrinhoController= TextEditingController();
+  TextEditingController _batismopadrinhoController = TextEditingController();
+
+  TextEditingController _crismapadrinhoController= TextEditingController();
+  TextEditingController _estadocivilController = TextEditingController();
+  TextEditingController _casadapadrinhaController = TextEditingController();
+  TextEditingController _nomemadrinhaController = TextEditingController();
+  TextEditingController _telefonemadrinhoController = TextEditingController();
+  TextEditingController _batismoMadrinhoController = TextEditingController();
+  TextEditingController _crismaMadrinhoController = TextEditingController();
+  TextEditingController _casadamadrinhaController = TextEditingController();
+  TextEditingController _estadocivilmadrinhaController = TextEditingController();
+
+
+
+
+
+
+
+
   List<XFile> fotos = [];
   bool _enviandoEmail = false;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,12 +83,12 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 controller: _nomeController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Por favor, insira seu nome';
+                    return 'Insira o nome do Batizando';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Nome',
+                  labelText: 'Nome do Batizando',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -65,25 +99,41 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               SizedBox(height: 10),
               // Campo de texto para a idade
               TextFormField(
-                controller: _idadeController,
+                controller: _dataController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Por favor, insira sua idade';
+                    return 'Insira data de Nascimento';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Idade',
+                  labelText: 'Data de Nascimento',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
+
+              ),
+              SizedBox(height: 10),
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _localnascController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Local de Nascimento';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Local de Nascimento',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
               ),
               SizedBox(height: 10),
               // Campo de texto para o endereço
@@ -91,7 +141,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 controller: _enderecoController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Por favor, insira seu endereço';
+                    return 'Insira seu endereço';
                   }
                   return null;
                 },
@@ -104,13 +154,75 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                   ),
                 ),
               ),
+
+              SizedBox(height: 10),
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _bairroController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira o Bairro';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Bairro',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _cepController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira o CEP';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'CEP',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _cidadeController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira a Cidade';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Cidade',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
               SizedBox(height: 10),
               // Campo de texto para o e-mail
               TextFormField(
                 controller: _emailController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Por favor, insira seu e-mail';
+                    return 'Insira seu e-mail';
                   }
                   return null;
                 },
@@ -134,7 +246,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                       controller: _dddController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Por favor, insira o DDD';
+                          return 'Insira o DDD';
                         }
                         return null;
                       },
@@ -159,12 +271,12 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                       controller: _telefoneController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Por favor, insira seu número de telefone';
+                          return 'Insira seu número de telefone';
                         }
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: 'Número de Telefone',
+                        labelText: 'Whatsapp Telefone',
                         filled: true,
                         fillColor: Colors.grey[200],
                         border: OutlineInputBorder(
@@ -178,7 +290,481 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                     ),
                   ),
                 ],
-              ),SizedBox(height: 20),
+              ),
+                Text('\nPais',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomePaiController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Por favor, insira o nome do pai';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome do Pai',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+                            
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _batismoPaiController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'insira o Batismo do pai';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Pai é Batizado?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              
+              
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomeMaeController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Por favor, insira o nome da mãe';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome da Mãe',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _batismoMaeController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'insira o batismo da mãe';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Mãe é Batizado?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),   
+
+///////////////////////////////////////////////////////////////////
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _casadosreligiosoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Casados no Religioso';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Casados no Religioso (sim ou não)',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+////////////////////////////////////////////////////////////////
+
+                            SizedBox(height: 20),
+              // Container com dicas para tirar uma boa foto
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20.0),
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Text(
+                      '- Se forem casados preencher os dados de casamento.',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      '- Se não forem casados no relgioso deixar em branco.',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+//////////////////////////////////////////////////////////////////////////////
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _paroquiaCasamentoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira a Paroquia do Casamento';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Paroquia do casamento',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _diocesecasamentoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira a Dicoese da Paroquia';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Diocese da Paroquia',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _cidadeparoquiaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Cidade da paroquia';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Cidade da Paroquia?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _batismoMaeController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Bairro da paroquia';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Bairro da Paroquia?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+/////////////////////////////////////////////////////////////////
+                Text('\nPadrinho',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomepadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Nome do Padrinho';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome do Padrinho',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _telefonepadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Telefone Padrinho';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Telefone Padrinho',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _batismopadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Batizado';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Batizado? (sim ou não)',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _crismapadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Crismado';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Crismado? (sim ou não)',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _estadocivilController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Estado Civil';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Estado civil do Padrinho',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+                            
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _casadapadrinhaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira casado?';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Casado no Religioso ?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              
+
+
+///////////////////////////////////////////////////////////////////
+///                
+                Text('\nMadrinho',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomemadrinhaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Nome da Madrinha';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome da Madrinha',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _telefonemadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Telefone Madrinho';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Telefone Madrinho',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _batismoMadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Batizada';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Batizada? (sim ou não)',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _crismaMadrinhoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Crismada?';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Crismada? (sim ou não)',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _estadocivilmadrinhaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Estado Civil';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Estado civil do Madrinho',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+                          
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _casadamadrinhaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira casada?';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Casada no Religioso ?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              
+              SizedBox(height: 20),
               // Container com dicas para tirar uma boa foto
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -393,10 +979,51 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
       ..subject = 'Nova inscrição de Batismo'
       ..text = '''
         Nome: ${_nomeController.text}
-        Idade: ${_idadeController.text}
+        Data Nascimento: ${_dataController.text}
+        Local Nascimento: ${_localnascController.text}
+        Bairro: ${_bairroController.text}
+        Cidade: ${_cidadeController.text}
         Endereço: ${_enderecoController.text}
         E-mail: ${_emailController.text}
         Telefone: (${_dddController.text}) ${_telefoneController.text}
+        CEP: ${_cepController.text}
+
+
+        ------------------------------------------------------
+        Nome Pai: ${_nomePaiController.text}
+        Pai é Batizado: ${_batismoPaiController.text}
+        Nome Mãe: ${_nomeMaeController.text}
+        Mãe é Batizada: ${_batismoMaeController.text}
+        Pais Casados no Religioso: ${_casadosreligiosoController.text}
+        ------------------------------------------------------
+        Paroquia do Casamento: ${_paroquiaCasamentoController.text}
+        Diocese da Paroquia do Casamento: ${_diocesecasamentoController.text}
+        Bairro da Paroquia: ${_bairroparoquiaController.text}
+        Cidade da Paroquia: ${_cidadeparoquiaController.text}
+        ------------------------------------------------------
+        Padrinho
+        Nome do Padrinho: ${_nomepadrinhoController.text}
+        Telefone Padrinho: ${_telefonepadrinhoController.text}
+        Padrinho é Batizado: ${_batismopadrinhoController.text}
+        Padrinho é Crismado: ${_crismapadrinhoController.text}
+        Estado civil Padrinho ${_estadocivilController.text}
+        Casado no religioso: ${_casadapadrinhaController.text}
+        -------------------------------------------------------
+        Madrinha
+        Nome da Madrinha: ${_nomemadrinhaController.text}        
+        Telefone Madrinho: ${_telefonemadrinhoController.text}
+        Padrinho é Batizada: ${_batismoMadrinhoController.text}
+        Padrinho é Crismada: ${_crismaMadrinhoController.text}
+        Estado civil Madrinho ${_casadamadrinhaController.text}
+        Casada no religioso: ${_estadocivilmadrinhaController.text}
+
+
+
+
+
+
+
+
       ''';
 
     for (final foto in fotos) {
@@ -416,11 +1043,41 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   // Função para limpar os controladores de texto e a lista de fotos
   void _limparCampos() {
     _nomeController.clear();
-    _idadeController.clear();
+    _dataController.clear();
+    _localnascController.clear();    
+    _bairroController.clear();    
+    _cidadeController.clear();
     _enderecoController.clear();
     _emailController.clear();
     _dddController.clear();
     _telefoneController.clear();
+    _cepController.clear();
+
+    _nomePaiController.clear();
+    _nomeMaeController.clear();
+    _batismoPaiController.clear();
+    _batismoMaeController.clear();
+
+    _casadosreligiosoController.clear();
+    _paroquiaCasamentoController.clear();
+    _diocesecasamentoController.clear();
+    _bairroparoquiaController.clear();
+    _cidadeparoquiaController.clear();
+
+    _nomepadrinhoController.clear();
+    _telefonepadrinhoController.clear();
+    _batismopadrinhoController.clear();
+    _crismapadrinhoController.clear();
+    _estadocivilController.clear();
+
+    _nomemadrinhaController.clear();
+    _telefonemadrinhoController.clear();
+    _batismoMadrinhoController.clear();
+    _crismaMadrinhoController.clear();
+    _casadamadrinhaController.clear();
+    _estadocivilmadrinhaController.clear();
+
+    
     setState(() {
       fotos.clear();
     });
