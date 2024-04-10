@@ -377,6 +377,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
 ///////////////////////////////////////////////////////////////////
               SizedBox(height: 10),
+              SizedBox(height: 20),
               TextFormField(
                 controller: _casadosreligiosoController,
                 validator: (value) {
@@ -397,6 +398,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 ////////////////////////////////////////////////////////////////
 
                             SizedBox(height: 20),
+                            
               // Container com dicas para tirar uma boa foto
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -418,13 +420,13 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                   children: [
                     SizedBox(height: 10),
                     Text(
-                      '- Se forem casados preencher os dados de casamento.',
+                      '- Se forem casados no religioso preencher os dados de casamento.',
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      '- Se não forem casados no relgioso deixar em branco.',
+                      '\n- Se não forem casados no relgioso deixar em branco.',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -433,16 +435,19 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 ),
               ),
 //////////////////////////////////////////////////////////////////////////////
+                Text('\nCasamento Religioso',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+
 
               SizedBox(height: 10),
               TextFormField(
                 controller: _paroquiaCasamentoController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira a Paroquia do Casamento';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
                   labelText: 'Paroquia do casamento',
                   filled: true,
@@ -455,12 +460,6 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _diocesecasamentoController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira a Dicoese da Paroquia';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
                   labelText: 'Diocese da Paroquia',
                   filled: true,
@@ -473,14 +472,8 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _cidadeparoquiaController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira Cidade da paroquia';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
-                  labelText: 'Cidade da Paroquia?',
+                  labelText: 'Cidade da Paroquia',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -492,14 +485,8 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _batismoMaeController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira Bairro da paroquia';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
-                  labelText: 'Bairro da Paroquia?',
+                  labelText: 'Bairro da Paroquia',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -978,6 +965,10 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
       ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Nova inscrição de Batismo'
       ..text = '''
+        ====================================
+                       BATIZANDO 
+        ====================================
+asaa
         Nome: ${_nomeController.text}
         Data Nascimento: ${_dataController.text}
         Local Nascimento: ${_localnascController.text}
@@ -988,40 +979,46 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
         Telefone: (${_dddController.text}) ${_telefoneController.text}
         CEP: ${_cepController.text}
 
+        ====================================
+                        PAIS
+        ====================================
 
-        ------------------------------------------------------
         Nome Pai: ${_nomePaiController.text}
         Pai é Batizado: ${_batismoPaiController.text}
         Nome Mãe: ${_nomeMaeController.text}
         Mãe é Batizada: ${_batismoMaeController.text}
         Pais Casados no Religioso: ${_casadosreligiosoController.text}
-        ------------------------------------------------------
+
+        ====================================
+               CASAMENTO RELIGIOSO PAIS
+        ====================================
+
         Paroquia do Casamento: ${_paroquiaCasamentoController.text}
         Diocese da Paroquia do Casamento: ${_diocesecasamentoController.text}
         Bairro da Paroquia: ${_bairroparoquiaController.text}
         Cidade da Paroquia: ${_cidadeparoquiaController.text}
-        ------------------------------------------------------
-        Padrinho
+
+        ====================================
+                      PADRINHO
+        ====================================
+
         Nome do Padrinho: ${_nomepadrinhoController.text}
         Telefone Padrinho: ${_telefonepadrinhoController.text}
         Padrinho é Batizado: ${_batismopadrinhoController.text}
         Padrinho é Crismado: ${_crismapadrinhoController.text}
         Estado civil Padrinho ${_estadocivilController.text}
         Casado no religioso: ${_casadapadrinhaController.text}
-        -------------------------------------------------------
-        Madrinha
+
+        ====================================
+                      MADRINHA
+        ====================================
+
         Nome da Madrinha: ${_nomemadrinhaController.text}        
         Telefone Madrinho: ${_telefonemadrinhoController.text}
         Padrinho é Batizada: ${_batismoMadrinhoController.text}
         Padrinho é Crismada: ${_crismaMadrinhoController.text}
         Estado civil Madrinho ${_casadamadrinhaController.text}
         Casada no religioso: ${_estadocivilmadrinhaController.text}
-
-
-
-
-
-
 
 
       ''';
