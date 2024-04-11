@@ -5,17 +5,17 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:flutter/services.dart';
 
-class InscricoesCatequesePage extends StatefulWidget {
+class DizimistaPage extends StatefulWidget {
   @override
-  _InscricoesCatequesePageState createState() =>
-      _InscricoesCatequesePageState();
+  _DizimistaPageState createState() =>
+      _DizimistaPageState();
 }
 
-class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
+class _DizimistaPageState extends State<DizimistaPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _dataController = TextEditingController();
-  TextEditingController _idadeController = TextEditingController();
+
 
 
 
@@ -27,17 +27,10 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   TextEditingController _bairroController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
   TextEditingController _cidadeController = TextEditingController();
-  TextEditingController _estudaController = TextEditingController();
-  TextEditingController _periodoController = TextEditingController();  
-  TextEditingController _batismoadultoController = TextEditingController();
-  TextEditingController _adultoEucaristiaController = TextEditingController();  
+  TextEditingController _cpfController = TextEditingController();
   TextEditingController _estadoCivilController = TextEditingController();
-  TextEditingController _missadominicalController = TextEditingController();
-  TextEditingController _horariomissaController = TextEditingController();
-
   TextEditingController _casadosreligiosoController = TextEditingController();
-
-
+  TextEditingController _contribuicaoController = TextEditingController();
 
 
 
@@ -49,7 +42,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catequese de Jovens '),
+        title: Text('Dizimista'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -60,7 +53,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
             children: [
               // Título da página
               Text(
-                'Página de Inscrições para Catequese de Jovens',
+                'Inscrição para Dizimista',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -73,12 +66,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _nomeController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Insira o Nome do Catequizando';
+                    return 'Insira o Nome do Dizimista';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Nome do Catequizando',
+                  labelText: 'Nome do Dizimista',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -126,25 +119,30 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ),
               ),
-
-              SizedBox(height: 10),
+              SizedBox(height: 20),
+              // Campo de texto para o nome
               TextFormField(
-                controller: _idadeController,
+                controller: _cpfController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Insira Idade atual';
+                    return 'CPF';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Idade atual',
+                  labelText: 'CPF',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(15.0),  
                   ),
                 ),
+                keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
               ),
+              
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
@@ -203,6 +201,10 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
               ),
 
               SizedBox(height: 10),
@@ -225,98 +227,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 ),
               ),
 
-              SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _estudaController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'O adulto Estuda?';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'O adulto Estuda?',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-
-                            SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _periodoController,
-                decoration: InputDecoration(
-                  labelText: 'Periodo Escolar manha/tarde/noite',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _batismoadultoController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'O adulto é Batizada?';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'O adulto é Batizada?',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-              Text(
-                  'Caso a pessoa não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-
-              SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _adultoEucaristiaController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'O adulto  fez 1° Eucaristia?';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'O adulto fez 1° Eucaristia?',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    
-                  ),
-                  
-                ),
-                
-              ),
-              Text(
-                  'Caso a pessoa não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-
-
-////////////////////////////////////////////////////////////////////////////
-
+             
               SizedBox(height: 10),
               // Campo de texto para o e-mail
               TextFormField(
@@ -399,12 +310,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _estadoCivilController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Estado Civil';
+                    return 'Estado Civil do Pais';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Estado Civil ',
+                  labelText: 'Estado Civil do Pais',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -415,12 +326,6 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _casadosreligiosoController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Casado no Religioso? ';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
                   labelText: 'Casado no Religioso?',
                   filled: true,
@@ -431,19 +336,17 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 ),
               ),
 
-
-
               SizedBox(height: 10),
               TextFormField(
-                controller: _missadominicalController,
+                controller: _contribuicaoController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Participa da Santa Missa Dominical? ';
+                    return 'Estado Civil do Pais';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Participa da Santa Missa Dominical?',
+                  labelText: 'Contribuição Pix/Missa/envelope',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -451,195 +354,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ),
               ),
-
               
-              SizedBox(height: 10),
-              TextFormField(
-                controller: _horariomissaController,
-                decoration: InputDecoration(
-                  labelText: 'Horario da Missa voce Participa.',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-////////////////////////////////////////////////////////////////
-
-              
-              SizedBox(height: 20),
-              // Container com dicas para tirar uma boa foto
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 20.0),
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Documentos necessarios',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '- RG',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Comprovante de Residência',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Certidão de Nascimento',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Comprovante de 1° Eucaristia \n  (se tiver feito)',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Comprovante de Batismo \n  (se tiver feito)',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Uma foto de rosto',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                                                             
-                    Text(
-                      '- Certidão de Casamento (se for casado)',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              // Container com dicas para tirar uma boa foto
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 20.0),
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Dicas para tirar uma ótima foto do documento:',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '- Tire a foto em um ambiente bem iluminado;',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Evite sombras que possam obscurecer o documento;',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Mantenha o documento reto e bem enquadrado na foto;',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      '- Certifique-se de que o texto do documento está nítido e legível;',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    await _selecionarImagem(ImageSource.camera);
-                  }
-                },
-                child: Text('Adicionar Foto'),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-              ),
-              SizedBox(height: 20),
-              // Exibição das fotos selecionadas
-              for (int i = 0; i < fotos.length; i++)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            // Adicione a funcionalidade para visualizar a imagem
-                          },
-                          child: Image.file(
-                            File(fotos[i].path),
-                            width: 100,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          _removerImagem(i);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              SizedBox(height: 20),
-              // Botão para enviar a inscrição
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
@@ -705,37 +420,24 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
     final message = Message()
       ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
       ..recipients.add('santoantoniolimao@gmail.com')
-      ..subject = 'Nova inscrição de Catequese Adulto'
+      ..subject = 'Nova inscrição Dizimista'
       ..text = '''
         ====================================
-                       Catequizando
+                       Dizimista
         ====================================
         Nome: ${_nomeController.text}      
         Local Nascimento: ${_localnascController.text}
         Data Nascimento: ${_dataController.text}
-        Idade atual: ${_idadeController.text}
         Bairro: ${_bairroController.text}
         Endereço: ${_enderecoController.text}
         CEP: ${_cepController.text}
+        CPF: ${_cpfController.text}
         Cidade: ${_cidadeController.text}
-
-        ========================================
-                   Informações do Adulto
-        ========================================
-        O adulto  Estuda? ${_estudaController.text}
-        Periodo Escolar: ${_periodoController.text}
-        Batizado? ${_batismoadultoController.text}
-        1° Eucaristia? ${_adultoEucaristiaController.text}
-
-
         E-mail: ${_emailController.text}
         Telefone: (${_dddController.text}) ${_telefoneController.text}
-        Estado civil: ${_estadoCivilController.text}
-        Casado no Religioso: ${_casadosreligiosoController.text}
-        Frequenta a Missa de Domingo: ${_missadominicalController.text}
-        Horario que frequenta a Missa: ${_horariomissaController.text}
-
-
+        Estado civil dos Pais: ${_estadoCivilController.text}
+        Pais Casados no Religioso: ${_casadosreligiosoController.text}
+        Forma de Contribuiçao: ${_contribuicaoController.text}
               ''';
 
     for (final foto in fotos) {
@@ -756,24 +458,18 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   void _limparCampos() {
     _nomeController.clear();
     _dataController.clear();
-    _idadeController.clear();
     _localnascController.clear();    
     _bairroController.clear();    
     _enderecoController.clear();
     _emailController.clear();
     _cepController.clear();
     _cidadeController.clear();
-    _estudaController.clear();
-    _periodoController.clear();
-    _batismoadultoController.clear();
-    _adultoEucaristiaController.clear();
+    _cpfController.clear();
     _estadoCivilController.clear();
     _casadosreligiosoController.clear();
     _dddController.clear();
     _telefoneController.clear();
-    _missadominicalController.clear();
-    _horariomissaController.clear();
-
+    _contribuicaoController.clear();
     
     setState(() {
       fotos.clear();

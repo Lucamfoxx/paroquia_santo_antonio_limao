@@ -5,13 +5,13 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:flutter/services.dart';
 
-class InscricoesCatequesePage extends StatefulWidget {
+class CatequeseInfantilPage extends StatefulWidget {
   @override
-  _InscricoesCatequesePageState createState() =>
-      _InscricoesCatequesePageState();
+  _CatequeseInfantilPageState createState() =>
+      _CatequeseInfantilPageState();
 }
 
-class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
+class _CatequeseInfantilPageState extends State<CatequeseInfantilPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
   TextEditingController _dataController = TextEditingController();
@@ -29,13 +29,15 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   TextEditingController _cidadeController = TextEditingController();
   TextEditingController _estudaController = TextEditingController();
   TextEditingController _periodoController = TextEditingController();  
-  TextEditingController _batismoadultoController = TextEditingController();
-  TextEditingController _adultoEucaristiaController = TextEditingController();  
+  TextEditingController _batismoCriancaController = TextEditingController();
+  TextEditingController _criancaEucaristiaController = TextEditingController();  
+  TextEditingController _nomePaiController = TextEditingController();
+  TextEditingController _nomeMaeController = TextEditingController();
   TextEditingController _estadoCivilController = TextEditingController();
+  TextEditingController _casadosreligiosoController = TextEditingController();
   TextEditingController _missadominicalController = TextEditingController();
   TextEditingController _horariomissaController = TextEditingController();
 
-  TextEditingController _casadosreligiosoController = TextEditingController();
 
 
 
@@ -49,7 +51,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catequese de Jovens '),
+        title: Text('Catequese Infantil '),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -60,7 +62,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
             children: [
               // Título da página
               Text(
-                'Página de Inscrições para Catequese de Jovens',
+                'Inscrição para Catequese Infantil',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -231,12 +233,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _estudaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'O adulto Estuda?';
+                    return 'Criança Estuda?';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'O adulto Estuda?',
+                  labelText: 'Criança Estuda?',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -249,6 +251,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               // Campo de texto para o endereço
               TextFormField(
                 controller: _periodoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Periodo Escolar';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: 'Periodo Escolar manha/tarde/noite',
                   filled: true,
@@ -262,15 +270,15 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
-                controller: _batismoadultoController,
+                controller: _batismoCriancaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'O adulto é Batizada?';
+                    return 'Criança é Batizada';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'O adulto é Batizada?',
+                  labelText: 'Criança é Batizada',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -278,45 +286,77 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ),
               ),
-              Text(
-                  'Caso a pessoa não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
 
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
-                controller: _adultoEucaristiaController,
+                controller: _criancaEucaristiaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'O adulto  fez 1° Eucaristia?';
+                    return 'Criança fez 1° Eucaristia';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'O adulto fez 1° Eucaristia?',
+                  labelText: 'Criança fez 1° Eucaristia',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                    
                   ),
-                  
                 ),
-                
               ),
-              Text(
-                  'Caso a pessoa não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+
 
 
 ////////////////////////////////////////////////////////////////////////////
+                Text('\nPais',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomePaiController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Por favor, insira o nome do pai';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome do Pai',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+                            
 
+              
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _nomeMaeController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Por favor, insira o nome da mãe';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Nome da Mãe',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
               SizedBox(height: 10),
               // Campo de texto para o e-mail
               TextFormField(
@@ -328,7 +368,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'E-mail ',
+                  labelText: 'E-mail do Responsavel',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -399,12 +439,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _estadoCivilController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Estado Civil';
+                    return 'Estado Civil do Pais';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Estado Civil ',
+                  labelText: 'Estado Civil do Pais',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -417,12 +457,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _casadosreligiosoController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Casado no Religioso? ';
+                    return 'Casados no Religioso? ';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Casado no Religioso?',
+                  labelText: 'Casados no Religioso?',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -514,27 +554,32 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                         fontSize: 16,
                       ),
                     ),
-                    Text(
+                                        Text(
                       '- Comprovante de 1° Eucaristia \n  (se tiver feito)',
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    Text(
+                                        Text(
                       '- Comprovante de Batismo \n  (se tiver feito)',
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      '- Uma foto de rosto',
+                     Text(
+                      '- Uma foto de rosto da Criança (3x4)',
                       style: TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                                                             
-                    Text(
-                      '- Certidão de Casamento (se for casado)',
+                                         Text(
+                      '- Certidão de Casamento dos Pais\n  (se forem casados)',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                                                             Text(
+                      '- RG dos Pais',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -705,7 +750,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
     final message = Message()
       ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
       ..recipients.add('santoantoniolimao@gmail.com')
-      ..subject = 'Nova inscrição de Catequese Adulto'
+      ..subject = 'Nova inscrição de Catequese Infantil'
       ..text = '''
         ====================================
                        Catequizando
@@ -720,18 +765,24 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
         Cidade: ${_cidadeController.text}
 
         ========================================
-                   Informações do Adulto
+                   Informações da Criança
         ========================================
-        O adulto  Estuda? ${_estudaController.text}
+        Criança Estuda? ${_estudaController.text}
         Periodo Escolar: ${_periodoController.text}
-        Batizado? ${_batismoadultoController.text}
-        1° Eucaristia? ${_adultoEucaristiaController.text}
+        Batizado? ${_batismoCriancaController.text}
+        1° Eucaristia? ${_criancaEucaristiaController.text}
 
 
+        ====================================
+                        PAIS
+        ====================================
+
+        Nome Pai: ${_nomePaiController.text}
+        Nome Mãe: ${_nomeMaeController.text}
         E-mail: ${_emailController.text}
         Telefone: (${_dddController.text}) ${_telefoneController.text}
-        Estado civil: ${_estadoCivilController.text}
-        Casado no Religioso: ${_casadosreligiosoController.text}
+        Estado civil dos Pais: ${_estadoCivilController.text}
+        Pais Casados no Religioso: ${_casadosreligiosoController.text}
         Frequenta a Missa de Domingo: ${_missadominicalController.text}
         Horario que frequenta a Missa: ${_horariomissaController.text}
 
@@ -765,8 +816,10 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
     _cidadeController.clear();
     _estudaController.clear();
     _periodoController.clear();
-    _batismoadultoController.clear();
-    _adultoEucaristiaController.clear();
+    _batismoCriancaController.clear();
+    _criancaEucaristiaController.clear();
+    _nomePaiController.clear();
+    _nomeMaeController.clear();
     _estadoCivilController.clear();
     _casadosreligiosoController.clear();
     _dddController.clear();

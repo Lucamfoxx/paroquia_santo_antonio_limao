@@ -20,6 +20,13 @@ import 'pedido_missas.dart';
 import 'pedido_intencoes.dart';
 import 'santo_padroeiro.dart';
 import 'sacramentos.dart';
+import 'inscricoes_catequese_jovem.dart';
+import 'inscricoes_catequese_infantil.dart';
+import 'dizimista.dart';
+import 'dizimosdoacoes.dart';
+import 'Festas.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -59,6 +66,8 @@ class MyApp extends StatelessWidget {
         '/historiaparoquia': (context) => HistoriaParoquiaPage(),
         '/inscricoes': (context) => InscricoesPage(), // Rota para a página inscricoes.dart
         '/inscricoes_catequese': (context) => InscricoesCatequesePage(),
+        '/inscricoes_catequese_infantil': (context) => CatequeseInfantilPage(),
+        '/inscricoes_catequese_jovem': (context) => CatequeseJovemPage(),
         '/inscricoes_batismo': (context) => InscricoesBatismoPage(),
         '/inscricoes_casamento': (context) => InscricoesCasamentoPage(),
         '/missas_intencoes': (context) => MissasIntencoesPage(),
@@ -66,6 +75,10 @@ class MyApp extends StatelessWidget {
         '/pedido_intencoes': (context) => PedidoIntencoesPage(),
         '/santo_padroeiro': (context) => SantoPadroeiro(),
         '/sacramentos': (context) => SacramentosPage(),
+        '/dizimista': (context) => DizimistaPage(),
+        '/dizimosdoacoes': (context) => DoacoesPage(),
+        '/festas': (context) => FestasPage(),
+
 
       },
     );
@@ -90,7 +103,9 @@ class MissaDiariaApp extends StatelessWidget {
                 Image.asset('assets/logo.png'),
                 SizedBox(height: 20),
                 MenuButton('Inscrições', '/inscricoes'),
-                MenuButton('Missas e Intenções', '/missas_intencoes'),
+                MenuButton('Missas e Intenções', '/missas_intencoes'),                
+                MenuButton('Dizimos e Doações', '/dizimosdoacoes'),
+                MenuButton('Festas', '/festas'),                
                 MenuButton('Santo Padroeiro', '/santo_padroeiro'),
                 MenuButton('Sacramentos', '/sacramentos'),
                 MenuButton('Liturgia Diária', '/missa_diaria'),

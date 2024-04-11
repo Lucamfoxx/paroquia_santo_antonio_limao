@@ -59,7 +59,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inscrições de Batismo'),
+        title: Text('Inscrição de Batismo'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -70,7 +70,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
             children: [
               // Título da página
               Text(
-                'Página de Inscrições de Batismo',
+                'Inscrição de Batismo',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -484,7 +484,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
               SizedBox(height: 10),
               TextFormField(
-                controller: _batismoMaeController,
+                controller: _bairroparoquiaController,
                 decoration: InputDecoration(
                   labelText: 'Bairro da Paroquia',
                   filled: true,

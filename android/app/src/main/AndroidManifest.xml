@@ -6,7 +6,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
-        android:label="paroquia_santo_antonio_limao"
+        android:label="Paroquia Santo Antonio Limão"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
