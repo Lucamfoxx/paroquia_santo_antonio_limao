@@ -1,20 +1,143 @@
 import 'package:flutter/material.dart';
 
-class FestasPage extends StatelessWidget {
+class FestasPage extends StatefulWidget {
+  @override
+  _FestasPageState createState() => _FestasPageState();
+}
+
+class _FestasPageState extends State<FestasPage> {
+  double _fontSize = 20.0;
+
+  void _increaseFontSize() {
+    setState(() {
+      _fontSize += 2.0;
+    });
+  }
+
+  void _decreaseFontSize() {
+    setState(() {
+      _fontSize -= 2.0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Minha Página'),
+        title: Text('Festas'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.zoom_in),
+            onPressed: _increaseFontSize,
+          ),
+          IconButton(
+            icon: Icon(Icons.zoom_out),
+            onPressed: _decreaseFontSize,
+          ),SizedBox(height: 10)
+        ],
       ),
+      
       body: Center(
-        child: Text(
-          'Esta é a minha página básica.',
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '\nProgramação Religiosa',
+                
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 29,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              EventSchedule(fontSize: _fontSize), // Pass font size to EventSchedule
+            ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class EventSchedule extends StatelessWidget {
+  final double fontSize;
+
+  const EventSchedule({
+    Key? key,
+    required this.fontSize,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10),
+        EventItem(
+          date: 'Dia de Santo Antônio',
+          description:
+              '13/06 - Missas: 7h, 9h, 12h, 15h e 19h30\n\nEm todas as missas, benção dos pães, bolo de Santo Antônio e objetos de devoção.',
+          fontSize: fontSize, // Pass font size to EventItem
+        ),
+        SizedBox(height: 10),
+        EventItem(
+          date: 'Trezena e carreata de Santo Antônio',
+          description:
+              '31/05 (sexta feira) às 20h - Dom Carlos Silva- Bispo auxiliar da Região Brasilândia\n\n01/06 (sábado) às 17h - Pe. Rafael Araujo\n\n07/06 (domingo) após a missa das 19h - Carreata solidária pelas ruas do bairro com a imagem de Santo Antônio - Pe. Romulo Freire\n\n03/06 (segunda feira) às 20h - Pe. Dorival Ferreira\n\n04/06 (terça feira) às 20h - Edmilson Silva\n\n05/06 (quarta feira) às 20h - Frei Carlos Silva OFM\n\n06/06 (quinta feira) às 20h - Pe. João Henrique\n\n07/06 (sexta feira) às 20h - Pe. José Ferreira\n\n08/06 (sábado) às 17h - Pe. Aldo Lima\n\n09/06 (domingo) às 19h - Pe. Frei Alonso Pires- OFM Cap',
+          fontSize: fontSize, // Pass font size to EventItem
+        ),
+      ],
+    );
+  }
+}
+
+class EventItem extends StatelessWidget {
+  final String date;
+  final String description;
+  final double fontSize;
+
+  const EventItem({
+    Key? key,
+    required this.date,
+    required this.description,
+    required this.fontSize,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            date,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: fontSize,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            description,
+            style: TextStyle(fontSize: fontSize),
+          ),
+        ],
       ),
     );
   }

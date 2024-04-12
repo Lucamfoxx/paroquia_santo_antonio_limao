@@ -113,7 +113,7 @@ class MissaDiariaApp extends StatelessWidget {
                 MenuButton('Santo do Dia', '/santo_do_dia'),
                 MenuButton('Orações', '/oracoes'),
                 MenuButton('Decanato São Pedro', '/paroquias'),
-                MenuButton('Notícias', '/noticias'),
+                MenuButton('Avisos Paroquiais', '/noticias'),
                 MenuButton('Horários', '/horarios'), // Botão para Horários
                 MenuButton('História da Paróquia', '/historiaparoquia'), // Botão para História da Paróquia
                 SizedBox(height: 20), // Adiciona um espaço entre o menu e o texto com o endereço e telefone

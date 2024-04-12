@@ -24,7 +24,7 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Página de Pedidos de Missas',
+              'Pedidos de Missas',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
   Future<bool> _enviarPedidoPorEmail() async {
     final smtpServer = SmtpServer('smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

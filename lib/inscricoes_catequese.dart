@@ -49,7 +49,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catequese de Jovens '),
+        title: Text('Catequese de Adultos'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -60,7 +60,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
             children: [
               // Título da página
               Text(
-                'Página de Inscrições para Catequese de Jovens',
+                'Catequese de Adultos',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -258,62 +258,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ),
               ),
-
-              SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _batismoadultoController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'O adulto é Batizada?';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'O adulto é Batizada?',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-              Text(
-                  'Caso a pessoa não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-
-              SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _adultoEucaristiaController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'O adulto  fez 1° Eucaristia?';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'O adulto fez 1° Eucaristia?',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    
-                  ),
-                  
-                ),
-                
-              ),
-              Text(
-                  'Caso a pessoa não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-
+               
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -347,7 +292,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                       controller: _dddController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Insira o DDD';
+                          return 'DDD';
                         }
                         return null;
                       },
@@ -392,6 +337,68 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ],
               ),
+            Text('\nBtismo e 1° Eucaristia\n',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
+
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _batismoadultoController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'O adulto é Batizada?';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'O adulto é Batizado?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              Text(
+                  'Caso a pessoa não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+
+              SizedBox(height: 10),
+              // Campo de texto para o endereço
+              TextFormField(
+                controller: _adultoEucaristiaController,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'O adulto  fez 1° Eucaristia?';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'O adulto fez 1° Eucaristia?',
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    
+                  ),
+                  
+                ),
+                
+              ),
+              Text(
+                  'Caso a pessoa não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
 
 
               SizedBox(height: 10),
@@ -490,7 +497,9 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   children: [
                     Text(
                       'Documentos necessarios',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                        
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -589,7 +598,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                       ),
                     ),
                     Text(
-                      '- Certifique-se de que o texto do documento está nítido e legível;',
+                      '- Certifique-se de que o texto do documento está nítido e legível.',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -698,7 +707,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

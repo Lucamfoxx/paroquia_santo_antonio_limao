@@ -69,7 +69,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eventos'),
+        title: Text('Avisos Paroquiais'),
         actions: [
           IconButton(
             onPressed: _aumentarFonte,

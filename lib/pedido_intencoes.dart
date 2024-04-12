@@ -24,7 +24,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Página de Pedidos de Intenções',
+              'Pedidos de Intenções',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
             TextFormField(
               controller: _nomeController,
               decoration: InputDecoration(
-                labelText: 'Nome do Pedinte',
+                labelText: 'Nome do Solicitante',
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
@@ -89,7 +89,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

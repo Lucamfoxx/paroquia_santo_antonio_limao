@@ -39,9 +39,9 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   TextEditingController _estadocivilController = TextEditingController();
   TextEditingController _casadapadrinhaController = TextEditingController();
   TextEditingController _nomemadrinhaController = TextEditingController();
-  TextEditingController _telefonemadrinhoController = TextEditingController();
-  TextEditingController _batismoMadrinhoController = TextEditingController();
-  TextEditingController _crismaMadrinhoController = TextEditingController();
+  TextEditingController _telefonemadrinhaController = TextEditingController();
+  TextEditingController _batismomadrinhaController = TextEditingController();
+  TextEditingController _crismamadrinhaController = TextEditingController();
   TextEditingController _casadamadrinhaController = TextEditingController();
   TextEditingController _estadocivilmadrinhaController = TextEditingController();
 
@@ -246,7 +246,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                       controller: _dddController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Insira o DDD';
+                          return 'DDD';
                         }
                         return null;
                       },
@@ -291,13 +291,17 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                   ),
                 ],
               ),
-                Text('\nPais',
+              
+              SizedBox(height: 10),
+                Text('Pais',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
+              
+              SizedBox(height: 10),
               
               SizedBox(height: 10),
               TextFormField(
@@ -376,7 +380,6 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               ),   
 
 ///////////////////////////////////////////////////////////////////
-              SizedBox(height: 10),
               SizedBox(height: 20),
               TextFormField(
                 controller: _casadosreligiosoController,
@@ -435,7 +438,9 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 ),
               ),
 //////////////////////////////////////////////////////////////////////////////
-                Text('\nCasamento Religioso',
+///
+              SizedBox(height: 10),
+                Text('Casamento Religioso',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -443,13 +448,14 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 textAlign: TextAlign.center,
               ),
 
+              SizedBox(height: 10),
 
 
               SizedBox(height: 10),
               TextFormField(
                 controller: _paroquiaCasamentoController,
                 decoration: InputDecoration(
-                  labelText: 'Paroquia do casamento',
+                  labelText: 'Paroquia do Casamento',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -495,7 +501,9 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 ),
               ),
 /////////////////////////////////////////////////////////////////
-                Text('\nPadrinho',
+                
+              SizedBox(height: 10),
+                Text('Padrinho',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -503,6 +511,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 textAlign: TextAlign.center,
               ),
               
+              SizedBox(height: 10),
               SizedBox(height: 10),
               TextFormField(
                 controller: _nomepadrinhoController,
@@ -625,7 +634,8 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
 ///////////////////////////////////////////////////////////////////
 ///                
-                Text('\nMadrinho',
+              SizedBox(height: 10),
+                Text('Madrinha',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -633,6 +643,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 textAlign: TextAlign.center,
               ),
 
+              SizedBox(height: 10),
 
               SizedBox(height: 10),
               TextFormField(
@@ -655,15 +666,15 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
               SizedBox(height: 10),
               TextFormField(
-                controller: _telefonemadrinhoController,
+                controller: _telefonemadrinhaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Insira Telefone Madrinho';
+                    return 'Insira Telefone Madrinha';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Telefone Madrinho',
+                  labelText: 'Telefone Madrinha',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -675,7 +686,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
               SizedBox(height: 10),
               TextFormField(
-                controller: _batismoMadrinhoController,
+                controller: _batismomadrinhaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return 'Insira Batizada';
@@ -695,7 +706,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
               SizedBox(height: 10),
               TextFormField(
-                controller: _crismaMadrinhoController,
+                controller: _crismamadrinhaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return 'Insira Crismada?';
@@ -718,12 +729,12 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 controller: _estadocivilmadrinhaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Insira Estado Civil';
+                    return 'Insira Estado Civil da Madrinha';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Estado civil do Madrinho',
+                  labelText: 'Estado civil do Madrinha',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -847,7 +858,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                       ),
                     ),
                     Text(
-                      '- Certifique-se de que o texto do documento está nítido e legível;',
+                      '- Certifique-se de que o texto do documento está nítido e legível.',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -956,7 +967,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 
@@ -1014,10 +1025,10 @@ asaa
         ====================================
 
         Nome da Madrinha: ${_nomemadrinhaController.text}        
-        Telefone Madrinho: ${_telefonemadrinhoController.text}
-        Padrinho é Batizada: ${_batismoMadrinhoController.text}
-        Padrinho é Crismada: ${_crismaMadrinhoController.text}
-        Estado civil Madrinho ${_casadamadrinhaController.text}
+        Telefone madrinha: ${_telefonemadrinhaController.text}
+        Padrinho é Batizada: ${_batismomadrinhaController.text}
+        Padrinho é Crismada: ${_crismamadrinhaController.text}
+        Estado civil madrinha ${_casadamadrinhaController.text}
         Casada no religioso: ${_estadocivilmadrinhaController.text}
 
 
@@ -1068,9 +1079,9 @@ asaa
     _estadocivilController.clear();
 
     _nomemadrinhaController.clear();
-    _telefonemadrinhoController.clear();
-    _batismoMadrinhoController.clear();
-    _crismaMadrinhoController.clear();
+    _telefonemadrinhaController.clear();
+    _batismomadrinhaController.clear();
+    _crismamadrinhaController.clear();
     _casadamadrinhaController.clear();
     _estadocivilmadrinhaController.clear();
 

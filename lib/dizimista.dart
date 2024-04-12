@@ -119,7 +119,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               // Campo de texto para o nome
               TextFormField(
                 controller: _cpfController,
@@ -258,7 +258,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
                       controller: _dddController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Insira o DDD';
+                          return 'DDD';
                         }
                         return null;
                       },
@@ -326,6 +326,12 @@ class _DizimistaPageState extends State<DizimistaPage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _casadosreligiosoController,
+                                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira casado no Religioso?';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: 'Casado no Religioso?',
                   filled: true,
@@ -341,12 +347,12 @@ class _DizimistaPageState extends State<DizimistaPage> {
                 controller: _contribuicaoController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Estado Civil do Pais';
+                    return 'Contribuição Pix/Missa/Envelope';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Contribuição Pix/Missa/envelope',
+                  labelText: 'Contribuição Pix/Missa/Envelope',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -354,7 +360,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
                   ),
                 ),
               ),
-              
+                            SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
@@ -413,7 +419,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

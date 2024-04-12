@@ -62,7 +62,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
             children: [
               // Título da página
               Text(
-                'Inscrição para Catequese de Jovens',
+                'Catequese de Jovens',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -266,6 +266,14 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   ),
                 ),
               ),
+Text('\nBtismo e 1° Eucaristia\n',
+                  style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              
 
               SizedBox(height: 10),
               // Campo de texto para o endereço
@@ -273,12 +281,12 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                 controller: _batismojovemController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'O Jovem é Batizada';
+                    return 'O Jovem é Batizado';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'O Jovem é Batizada',
+                  labelText: 'O Jovem é Batizado',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -286,6 +294,12 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   ),
                 ),
               ),
+              Text(
+                  'Caso o jovem não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
 
               SizedBox(height: 10),
               // Campo de texto para o endereço
@@ -306,6 +320,12 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   ),
                 ),
               ),
+              Text(
+                  'Caso o jovem não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
 
 
 
@@ -387,7 +407,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                       controller: _dddController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Insira o DDD';
+                          return 'DDD';
                         }
                         return null;
                       },
@@ -634,7 +654,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                       ),
                     ),
                     Text(
-                      '- Certifique-se de que o texto do documento está nítido e legível;',
+                      '- Certifique-se de que o texto do documento está nítido e legível.',
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -743,7 +763,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

@@ -161,48 +161,27 @@ class _SantoPadroeiroState extends State<SantoPadroeiro> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildExpansibleButton('Os Pássaros e a Plantação', '''
-O pai de Santo Antônio, Martinho de Bulhões, gostava de ir a uma fazenda
-que possuía nos arredores de Lisboa. Um dia, levou o filho com ele. 
-Ocorre que insaciáveis bandos de pássaros desciam continuamente para bicar os
-grãos de trigo. 
-Era necessário espantá-los para impedir grave dano à colheita.
-Martinho encarregou o garoto de manter longe os pequenos ladrões. 
-O pai se foi e Fernando permaneceu correndo de cá para lá no campo. 
-Em pouco
-tempo, começou a se aborrecer com aquela ocupação. Não muito longe, uma
-capelinha rústica o convidava à oração. Mas o pai o mandara enxotar os
-passarinhos. Gritou então aos pássaros, convidando-os a segui-lo para dentro
-de uma sala da fazenda. Obedientes os pássaros entraram. 
-Quando todos
-estavam dentro, Fernando fechou as janelas e as portas, e foi tranquilamente
-fazer sua visita ao Senhor. Retornando o pai veio procurá-lo. 
-Andou pelo
-campo, chamando-o, mas não o encontrou. 
-Preocupado, dirigiu-se à capela e o descobriu, todo absorto na prece. 
-Fernando tomou o pai pelas mãos e o
-conduziu ao salão repleto dos voos e dos cantos dos graciosos prisioneiros.
-Abriu a porta e, a um sinal seu, os pássaros, em bando, retornaram os livres
-caminhos do espaço.
+O pai de Santo Antônio, Martinho de Bulhões, gostava de ir a uma fazenda que possuía nos arredores de Lisboa. Um dia, levou o filho com ele. Ocorre que insaciáveis bandos de pássaros desciam continuamente para bicar os grãos de trigo. Era necessário espantá-los para impedir grave dano à colheita. Martinho encarregou o garoto de manter longe os pequenos ladrões. 
+O pai se foi e Fernando permaneceu correndo de cá para lá no campo. Em pouco tempo, começou a se aborrecer com aquela ocupação. Não muito longe, uma capelinha rústica o convidava à oração. Mas o pai o mandara enxotar os passarinhos. Gritou então aos pássaros, convidando-os a segui-lo para dentro de uma sala da fazenda. Obedientes os pássaros entraram. Quando todos estavam dentro, Fernando fechou as janelas e as portas, e foi tranquilamente fazer sua visita ao Senhor. Retornando o pai veio procurá-lo. Andou pelo campo, chamando-o, mas não o encontrou. Preocupado, dirigiu-se à capela e o descobriu, todo absorto na prece. Fernando tomou o pai pelas mãos e o conduziu ao salão repleto dos voos e dos cantos dos graciosos prisioneiros. Abriu a porta e, a um sinal seu, os pássaros, em bando, retornaram os livres caminhos do espaço.
 ''',fontSize),
         _buildExpansibleButton('O Jumento se Curva Diante da Eucaristia', '''
 Durante uma pregação, cujo tema era a Eucaristia, levantou-se um homem
 dizendo: “Eu acreditarei que Cristo está realmente presente na Hóstia
 Consagrada quando vir o meu jumento ajoelhar-se diante da custódia com o
-Santíssimo. Sacramento”. 
-O Santo aceitou o desafio. 
-Deixaram o pobre
-jumento três dias sem comer. No momento e lugar pré-estabelecido,
+Santíssimo. Sacramento”. O Santo aceitou o desafio. 
+Deixaram o pobre jumento três dias sem comer. No momento e lugar pré-estabelecido,
 apresentou-se Antônio com a custódia e o herege com o seu jumento que já
 não aguentava manter-se em pé devido ao forçado jejum. 
-Mesmo
-meio-morto de fome, deixou de lado a apetitosa pastagem que lhe era
+Mesmo meio-morto de fome, deixou de lado a apetitosa pastagem que lhe era
 oferecida pelo seu dono, para se ajoelhar diante do Santíssimo Sacramento.
 
 ''',fontSize),
-        _buildExpansibleButton('Livro Roubado', '''Um dia o frei descobriu que um noviço havia fugido do mosteiro e levado
+        _buildExpansibleButton('Livro Roubado', '''
+Um dia o frei descobriu que um noviço havia fugido do mosteiro e levado
 com ele seus comentários sobre o Livro dos Salmos. Então, rezou para o
 retorno de ambos. Em pouco tempo, o jovem arrependido voltou para a
-vida religiosa, acompanhado, é claro, dos manuscritos.''',fontSize),
+vida religiosa, acompanhado, é claro, dos manuscritos.
+''',fontSize),
         _buildExpansibleButton('Sermão aos Peixes', '''Santo Antônio foi pregar na cidade de Rímini, onde dominavam os hereges
 que resolveram não ouvi-lo em hipótese alguma. Frei Antônio subiu ao
 púlpito e quase todos se retiraram e fugiram. Não esmoreceu e pregou aos
@@ -232,7 +211,8 @@ fato discípulo de Cristo”. Santo Antônio fez o sinal da Cruz sobre aquele
 prato e o comeu com apetite, saboreando a comida envenenada como se
 fosse alimento saudável, e nada sofreu, deixando mais uma vez os hereges
 confusos e assombrados.''',fontSize),
-        _buildExpansibleButton('O Milagre da Bilocação ', '''No domingo de Páscoa enquanto pregava na Catedral, Santo Antônio
+        _buildExpansibleButton('O Milagre da Bilocação ', '''
+No domingo de Páscoa enquanto pregava na Catedral, Santo Antônio
 lembrou-se de que fora designado para entoar a Aleluia na Missa que se
 celebrava naquele momento na Igreja do Convento franciscano. Não
 querendo faltar com a obediência e não podendo descer do púlpito, parou
