@@ -10,6 +10,34 @@ class InscricoesBatismoPage extends StatefulWidget {
   _InscricoesBatismoPageState createState() => _InscricoesBatismoPageState();
 }
 
+class _DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Remove caracteres não numéricos
+    final newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limita o comprimento do texto
+    if (newText.length > 8) {
+      // Se tiver mais de 8 caracteres, não faz nenhuma alteração
+      return oldValue;
+    }
+
+    // Adiciona automaticamente as barras para o formato DD/MM/AAAA
+    String formattedText = '';
+    for (int i = 0; i < newText.length; i++) {
+      if (i == 2 || i == 4) {
+        formattedText += '/';
+      }
+      formattedText += newText[i];
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
 class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
@@ -97,7 +125,6 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 ),
               ),
               SizedBox(height: 10),
-              // Campo de texto para a idade
               TextFormField(
                 controller: _dataController,
                 validator: (value) {
@@ -106,16 +133,21 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                   }
                   return null;
                 },
+                inputFormatters: [
+                  // Adicionando o formatter para o formato de data
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  _DateFormatter(),
+                ],
                 decoration: InputDecoration(
-                  labelText: 'Data de Nascimento',
+                  labelText: 'Data de Nascimento DD/MM/AAAA',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-
               ),
+
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
@@ -177,7 +209,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
 
               SizedBox(height: 10),
               // Campo de texto para o endereço
-              TextFormField(
+             TextFormField(
                 controller: _cepController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
@@ -193,8 +225,11 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
               ),
-
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
@@ -782,9 +817,12 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Documentos necessarios',
+                   Text(
+                      '''Documentos Necessários
+(Tire foto de todos os documentos)''',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                        
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -967,7 +1005,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: ' ',
+      password: '',
       port: 587,
     );
 

@@ -37,6 +37,7 @@ Map<String, List<String>> temasOpcoesMap = {
     'Pelos parentes ausentes'
   ],
   'Orações dos Santos': [
+    'Responso de Santo Antonio',
     'São Benedito',
     'São Brás (Protetor das doenças da garganta)',
     'São Cristóvão',
@@ -91,6 +92,7 @@ Map<String, List<String>> temasOpcoesMap = {
     'Oração para a família'
   ],
   'Ladainhas': [
+    'Ladainha de Santo Antonio',
     'Ladainha da Divina Misericórdia - Santa Faustina',
     'Ladainha da Humildade',
     'Ladainha de Nossa Senhora',
@@ -192,6 +194,8 @@ Map<String, List<String>> temasOpcoesMap = {
 };
 
 Map<String, String> caminhosMap = {
+  'Ladainha de Santo Antonio':'assets/oracao/Ladainha_de_santo_antonio.txt',
+  'Responso de Santo Antonio':'assets/oracao/Responso_de_Santo_António.txt',
   'Ave Maria': 'assets/oracao/ave_maria.txt',
   'Anjo da Guarda': 'assets/oracao/anjo_da_guarda.txt',
   'Credo': 'assets/oracao/credo.txt',
@@ -424,22 +428,6 @@ class OracoesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Orações'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.zoom_in),
-            onPressed: () {
-              // Função para aumentar o tamanho da fonte
-              // Pode ser implementada aqui
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.zoom_out),
-            onPressed: () {
-              // Função para diminuir o tamanho da fonte
-              // Pode ser implementada aqui
-            },
-          ),
-        ],
       ),
       backgroundColor: Color.fromARGB(255, 212, 177, 116),
  // Definindo a cor de fundo da página

@@ -14,10 +14,11 @@ class InscricoesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              MenuButton('Catequese de 6 a 11 anos', '/inscricoes_catequese_infantil'), // 
-              MenuButton('Catequese de 12 a 18 anos', '/inscricoes_catequese_jovem'), // 
+              MenuButton('Catequese/1° Eucaristia de 6 a 11 anos', '/inscricoes_catequese_infantil'), // 
+              MenuButton('Catequese/Crisma de 12 a 17 anos', '/inscricoes_catequese_jovem'), // 
               MenuButton('Catequese Adultos', '/inscricoes_catequese'), // Botão para inscrições de catequese
-              MenuButton('Batismo', '/inscricoes_batismo'), // Botão para inscrições de batismo
+              MenuButton('Batismo', '/inscricoes_batismo'),
+              MenuButton('Preparações e Batismos', '/preparacaobatismo'), // Botão para inscrições de batismo
               MenuButton('Casamento', '/inscricoes_casamento'),
               MenuButton('Dizimista', '/dizimista'), // Botão para inscrições de casamento
             ],

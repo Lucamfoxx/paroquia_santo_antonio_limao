@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'horarios.dart';
 import 'historiaparoquia.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
 import 'inscricoes_batismo.dart';
 import 'inscricoes_catequese.dart';
 import 'inscricoes_casamento.dart';
@@ -24,8 +23,8 @@ import 'inscricoes_catequese_jovem.dart';
 import 'inscricoes_catequese_infantil.dart';
 import 'dizimista.dart';
 import 'dizimosdoacoes.dart';
-import 'Festas.dart';
-
+import 'festas.dart';
+import 'preparacao.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,7 +76,8 @@ class MyApp extends StatelessWidget {
         '/sacramentos': (context) => SacramentosPage(),
         '/dizimista': (context) => DizimistaPage(),
         '/dizimosdoacoes': (context) => DoacoesPage(),
-        '/festas': (context) => FestasPage(),
+        '/festas': (context) => FestasPage(),        
+        '/preparacaobatismo': (context) => PreparacaoPage(),
 
 
       },
@@ -104,7 +104,7 @@ class MissaDiariaApp extends StatelessWidget {
                 SizedBox(height: 20),
                 MenuButton('Inscrições', '/inscricoes'),
                 MenuButton('Missas e Intenções', '/missas_intencoes'),                
-                MenuButton('Dizimos e Doações', '/dizimosdoacoes'),
+                MenuButton('Dízimo e Doações', '/dizimosdoacoes'),
                 MenuButton('Festas', '/festas'),                
                 MenuButton('Santo Padroeiro', '/santo_padroeiro'),
                 MenuButton('Sacramentos', '/sacramentos'),
@@ -176,7 +176,32 @@ class ContactInfo extends StatelessWidget {
           SizedBox(height: 10),
           InkWell(
             onTap: () {
-              launch("tel://1132912400");
+              launch("https://www.instagram.com/paroquiadolimao/");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/insta.png', // Caminho para o ícone do WhatsApp personalizado
+                  width: 25, // Largura do ícone
+                  height: 25, // Altura do ícone
+                  color: const Color.fromARGB(255, 0, 0, 0), // Cor do ícone
+                ),
+                SizedBox(width: 5),
+                Text(
+                  "@paroquiadolimao",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          InkWell(
+            onTap: () {
+              launch("tel://+551145635838");
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

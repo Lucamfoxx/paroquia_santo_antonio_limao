@@ -11,6 +11,34 @@ class CatequeseJovemPage extends StatefulWidget {
       _CatequeseJovemPageState();
 }
 
+class _DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Remove caracteres não numéricos
+    final newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limita o comprimento do texto
+    if (newText.length > 8) {
+      // Se tiver mais de 8 caracteres, não faz nenhuma alteração
+      return oldValue;
+    }
+
+    // Adiciona automaticamente as barras para o formato DD/MM/AAAA
+    String formattedText = '';
+    for (int i = 0; i < newText.length; i++) {
+      if (i == 2 || i == 4) {
+        formattedText += '/';
+      }
+      formattedText += newText[i];
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
 class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
@@ -108,9 +136,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   ),
                 ),
               ),
-
               SizedBox(height: 10),
-              // Campo de texto para a idade
               TextFormField(
                 controller: _dataController,
                 validator: (value) {
@@ -119,8 +145,13 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   }
                   return null;
                 },
+                inputFormatters: [
+                  // Adicionando o formatter para o formato de data
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  _DateFormatter(),
+                ],
                 decoration: InputDecoration(
-                  labelText: 'Data de Nascimento',
+                  labelText: 'Data de Nascimento DD/MM/AAAA',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -205,6 +236,10 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
               ),
 
               SizedBox(height: 10),
@@ -266,7 +301,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   ),
                 ),
               ),
-Text('\nBtismo e 1° Eucaristia\n',
+Text('\nBatismo e 1° Eucaristia\n',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -388,7 +423,7 @@ Text('\nBtismo e 1° Eucaristia\n',
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'E-mail do Responsavel',
+                  labelText: 'E-mail do Responsável',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -517,7 +552,7 @@ Text('\nBtismo e 1° Eucaristia\n',
               TextFormField(
                 controller: _horariomissaController,
                 decoration: InputDecoration(
-                  labelText: 'Horario da Missa voce Participa.',
+                  labelText: 'Horário da Missa que você Participa.',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -549,8 +584,11 @@ Text('\nBtismo e 1° Eucaristia\n',
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Documentos necessarios',
+                      '''Documentos Necessários
+(Tire foto de todos os documentos)''',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
+                        
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -593,7 +631,7 @@ Text('\nBtismo e 1° Eucaristia\n',
                       ),
                     ),
                                                              Text(
-                      '\n- Certidão de Casamento dos Pais\n  (se forem casados)',
+                      '- Certidão de Casamento dos Pais\n  (se forem casados)',
                       style: TextStyle(
                         fontSize: 16, 
                       ),
@@ -608,6 +646,8 @@ Text('\nBtismo e 1° Eucaristia\n',
                 ),
               ),
               SizedBox(height: 20),
+
+
               // Container com dicas para tirar uma boa foto
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -668,10 +708,14 @@ Text('\nBtismo e 1° Eucaristia\n',
                     await _selecionarImagem(ImageSource.camera);
                   }
                 },
-                child: Text('Adicionar Foto'),
+                child: Text(
+                  'Adicionar Foto',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                 ),
               ),
               SizedBox(height: 20),
@@ -727,10 +771,14 @@ Text('\nBtismo e 1° Eucaristia\n',
                 },
                 child: _enviandoEmail
                     ? CircularProgressIndicator() // Mostra o indicador de carregamento se estiver enviando
-                    : Text('Enviar Inscrição'),
+                    : Text(
+                        'Enviar Inscrição',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                 ),
               ),
             ],
@@ -763,7 +811,7 @@ Text('\nBtismo e 1° Eucaristia\n',
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: ' ',
+      password: '',
       port: 587,
     );
 

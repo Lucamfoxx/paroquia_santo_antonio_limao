@@ -46,16 +46,25 @@ Terças e Quartas : 12h
 Sexta-feira : 15h
 Sábado : 17h
 Domingo : 08h - 11h e 19h''',
+              ),              SizedBox(height: 20),
+              _buildHorario(
+                titulo: 'Confissões',
+                texto: '''De Terça a Sábado
+                
+-Confirmar horário com a Secretaria.''',
               ),
               SizedBox(height: 20),
               _buildHorario(
                 titulo: 'Horário de Atendimento',
                 texto: '''
-Terça-feira: 08h as 12h e 14h as 18h
-Quarta-feira: 08h as 12h e 14h as 18h
-Quinta-feira: 08h as 12h e 14h as 18h
-Sexta-feira: 08h as 12h e 14h as 18h
+Terça-Feira: 08h as 12h e 14h as 18h
+Quarta-Feira: 08h as 12h e 14h as 18h
+Quinta-Feira: 08h as 12h e 14h as 18h
+Sexta-Feira: 08h as 12h e 14h as 18h
 Sábado: 08h as 12h e 14h as 18h
+
+Domingo: --NÃO HÁ ATENDIMENTO--
+Segunda-Feira: --NÃO HÁ ATENDIMENTO--
 ''',
               ),
             ],

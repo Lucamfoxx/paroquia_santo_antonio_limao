@@ -47,7 +47,7 @@ class InscricoesCasamentoPage extends StatelessWidget {
                       ),
                     ),
                                         Text(
-                      ' Horário de Atendimento\n           da Scretaria',
+                      ' Horário de Atendimento\n           da Secretaria',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

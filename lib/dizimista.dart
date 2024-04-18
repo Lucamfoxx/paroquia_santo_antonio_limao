@@ -11,6 +11,34 @@ class DizimistaPage extends StatefulWidget {
       _DizimistaPageState();
 }
 
+class _DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Remove caracteres não numéricos
+    final newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limita o comprimento do texto
+    if (newText.length > 8) {
+      // Se tiver mais de 8 caracteres, não faz nenhuma alteração
+      return oldValue;
+    }
+
+    // Adiciona automaticamente as barras para o formato DD/MM/AAAA
+    String formattedText = '';
+    for (int i = 0; i < newText.length; i++) {
+      if (i == 2 || i == 4) {
+        formattedText += '/';
+      }
+      formattedText += newText[i];
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
 class _DizimistaPageState extends State<DizimistaPage> {
   final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
   TextEditingController _nomeController = TextEditingController();
@@ -23,11 +51,9 @@ class _DizimistaPageState extends State<DizimistaPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _dddController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
-  TextEditingController _localnascController = TextEditingController();
   TextEditingController _bairroController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
   TextEditingController _cidadeController = TextEditingController();
-  TextEditingController _cpfController = TextEditingController();
   TextEditingController _estadoCivilController = TextEditingController();
   TextEditingController _casadosreligiosoController = TextEditingController();
   TextEditingController _contribuicaoController = TextEditingController();
@@ -80,28 +106,8 @@ class _DizimistaPageState extends State<DizimistaPage> {
                 ),
               ),
               
+             
               SizedBox(height: 10),
-              // Campo de texto para o endereço
-              TextFormField(
-                controller: _localnascController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira Local de Nascimento';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'Local de Nascimento',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 10),
-              // Campo de texto para a idade
               TextFormField(
                 controller: _dataController,
                 validator: (value) {
@@ -110,8 +116,13 @@ class _DizimistaPageState extends State<DizimistaPage> {
                   }
                   return null;
                 },
+                inputFormatters: [
+                  // Adicionando o formatter para o formato de data
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  _DateFormatter(),
+                ],
                 decoration: InputDecoration(
-                  labelText: 'Data de Nascimento',
+                  labelText: 'Data de Nascimento DD/MM/AAAA',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -119,30 +130,8 @@ class _DizimistaPageState extends State<DizimistaPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              // Campo de texto para o nome
-              TextFormField(
-                controller: _cpfController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'CPF';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'CPF',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),  
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-              ),
-              
+
+
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
@@ -310,12 +299,12 @@ class _DizimistaPageState extends State<DizimistaPage> {
                 controller: _estadoCivilController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Estado Civil do Pais';
+                    return 'Estado Civil';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'Estado Civil do Pais',
+                  labelText: 'Estado Civil',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -419,7 +408,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: ' ',
+      password: '',
       port: 587,
     );
 
@@ -432,17 +421,15 @@ class _DizimistaPageState extends State<DizimistaPage> {
                        Dizimista
         ====================================
         Nome: ${_nomeController.text}      
-        Local Nascimento: ${_localnascController.text}
         Data Nascimento: ${_dataController.text}
         Bairro: ${_bairroController.text}
         Endereço: ${_enderecoController.text}
         CEP: ${_cepController.text}
-        CPF: ${_cpfController.text}
         Cidade: ${_cidadeController.text}
         E-mail: ${_emailController.text}
         Telefone: (${_dddController.text}) ${_telefoneController.text}
-        Estado civil dos Pais: ${_estadoCivilController.text}
-        Pais Casados no Religioso: ${_casadosreligiosoController.text}
+        Estado civil: ${_estadoCivilController.text}
+        Casados no Religioso: ${_casadosreligiosoController.text}
         Forma de Contribuiçao: ${_contribuicaoController.text}
               ''';
 
@@ -463,14 +450,12 @@ class _DizimistaPageState extends State<DizimistaPage> {
   // Função para limpar os controladores de texto e a lista de fotos
   void _limparCampos() {
     _nomeController.clear();
-    _dataController.clear();
-    _localnascController.clear();    
+    _dataController.clear();   
     _bairroController.clear();    
     _enderecoController.clear();
     _emailController.clear();
     _cepController.clear();
     _cidadeController.clear();
-    _cpfController.clear();
     _estadoCivilController.clear();
     _casadosreligiosoController.clear();
     _dddController.clear();

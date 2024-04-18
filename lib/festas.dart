@@ -78,7 +78,7 @@ class EventSchedule extends StatelessWidget {
         EventItem(
           date: 'Dia de Santo Antônio',
           description:
-              '13/06 - Missas: 7h, 9h, 12h, 15h e 19h30\n\nEm todas as missas, benção dos pães, bolo de Santo Antônio e objetos de devoção.',
+              '13/06 - Missas: 7h, 9h, 12h, 15h e 20h \n\nEm todas as missas, benção dos pães, bolo de Santo Antônio e objetos de devoção.',
           fontSize: fontSize, // Pass font size to EventItem
         ),
         SizedBox(height: 10),

@@ -57,7 +57,7 @@ class DoacoesPage extends StatelessWidget {
               color: Colors.white,
               padding: EdgeInsets.all(20),
               child: Text(
-                '\n- Clique no botão de Fazer Doação ou Dizimo'
+                '\n- Clique no botão de Fazer Doação ou Dízimo'
                 '\n- O Pix já será copiado. '
                 '\n- Abra o seu aplicativo de banco ou pagamentos'
                 '\n- Procure a opção Pix.',

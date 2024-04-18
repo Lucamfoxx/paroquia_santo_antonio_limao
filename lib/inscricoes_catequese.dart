@@ -5,6 +5,36 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:flutter/services.dart';
 
+
+class _DateFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // Remove caracteres não numéricos
+    final newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+    // Limita o comprimento do texto
+    if (newText.length > 8) {
+      // Se tiver mais de 8 caracteres, não faz nenhuma alteração
+      return oldValue;
+    }
+
+    // Adiciona automaticamente as barras para o formato DD/MM/AAAA
+    String formattedText = '';
+    for (int i = 0; i < newText.length; i++) {
+      if (i == 2 || i == 4) {
+        formattedText += '/';
+      }
+      formattedText += newText[i];
+    }
+
+    return TextEditingValue(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
+    );
+  }
+}
+
 class InscricoesCatequesePage extends StatefulWidget {
   @override
   _InscricoesCatequesePageState createState() =>
@@ -108,7 +138,6 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               ),
 
               SizedBox(height: 10),
-              // Campo de texto para a idade
               TextFormField(
                 controller: _dataController,
                 validator: (value) {
@@ -117,8 +146,13 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   }
                   return null;
                 },
+                inputFormatters: [
+                  // Adicionando o formatter para o formato de data
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  _DateFormatter(),
+                ],
                 decoration: InputDecoration(
-                  labelText: 'Data de Nascimento',
+                  labelText: 'Data de Nascimento DD/MM/AAAA',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -128,23 +162,30 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               ),
 
               SizedBox(height: 10),
-              TextFormField(
-                controller: _idadeController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Insira Idade atual';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'Idade atual',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ),
+SizedBox(height: 10),
+TextFormField(
+  controller: _idadeController,
+  validator: (value) {
+    if (value?.isEmpty ?? true) {
+      return 'Insira Idade atual';
+    }
+    int? idade = int.tryParse(value!);
+    if (idade == null || idade < 18) {
+      return 'Você deve ter pelo menos 18 anos';
+    }
+    return null;
+  },
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: 'Idade atual',
+    filled: true,
+    fillColor: Colors.grey[200],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+  ),
+),
+
               SizedBox(height: 10),
               // Campo de texto para o endereço
               TextFormField(
@@ -187,7 +228,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
 
               SizedBox(height: 10),
               // Campo de texto para o endereço
-              TextFormField(
+             TextFormField(
                 controller: _cepController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
@@ -203,6 +244,10 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
+                keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
               ),
 
               SizedBox(height: 10),
@@ -231,12 +276,12 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 controller: _estudaController,
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'O adulto Estuda?';
+                    return 'O adulto estuda e/ou trabalha?';
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: 'O adulto Estuda?',
+                  labelText: 'O adulto estuda e/ou trabalha?',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -250,7 +295,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               TextFormField(
                 controller: _periodoController,
                 decoration: InputDecoration(
-                  labelText: 'Periodo Escolar manha/tarde/noite',
+                  labelText: 'Qual horário de estudo ou trabalho?',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -337,7 +382,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   ),
                 ],
               ),
-            Text('\nBtismo e 1° Eucaristia\n',
+            Text('\nBatismo e 1° Eucaristia\n',
                   style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -464,7 +509,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
               TextFormField(
                 controller: _horariomissaController,
                 decoration: InputDecoration(
-                  labelText: 'Horario da Missa voce Participa.',
+                  labelText: 'Horário da Missa que você Participa.',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
@@ -496,7 +541,8 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Documentos necessarios',
+                      '''Documentos Necessários
+(Tire foto de todos os documentos)''',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         
@@ -552,6 +598,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 ),
               ),
               SizedBox(height: 20),
+
               // Container com dicas para tirar uma boa foto
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
@@ -612,12 +659,17 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                     await _selecionarImagem(ImageSource.camera);
                   }
                 },
-                child: Text('Adicionar Foto'),
+                child: Text(
+                  'Adicionar Foto',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                 ),
               ),
+              SizedBox(height: 20),
               SizedBox(height: 20),
               // Exibição das fotos selecionadas
               for (int i = 0; i < fotos.length; i++)
@@ -671,10 +723,14 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
                 },
                 child: _enviandoEmail
                     ? CircularProgressIndicator() // Mostra o indicador de carregamento se estiver enviando
-                    : Text('Enviar Inscrição'),
+                    : Text(
+                        'Enviar Inscrição',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                 ),
               ),
             ],
@@ -707,7 +763,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: ' ',
+      password: '',
       port: 587,
     );
 
@@ -742,7 +798,7 @@ class _InscricoesCatequesePageState extends State<InscricoesCatequesePage> {
         Estado civil: ${_estadoCivilController.text}
         Casado no Religioso: ${_casadosreligiosoController.text}
         Frequenta a Missa de Domingo: ${_missadominicalController.text}
-        Horario que frequenta a Missa: ${_horariomissaController.text}
+        Horário que frequenta a Missa: ${_horariomissaController.text}
 
 
               ''';
