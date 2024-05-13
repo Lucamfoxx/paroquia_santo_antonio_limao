@@ -87,7 +87,7 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
   Future<bool> _enviarPedidoPorEmail() async {
     final smtpServer = SmtpServer('smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

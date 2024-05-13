@@ -408,7 +408,7 @@ class _DizimistaPageState extends State<DizimistaPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

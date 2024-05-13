@@ -811,7 +811,7 @@ Text(
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

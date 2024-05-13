@@ -89,7 +89,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

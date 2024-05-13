@@ -1005,7 +1005,7 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
     final smtpServer = SmtpServer(
       'smtp.sendgrid.net',
       username: 'apikey',
-      password: '',
+      password: ' ',
       port: 587,
     );
 

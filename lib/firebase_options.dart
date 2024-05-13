@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
     projectId: 'psantoantoniolimao',
     databaseURL: 'https://psantoantoniolimao-default-rtdb.firebaseio.com',
     storageBucket: 'psantoantoniolimao.appspot.com',
-    iosBundleId: 'com.example.paroquiaSantoAntonioLimao',
+    iosBundleId: 'com.paroquia.paroquiaSantoAntonioLimao',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -80,6 +80,6 @@ class DefaultFirebaseOptions {
     projectId: 'psantoantoniolimao',
     databaseURL: 'https://psantoantoniolimao-default-rtdb.firebaseio.com',
     storageBucket: 'psantoantoniolimao.appspot.com',
-    iosBundleId: 'com.example.paroquiaSantoAntonioLimao.RunnerTests',
+    iosBundleId: 'com.paroquia.paroquiaSantoAntonioLimao.RunnerTests',
   );
 }

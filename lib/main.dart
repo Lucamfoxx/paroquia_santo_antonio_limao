@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Paróquia Santo Antônio do limão',
+      title: 'Paróquia Santo Antônio do Limão',
       theme: ThemeData(
         scaffoldBackgroundColor:Color.fromARGB(255, 212, 177, 116),
       
@@ -90,7 +90,7 @@ class MissaDiariaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paróquia Santo Antônio do limão'),
+        title: Text('Paróquia Santo Antônio'),
       ),
       body: Center(
         child: Padding(
