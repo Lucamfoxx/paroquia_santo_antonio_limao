@@ -33,10 +33,10 @@ class _FestasPageState extends State<FestasPage> {
           IconButton(
             icon: Icon(Icons.zoom_out),
             onPressed: _decreaseFontSize,
-          ),SizedBox(height: 10)
+          ),
+          SizedBox(height: 10)
         ],
       ),
-      
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -44,7 +44,6 @@ class _FestasPageState extends State<FestasPage> {
             children: [
               Text(
                 '\nProgramação Religiosa',
-                
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 29,
@@ -52,7 +51,8 @@ class _FestasPageState extends State<FestasPage> {
                 ),
               ),
               SizedBox(height: 20),
-              EventSchedule(fontSize: _fontSize), // Pass font size to EventSchedule
+              EventSchedule(
+                  fontSize: _fontSize), // Pass font size to EventSchedule
             ],
           ),
         ),
@@ -85,7 +85,7 @@ class EventSchedule extends StatelessWidget {
         EventItem(
           date: 'Trezena e carreata de Santo Antônio',
           description:
-              '31/05 (sexta feira) às 20h - Dom Carlos Silva- Bispo auxiliar da Região Brasilândia\n\n01/06 (sábado) às 17h - Pe. Rafael Araujo\n\n07/06 (domingo) após a missa das 19h - Carreata solidária pelas ruas do bairro com a imagem de Santo Antônio - Pe. Romulo Freire\n\n03/06 (segunda feira) às 20h - Pe. Dorival Ferreira\n\n04/06 (terça feira) às 20h - Edmilson Silva\n\n05/06 (quarta feira) às 20h - Frei Carlos Silva OFM\n\n06/06 (quinta feira) às 20h - Pe. João Henrique\n\n07/06 (sexta feira) às 20h - Pe. José Ferreira\n\n08/06 (sábado) às 17h - Pe. Aldo Lima\n\n09/06 (domingo) às 19h - Pe. Frei Alonso Pires- OFM Cap',
+              '31/05 (sexta feira) às 20h - Dom Carlos Silva- Bispo auxiliar da Região Brasilândia\n\n01/06 (sábado) às 17h - Pe. Rafael Araujo\n\n02/06 (Domingo) após a missa das 8h, Carreata Solidária  pelas ruas do bairro com a imagem de Santo Antonio\n\n02/06 (domingo) às 19h Pe. Romulo Freire\n\n03/06 (segunda feira) às 20h - Pe. Dorival Ferreira\n\n04/06 (terça feira) às 20h - Pe. Edmilson Silva\n\n05/06 (quarta feira) às 20h - Frei Carlos Silva OFM\n\n06/06 (quinta feira) às 20h - Pe. João Henrique\n\n07/06 (sexta feira) às 20h - Pe. José Ferreira\n\n08/06 (sábado) às 17h - Pe. Aldo Lima\n\n09/06 (domingo) às 19h - Pe. Frei Alonso Pires- OFM \n\n10/06 (Segunda feira) 20h - Pe. Evander Camilo\n\n11/06 (Terça feira) 20h - Pe. Cleyton Pontes\n\n12/06 (Quarta feira) 20h - Pe. Michelino Roberto',
           fontSize: fontSize, // Pass font size to EventItem
         ),
       ],

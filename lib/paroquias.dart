@@ -19,7 +19,6 @@ class ParoquiasPage extends StatelessWidget {
               ParoquiaSetorTile(
                 setor: 'Decanato São Pedro',
                 paroquias: {
-                  
                   'Paróquia Santo Antônio': '''
 Festa litúrgica: 13 de Junho
 
@@ -41,9 +40,6 @@ Sábado das 8hs ás 12hs e das 13hs às 17hs
 
 Pároco: Pe. ALDO
 ''',
-
-
-
                   'Paróquia São Miguel Arcanjo': '''
 Festa litúrgica: 29 de Setembro
 
@@ -72,47 +68,53 @@ Administrador: Pe. Edson Fernandes
 
  
 ''',
-
-
-
                   'Paróquia São Luiz Gonzaga': '''
 Festa litúrgica: 21 de Junho
 
-Endereço: Rua Michel Ouchana - 50 - - Jaçanã - São Paulo - - SP - 02276-140
+Endereço: Rua Orminda - 214 - - Vila Santa Maria - São Paulo - - SP - 02562-150
 
-Telefone: (11) 2241-8986
+Telefone: (11) 3965-6299
 
-Site: http://saoluizgonzaga.iparoquia.com
+Instagram: https://www.instagram.com/paroquiasaoluizgonzagaoficial/
 
-Horário de Missas
-Segunda-feira : 15h00
-Terça-feira : 19h00
-Domingo : 09h00, 19h00
-
-Pároco: Pe. Benedito Hercules Daniel
-
-Vigário: Pe. Marcos Alves de Oliveira, CAM
-''',
-
-
-
-                  'Paróquia Santa Luzia': '''
-Festa litúrgica: 13 de Dezembro
-
-Endereço: Rua Padre Agostinho Poncet - 134 - - Mandaqui - São Paulo - - SP - 02408-040
-
-Telefone: (11) 2976-1267
-
-Facebook: https://www.facebook.com/paroquiasantaluziasp
+Facebook: https://www.facebook.com/profile.php?id=100043050142383&ref=xav_ig_profile_web
 
 Horário de Missas
-Acompanhe as celebrações pelo facebook da paróquia todos os domingos às 10h
+Terça Feira : 19h30
+Quinta Feira: 19h30
+Sábado : 17:00 horas
+Domingo : 08h00, 10h00, 18h00
 
-Administrador: Pe. Osvaldo Bisewski
+Pe. Edson Fernandes
+
+Diác. Ailton Machado Mendes
+
 ''',
+                  'Paróquia Santa Luiza': '''
 
+Rua Vicente Soares da Costa, 81
+Jardim Primavera - São Paulo - SP
+CEP: 55-000
 
+Pároco: Pe. Diogo Cassiano Maciel (Administrador Paroquial)
 
+Telefone(s): (11) 3936-2341
+
+Site: https://www.facebook.com/SantaLuziaSp/?locale=pt_BR
+
+Observações:
+missa votiva de Santa Luzia todo dia 13 de cada mês, com benção dos olhos.
+
+Missas:
+Domingo:	08:00, 08:00 (Com. Sta. Isabel), 10:00, 10:00 (Com. Sta. Isabel), 10:00 (Com. Sta. Teresinha), 18:00
+Terça-feira:	19:30 (Com. Sta. Isabel)
+Quarta-feira:	19:30
+Quinta-feira:	19:30 (Com. Sta. Teresinha)
+Sexta-feira:	08:00
+Sábado:	18:00 (Com. Sta. Teresinha), 19:30
+Primeira Sexta-feira:	19:30 (Com. Sta. Teresinha)
+
+''',
                   'Paróquia São José': '''
 Endereço: R. Ribeirão das Almas, 337 - Freguesia do Ó, São Paulo - SP, 02728-100
 
@@ -139,9 +141,6 @@ Pe. MARCIO Campos da Silva, CSCh
 
 
 ''',
-
-
-
                   'Paróquia Nossa Senhora das Graças': '''
 Endereço: (Clique no endereço para ver no Google Maps)
 Rua Marcelino de Camargo, 152
@@ -160,7 +159,6 @@ Terça-feira:	20:00
 Quinta-feira:	15:00
 Sexta-feira:	20:00
 ''',
-
                   'Paróquia Santa Cruz': '''
 MISSAS
 3ª a 6ª feira às 19:30
@@ -181,8 +179,6 @@ Telefone
 Pe. Beto - Pároco
 rocmoura@terra.com.br
 ''',
-
-
                   'Paróquia Nossa Senhora da Expectação': '''
 
 Segunda-feira
@@ -229,7 +225,7 @@ WhatsApp:
 par.n.sra.o@uol.com.br
 
 ''',
- 'Paroquial Nossa Senhora Do Carmo': '''
+                  'Paroquial Nossa Senhora Do Carmo': '''
 
 Endereço
 Avenida Elísio Teixeira Leite , 1317 , Vila Brasilândia
@@ -251,7 +247,6 @@ Sábado - das 09:00 as 12:00
 Sábado - das 13:00 as 18:00
 
 ''',
-
                 },
               ),
             ],
@@ -261,8 +256,6 @@ Sábado - das 13:00 as 18:00
     );
   }
 }
-
-
 
 class ParoquiaSetorTile extends StatefulWidget {
   final String setor;
@@ -357,7 +350,8 @@ class _ParoquiaSetorTileState extends State<ParoquiaSetorTile> {
 
   List<Widget> _getEmailWidgets(String text) {
     final List<Widget> widgets = [];
-    final RegExp emailRegex = RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b');
+    final RegExp emailRegex =
+        RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b');
     final List<RegExpMatch> matches = emailRegex.allMatches(text).toList();
     int prevIndex = 0;
     for (var match in matches) {
