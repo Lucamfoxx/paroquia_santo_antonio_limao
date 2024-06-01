@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBEOoUEg_xlQBbU2sFTV7BM6GCH7JYFSVU</string>
+	<string>AIzaSyBUXQwEUd4slh_DPVPJOodmj9lafGhNuMs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>725786636481</string>
+	<string>831299082694</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.paroquia.paroquiaSantoAntonioLimao</string>
+	<string>com.example.paroquiaSantoAntonioLimao</string>
 	<key>PROJECT_ID</key>
-	<string>paroquaia-santo-antonio-limao</string>
+	<string>psantoantoniolimao</string>
 	<key>STORAGE_BUCKET</key>
-	<string>paroquaia-santo-antonio-limao.appspot.com</string>
+	<string>psantoantoniolimao.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,8 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:725786636481:ios:d78b3dbf67cce30fad6440</string>
+	<string>1:831299082694:ios:2ea8c38770bd47ca17fac7</string>
 	<key>DATABASE_URL</key>
-	<string>https://paroquaia-santo-antonio-limao-default-rtdb.firebaseio.com</string>
+	<string>https://psantoantoniolimao-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
