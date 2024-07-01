@@ -3,18 +3,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'email_service_jovem.dart'; // Atualize com o nome correto do seu projeto
-import 'date_formatter_jovem.dart'; // Atualize com o nome correto do seu projeto
-import 'custom_text_form_field_jovem.dart'; // Atualize com o nome correto do seu projeto
+import 'email_service_adulto.dart'; // Atualize com o nome correto do seu projeto
+import 'date_formatter_adulto.dart'; // Atualize com o nome correto do seu projeto
+import 'custom_text_form_field_adulto.dart'; // Atualize com o nome correto do seu projeto
 
-class CatequeseJovemPage extends StatefulWidget {
+class InscricoesCatequeseAdultoPage extends StatefulWidget {
   @override
-  _CatequeseJovemPageState createState() => _CatequeseJovemPageState();
+  _InscricoesCatequeseAdultoPageState createState() => _InscricoesCatequeseAdultoPageState();
 }
 
-class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
-  final _formKey = GlobalKey<FormState>();
-  final EmailServiceJovem _emailService = EmailServiceJovem();
+class _InscricoesCatequeseAdultoPageState extends State<InscricoesCatequeseAdultoPage> {
+  final _formKey = GlobalKey<FormState>(); // Chave global para o formulário
+  final EmailServiceAdulto _emailService = EmailServiceAdulto();
   final Map<String, TextEditingController> _controllers = {
     'nome': TextEditingController(),
     'localnasc': TextEditingController(),
@@ -26,118 +26,261 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
     'cidade': TextEditingController(),
     'estuda': TextEditingController(),
     'periodo': TextEditingController(),
-    'batismoJovem': TextEditingController(),
-    'jovemEucaristia': TextEditingController(),
-    'crisma': TextEditingController(),
-    'nomePai': TextEditingController(),
-    'nomeMae': TextEditingController(),
-    'email': TextEditingController(),
-    'ddd': TextEditingController(),
-    'telefone': TextEditingController(),
+    'batismoAdulto': TextEditingController(),
+    'adultoEucaristia': TextEditingController(),
     'estadoCivil': TextEditingController(),
     'casadosReligioso': TextEditingController(),
     'missadominical': TextEditingController(),
     'horariomissa': TextEditingController(),
+    'email': TextEditingController(),
+    'ddd': TextEditingController(),
+    'telefone': TextEditingController(),
   };
 
-  List<File> documentos = [];
+  List<XFile> documentos = [];
   bool _enviandoEmail = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Catequese Jovem')),
+      appBar: AppBar(
+        title: Text('Catequese de Adultos'),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+          key: _formKey, // Associando a chave global ao formulário
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildSectionTitle('Catequese Jovem'),
-              CustomTextFormFieldJovem(label: 'Nome do Jovem', controller: _controllers['nome']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Local de Nascimento', controller: _controllers['localnasc']!, isRequired: true),
-              CustomTextFormFieldJovem(
+              _buildSectionTitle('Catequese de Adultos'),
+              CustomTextFormFieldAdulto(
+                label: 'Nome do Catequizando',
+                controller: _controllers['nome']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira o Nome do Catequizando';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Local de Nascimento',
+                controller: _controllers['localnasc']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Local de Nascimento';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
                 label: 'Data de Nascimento DD/MM/AAAA',
                 controller: _controllers['data']!,
                 isRequired: true,
-                inputFormatters: [DateFormatterJovem()],
+                inputFormatters: [DateFormatterAdulto()],
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira data de Nascimento';
+                  }
+                  return null;
+                },
               ),
-              CustomTextFormFieldJovem(label: 'Idade atual', controller: _controllers['idade']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Endereço atual', controller: _controllers['endereco']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Bairro', controller: _controllers['bairro']!, isRequired: true),
-              CustomTextFormFieldJovem(
+              CustomTextFormFieldAdulto(
+                label: 'Idade atual',
+                controller: _controllers['idade']!,
+                isRequired: true,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira Idade atual';
+                  }
+                  int? idade = int.tryParse(value!);
+                  if (idade == null || idade < 18) {
+                    return 'Você deve ter pelo menos 18 anos';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Endereço atual',
+                controller: _controllers['endereco']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira seu endereço';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Bairro',
+                controller: _controllers['bairro']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira o Bairro atual';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
                 label: 'CEP',
                 controller: _controllers['cep']!,
                 isRequired: true,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira o CEP';
+                  }
+                  return null;
+                },
               ),
-              CustomTextFormFieldJovem(label: 'Cidade', controller: _controllers['cidade']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Jovem Estuda?', controller: _controllers['estuda']!, isRequired: true),
-              CustomTextFormFieldJovem(
-                label: 'Periodo Escolar (manhã/tarde/noite)',
+              CustomTextFormFieldAdulto(
+                label: 'Cidade',
+                controller: _controllers['cidade']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira a Cidade';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'O adulto estuda e/ou trabalha?',
+                controller: _controllers['estuda']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'O adulto estuda e/ou trabalha?';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Qual horário de estudo ou trabalho?',
                 controller: _controllers['periodo']!,
-                isRequired: true,
               ),
-              _buildSectionTitle('Batismo, 1° Eucaristia e Crisma'),
-              CustomTextFormFieldJovem(label: 'Jovem é Batizado?', controller: _controllers['batismoJovem']!, isRequired: true),
+              _buildSectionTitle('Batismo e 1° Eucaristia'),
+              CustomTextFormFieldAdulto(
+                label: 'O adulto é Batizado?',
+                controller: _controllers['batismoAdulto']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'O adulto é Batizado?';
+                  }
+                  return null;
+                },
+              ),
               Text(
-                'Caso o jovem não seja batizado, ele será preparado e receberá o Batismo antes da 1° Eucaristia',
+                'Caso a pessoa não seja batizada, ela será preparada e receberá o Batismo antes da 1° Eucaristia',
                 style: TextStyle(fontSize: 16),
               ),
-              CustomTextFormFieldJovem(
-                label: 'Jovem fez 1° Eucaristia?',
-                controller: _controllers['jovemEucaristia']!,
+              CustomTextFormFieldAdulto(
+                label: 'O adulto fez 1° Eucaristia?',
+                controller: _controllers['adultoEucaristia']!,
                 isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'O adulto fez 1° Eucaristia?';
+                  }
+                  return null;
+                },
               ),
               Text(
-                'Caso o jovem não tenha feito a 1° Eucaristia ele será preparado e receberá a 1° Eucaristia antes da Crisma',
+                'Caso a pessoa não tenha feito a 1° Eucaristia ela será preparada e receberá a 1° Eucaristia antes da Crisma',
                 style: TextStyle(fontSize: 16),
               ),
-              CustomTextFormFieldJovem(
-                label: 'Jovem fez Crisma?',
-                controller: _controllers['crisma']!,
+              CustomTextFormFieldAdulto(
+                label: 'Estado Civil',
+                controller: _controllers['estadoCivil']!,
                 isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Estado Civil';
+                  }
+                  return null;
+                },
               ),
-              _buildSectionTitle('Pais'),
-              CustomTextFormFieldJovem(label: 'Nome do Pai', controller: _controllers['nomePai']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Nome da Mãe', controller: _controllers['nomeMae']!, isRequired: true),
-              CustomTextFormFieldJovem(
+              CustomTextFormFieldAdulto(
+                label: 'Casado no Religioso?',
+                controller: _controllers['casadosReligioso']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Casado no Religioso?';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Participa da Santa Missa Dominical?',
+                controller: _controllers['missadominical']!,
+                isRequired: true,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Participa da Santa Missa Dominical?';
+                  }
+                  return null;
+                },
+              ),
+              CustomTextFormFieldAdulto(
+                label: 'Horário da Missa que você Participa',
+                controller: _controllers['horariomissa']!,
+              ),
+              CustomTextFormFieldAdulto(
                 label: 'E-mail do Responsável',
                 controller: _controllers['email']!,
                 isRequired: true,
                 keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Insira seu e-mail';
+                  }
+                  return null;
+                },
               ),
               Row(
                 children: [
                   Expanded(
                     flex: 1,
-                    child: CustomTextFormFieldJovem(
+                    child: CustomTextFormFieldAdulto(
                       label: 'DDD',
                       controller: _controllers['ddd']!,
                       isRequired: true,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'DDD';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(width: 10),
                   Expanded(
                     flex: 3,
-                    child: CustomTextFormFieldJovem(
-                      label: 'Whatsapp/Telefone',
-                      controller: _controllers['telefone']!,
+                    child: CustomTextFormFieldAdulto(
+                      label: 'Whatsapp/Telefone',                      controller: _controllers['telefone']!,
                       isRequired: true,
                       keyboardType: TextInputType.phone,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Insira seu número de telefone';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
               ),
-              CustomTextFormFieldJovem(label: 'Estado Civil dos Pais', controller: _controllers['estadoCivil']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Casados no Religioso?', controller: _controllers['casadosReligioso']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Participa da Santa Missa Dominical?', controller: _controllers['missadominical']!, isRequired: true),
-              CustomTextFormFieldJovem(label: 'Horário da Missa que você Participa', controller: _controllers['horariomissa']!),
               _buildDocumentSection(),
               _buildPhotoTipsSection(),
               ElevatedButton(
@@ -203,10 +346,8 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
           Text('- Certidão de Nascimento', style: TextStyle(fontSize: 16)),
           Text('- Comprovante de 1° Eucaristia \n  (se tiver feito)', style: TextStyle(fontSize: 16)),
           Text('- Comprovante de Batismo \n  (se tiver feito)', style: TextStyle(fontSize: 16)),
-          Text('- Uma foto de rosto do Jovem (3x4)', style: TextStyle(fontSize: 16)),
-          Text('- Certidão de Casamento dos Pais\n  (se forem casados)', style: TextStyle(fontSize: 16)),
-          Text('- RG dos Pais', style: TextStyle(fontSize: 16)),
-          Text('- Comprovante de Crisma \n  (se tiver feito)', style: TextStyle(fontSize: 16)),
+          Text('- Uma foto de rosto', style: TextStyle(fontSize: 16)),
+          Text('- Certidão de Casamento (se for casado)', style: TextStyle(fontSize: 16)),
         ],
       ),
     );
@@ -271,18 +412,6 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
   List<Widget> _buildDocumentPreviews() {
     return documentos.map((documento) {
       int index = documentos.indexOf(documento);
-      Widget preview;
-      if (documento.path.endsWith('.jpg') || documento.path.endsWith('.jpeg') || documento.path.endsWith('.png')) {
-        preview = Image.file(
-          File(documento.path),
-          width: 100,
-          height: 200,
-          fit: BoxFit.cover,
-        );
-      } else {
-        preview = Icon(Icons.insert_drive_file, size: 50);
-      }
-
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
@@ -290,9 +419,16 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  // Adicione a funcionalidade para visualizar a imagem
+                  // Adicione a funcionalidade para visualizar o documento
                 },
-                child: preview,
+                child: documento.path.endsWith('.pdf') || documento.path.endsWith('.doc') || documento.path.endsWith('.docx')
+                    ? Icon(Icons.insert_drive_file, size: 100)
+                    : Image.file(
+                        File(documento.path),
+                        width: 100,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             IconButton(
@@ -305,16 +441,6 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
         ),
       );
     }).toList();
-  }
-
-  Widget _buildSubmitButton() {
-    return ElevatedButton(
-      onPressed: _enviarInscricao,
-      child: _enviandoEmail ? CircularProgressIndicator() : Text('Enviar Inscrição'),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-      ),
-    );
   }
 
   Future<void> _showImageSourceActionSheet(BuildContext context) async {
@@ -361,7 +487,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
-        documentos.add(File(pickedFile.path));
+        documentos.add(pickedFile);
       });
     }
   }
@@ -374,7 +500,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
 
     if (result != null) {
       setState(() {
-        documentos.add(File(result.files.single.path!));
+        documentos.add(XFile(result.files.single.path!));
       });
     }
   }

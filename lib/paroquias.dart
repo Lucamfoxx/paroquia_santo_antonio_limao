@@ -247,6 +247,24 @@ Sábado - das 09:00 as 12:00
 Sábado - das 13:00 as 18:00
 
 ''',
+                  'Paroquial Santo Antônio (Braislandia)': '''
+
+Endereço: R. Parapuã, 1903 - Brasilândia, 
+São Paulo - SP, 02831-001
+
+Telefone: (11) 3921-6046
+
+Horário de funcionamento: 
+
+sábado	09:00–12:00, 13:00–18:00
+domingo	11:00–18:00
+segunda-feira	Fechado
+terça-feira	09:00–12:00, 13:00–18:00
+quarta-feira	09:00–12:00, 13:00–18:00
+quinta-feira	09:00–12:00, 13:00–18:00
+sexta-feira	09:00–12:00, 13:00–18:00
+ 
+''',
                 },
               ),
             ],

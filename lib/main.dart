@@ -12,7 +12,7 @@ import 'horarios.dart';
 import 'historiaparoquia.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'inscricoes_batismo.dart';
-import 'inscricoes_catequese.dart';
+import 'inscricoes_catequese_adulto.dart';
 import 'inscricoes_casamento.dart';
 import 'missas_intencoes.dart';
 import 'pedido_missas.dart';
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         '/horarios': (context) => HorariosPage(), // Rota para a página horarios.dart
         '/historiaparoquia': (context) => HistoriaParoquiaPage(),
         '/inscricoes': (context) => InscricoesPage(), // Rota para a página inscricoes.dart
-        '/inscricoes_catequese': (context) => InscricoesCatequesePage(),
+        '/inscricoes_catequese': (context) => InscricoesCatequeseAdultoPage(),
         '/inscricoes_catequese_infantil': (context) => CatequeseInfantilPage(),
         '/inscricoes_catequese_jovem': (context) => CatequeseJovemPage(),
         '/inscricoes_batismo': (context) => InscricoesBatismoPage(),

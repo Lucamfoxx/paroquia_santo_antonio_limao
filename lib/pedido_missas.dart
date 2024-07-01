@@ -58,22 +58,28 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _enviandoEmail ? null : () async {
-                setState(() {
-                  _enviandoEmail = true;
-                });
-                bool enviado = await _enviarPedidoPorEmail();
-                setState(() {
-                  _enviandoEmail = false;
-                });
-                if (enviado) {
-                  _mostrarDialogo(context, 'Email enviado', 'O pedido foi enviado com sucesso.');
-                  _limparCampos(); // Limpa os campos após o envio bem-sucedido
-                } else {
-                  _mostrarDialogo(context, 'Erro', 'Ocorreu um erro ao enviar o pedido.');
-                }
-              },
-              child: _enviandoEmail ? CircularProgressIndicator() : Text('Enviar Pedido'),
+              onPressed: _enviandoEmail
+                  ? null
+                  : () async {
+                      setState(() {
+                        _enviandoEmail = true;
+                      });
+                      bool enviado = await _enviarPedidoPorEmail();
+                      setState(() {
+                        _enviandoEmail = false;
+                      });
+                      if (enviado) {
+                        _mostrarDialogo(context, 'Email enviado',
+                            'O pedido foi enviado com sucesso.');
+                        _limparCampos(); // Limpa os campos após o envio bem-sucedido
+                      } else {
+                        _mostrarDialogo(context, 'Erro',
+                            'Ocorreu um erro ao enviar o pedido.');
+                      }
+                    },
+              child: _enviandoEmail
+                  ? CircularProgressIndicator()
+                  : Text('Enviar Pedido'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
@@ -85,9 +91,10 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
   }
 
   Future<bool> _enviarPedidoPorEmail() async {
-    final smtpServer = SmtpServer('smtp.sendgrid.net',
+    final smtpServer = SmtpServer(
+      'smtp.sendgrid.net',
       username: 'apikey',
-      password: ' ',
+      password: '',
       port: 587,
     );
 
