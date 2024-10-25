@@ -18,12 +18,17 @@
   <string>paroquia_santo_antonio_limao</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
+
+  <!-- Versão do app -->
   <key>CFBundleShortVersionString</key>
-  <string>$(FLUTTER_BUILD_NAME)</string>
+  <string>2.0.2</string> <!-- Atualize aqui para a versão desejada -->
+
+  <!-- Número de build -->
+  <key>CFBundleVersion</key>
+  <string>3</string> <!-- Atualize aqui para o número de build correto -->
+
   <key>CFBundleSignature</key>
   <string>????</string>
-  <key>CFBundleVersion</key>
-  <string>$(FLUTTER_BUILD_NUMBER)</string>
   <key>LSRequiresIPhoneOS</key>
   <true/>
   <key>UIApplicationSupportsIndirectInputEvents</key>

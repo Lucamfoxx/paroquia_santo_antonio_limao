@@ -122,11 +122,18 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
   }
 
   List<String> _processContent(String content) {
-    final separators = const ['Primeira Leitura', 'Segunda Leitura', 'Evangelho do Dia'];
+    final separators = const [
+      'Primeira Leitura',
+      'Segunda Leitura',
+      'Evangelho do Dia'
+    ];
     List<String> parts = [];
     if (content.contains('Segunda Leitura')) {
       parts.add(content.split('Segunda Leitura')[0].trim());
-      parts.add(content.split('Evangelho do Dia')[0].split('Segunda Leitura')[1].trim());
+      parts.add(content
+          .split('Evangelho do Dia')[0]
+          .split('Segunda Leitura')[1]
+          .trim());
       parts.add(content.split('Evangelho do Dia')[1].trim());
     } else {
       parts.add(content.split('Evangelho do Dia')[0].trim());
@@ -269,7 +276,8 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
       context: context,
       initialDate: currentDate,
       firstDate: DateTime(currentDate.year, 1, 1),
-      lastDate: DateTime(currentDate.year, currentDate.month, currentDate.day + 5),
+      lastDate:
+          DateTime(currentDate.year, currentDate.month, currentDate.day + 5),
     );
   }
 }

@@ -225,7 +225,7 @@ WhatsApp:
 par.n.sra.o@uol.com.br
 
 ''',
-                  'Paroquial Nossa Senhora Do Carmo': '''
+                  'Paroquia Nossa Senhora Do Carmo': '''
 
 Endereço
 Avenida Elísio Teixeira Leite , 1317 , Vila Brasilândia
@@ -247,7 +247,7 @@ Sábado - das 09:00 as 12:00
 Sábado - das 13:00 as 18:00
 
 ''',
-                  'Paroquial Santo Antônio (Braislandia)': '''
+                  'Paroquia Santo Antônio (Brasilandia)': '''
 
 Endereço: R. Parapuã, 1903 - Brasilândia, 
 São Paulo - SP, 02831-001
@@ -264,6 +264,22 @@ quarta-feira	09:00–12:00, 13:00–18:00
 quinta-feira	09:00–12:00, 13:00–18:00
 sexta-feira	09:00–12:00, 13:00–18:00
  
+''',
+                  'Paróquia Nossa Senhora Mãe De Deus': '''
+
+Endereço: Rua Manuel de Arzão, 85 - Vila Albertina, São Paulo - SP, 02730-020
+
+Telefone: (11) 3931-4001
+
+Horário de funcionamento: 
+
+Atendimento da secretaria
+Terça-feira - das 13:00 as 17:00
+Quarta-feira - das 13:00 as 17:00
+Quinta-feira - das 13:00 as 17:00
+Sexta-feira - das 13:00 as 17:00
+Sábado - das 13:00 as 17:00
+
 ''',
                 },
               ),
