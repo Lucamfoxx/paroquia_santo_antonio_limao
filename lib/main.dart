@@ -23,14 +23,13 @@ import 'inscricoes_catequese_jovem.dart';
 import 'inscricoes_catequese_infantil.dart';
 import 'dizimista.dart';
 import 'dizimosdoacoes.dart';
-import 'festas.dart';
 import 'preparacao.dart';
+import 'terco_online.dart';
+import 'festas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -40,30 +39,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Paróquia Santo Antônio do Limão',
       theme: ThemeData(
-        scaffoldBackgroundColor:Color.fromARGB(255, 212, 177, 116),
-      
+        scaffoldBackgroundColor: Color.fromARGB(255, 212, 177, 116),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => FutureBuilder(
-          future: precacheImage(AssetImage('assets/logo.png'), context),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return MissaDiariaApp();
-            } else {
-              return Container();
-            }
-          },
-        ),
+              future: precacheImage(AssetImage('assets/logo.png'), context),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return MissaDiariaApp();
+                } else {
+                  return Container();
+                }
+              },
+            ),
         '/missa_diaria': (context) => MissaDiariaPage(),
         '/biblia': (context) => BibliaPage(),
         '/santo_do_dia': (context) => SantoDoDiaPage(),
         '/oracoes': (context) => OracoesPage(),
         '/paroquias': (context) => ParoquiasPage(),
         '/noticias': (context) => NoticiasPage(),
-        '/horarios': (context) => HorariosPage(), // Rota para a página horarios.dart
+        '/horarios': (context) =>
+            HorariosPage(), // Rota para a página horarios.dart
         '/historiaparoquia': (context) => HistoriaParoquiaPage(),
-        '/inscricoes': (context) => InscricoesPage(), // Rota para a página inscricoes.dart
+        '/inscricoes': (context) =>
+            InscricoesPage(), // Rota para a página inscricoes.dart
         '/inscricoes_catequese': (context) => InscricoesCatequeseAdultoPage(),
         '/inscricoes_catequese_infantil': (context) => CatequeseInfantilPage(),
         '/inscricoes_catequese_jovem': (context) => CatequeseJovemPage(),
@@ -76,10 +76,9 @@ class MyApp extends StatelessWidget {
         '/sacramentos': (context) => SacramentosPage(),
         '/dizimista': (context) => DizimistaPage(),
         '/dizimosdoacoes': (context) => DoacoesPage(),
-        '/festas': (context) => FestasPage(),        
+        '/terco_online': (context) => TercoOlinePage(),
         '/preparacaobatismo': (context) => PreparacaoPage(),
-
-
+        '/festas': (context) => FestasPage(),
       },
     );
   }
@@ -103,9 +102,10 @@ class MissaDiariaApp extends StatelessWidget {
                 Image.asset('assets/logo.png'),
                 SizedBox(height: 20),
                 MenuButton('Inscrições', '/inscricoes'),
-                MenuButton('Missas e Intenções', '/missas_intencoes'),                
+                MenuButton('Missas e Intenções', '/missas_intencoes'),
                 MenuButton('Dízimo e Doações', '/dizimosdoacoes'),
-                MenuButton('Festas', '/festas'),                
+                MenuButton('Terço', '/terco_online'),
+                MenuButton('Eventos', '/festas'),
                 MenuButton('Santo Padroeiro', '/santo_padroeiro'),
                 MenuButton('Sacramentos', '/sacramentos'),
                 MenuButton('Liturgia Diária', '/missa_diaria'),
@@ -115,8 +115,11 @@ class MissaDiariaApp extends StatelessWidget {
                 MenuButton('Decanato São Pedro', '/paroquias'),
                 MenuButton('Avisos Paroquiais', '/noticias'),
                 MenuButton('Horários', '/horarios'), // Botão para Horários
-                MenuButton('História da Paróquia', '/historiaparoquia'), // Botão para História da Paróquia
-                SizedBox(height: 20), // Adiciona um espaço entre o menu e o texto com o endereço e telefone
+                MenuButton('História da Paróquia',
+                    '/historiaparoquia'), // Botão para História da Paróquia
+                SizedBox(
+                    height:
+                        20), // Adiciona um espaço entre o menu e o texto com o endereço e telefone
                 ContactInfo(), // Adiciona o widget com as informações de contato
               ],
             ),
@@ -139,9 +142,7 @@ class MenuButton extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 220, 219, 214)
-
-,
+        color: Color.fromARGB(255, 220, 219, 214),
         borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.symmetric(vertical: 4),
