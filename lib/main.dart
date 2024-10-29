@@ -31,9 +31,7 @@ import 'festas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(
-      fileName:
-          "/Users/magao-/Documents/Projetos/paroquia_santo_antonio_limao/.env");
+  await dotenv.load(fileName: "assets/config/.env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }

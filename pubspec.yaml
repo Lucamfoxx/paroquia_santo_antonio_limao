@@ -1,7 +1,7 @@
 name: Paroquia_santo_antonio
 description: "Paroquia Santo Antonio"
 publish_to: 'none'
-version: 2.0.2+25
+version: 2.0.2+27
 
 
 environment:
@@ -44,3 +44,4 @@ flutter:
     - assets/mapas/
     - assets/oracao/
     - assets/imagens/
+    - assets/config/.env
