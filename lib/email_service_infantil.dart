@@ -2,24 +2,26 @@
 import 'dart:io';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EmailService {
-  final String username = 'apikey';
-  final String password = '';
-  final String fromEmail = 'santoantoniolimao@gmail.com';
+  final String username = dotenv.env['EMAIL_USERNAME']!;
+  final String password = dotenv.env['EMAIL_PASSWORD']!;
+  final String fromEmail = dotenv.env['EMAIL_USERNAME']!;
   final String toEmail = 'santoantoniolimao@gmail.com';
 
   Future<bool> enviarInscricaoPorEmail(
       Map<String, String> formData, List<File> documentos) async {
-    final smtpServer = SmtpServer('smtp.sendgrid.net',
-        username: username, password: password, port: 587);
+    // Configuração do servidor SMTP do Gmail
+    final smtpServer = gmail(username, password);
 
     final message = Message()
-      ..from = Address(fromEmail, 'Paroquia santo antonio')
+      ..from = Address(fromEmail, 'Paroquia Santo Antônio')
       ..recipients.add(toEmail)
       ..subject = 'Nova inscrição de Catequese Infantil'
       ..text = _buildEmailBody(formData);
 
+    // Anexando os arquivos enviados
     for (final documento in documentos) {
       message.attachments.add(FileAttachment(documento));
     }
@@ -29,7 +31,7 @@ class EmailService {
       print('Mensagem enviada com sucesso! ${sendReport.toString()}');
       return true;
     } catch (e) {
-      print('Erro ao enviar o Email! $e');
+      print('Erro ao enviar o e-mail! $e');
       return false;
     }
   }

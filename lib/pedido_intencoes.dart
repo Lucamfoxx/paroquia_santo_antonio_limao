@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PedidoIntencoesPage extends StatefulWidget {
   @override
@@ -8,9 +9,16 @@ class PedidoIntencoesPage extends StatefulWidget {
 }
 
 class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _pedidoController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _pedidoController = TextEditingController();
   bool _enviandoEmail = false;
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _pedidoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +62,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
-              maxLines: 3, // Para permitir várias linhas de texto
+              maxLines: 3,
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -71,7 +79,7 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
                       if (enviado) {
                         _mostrarDialogo(context, 'Email enviado',
                             'O pedido foi enviado com sucesso.');
-                        _limparCampos(); // Reiniciar a página após envio bem-sucedido
+                        _limparCampos();
                       } else {
                         _mostrarDialogo(context, 'Erro',
                             'Ocorreu um erro ao enviar o pedido.');
@@ -91,15 +99,13 @@ class _PedidoIntencoesPageState extends State<PedidoIntencoesPage> {
   }
 
   Future<bool> _enviarPedidoPorEmail() async {
-    final smtpServer = SmtpServer(
-      'smtp.sendgrid.net',
-      username: 'apikey',
-      password: '',
-      port: 587,
+    final smtpServer = gmail(
+      dotenv.env['EMAIL_USERNAME']!,
+      dotenv.env['EMAIL_PASSWORD']!,
     );
 
     final message = Message()
-      ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
+      ..from = Address(dotenv.env['EMAIL_USERNAME']!, 'eu')
       ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Novo pedido de intenção'
       ..text = '''

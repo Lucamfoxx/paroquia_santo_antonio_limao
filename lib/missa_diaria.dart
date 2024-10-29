@@ -15,7 +15,9 @@ class MissaDiariaPage extends StatefulWidget {
 }
 
 class _MissaDiariaPageState extends State<MissaDiariaPage> {
-  List<String> _missaDiariaParts = ['Carregando...'];
+  List<Map<String, String>> _missaDiariaParts = [
+    {'title': '', 'content': 'Carregando...'}
+  ];
   double _fontSize = 16.0;
   late DateTime _selectedDate;
   late ScrollController _scrollController;
@@ -65,17 +67,23 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
           await _saveContentToFile(content, date);
         } else {
           setState(() {
-            _missaDiariaParts = ['Conteúdo não encontrado.'];
+            _missaDiariaParts = [
+              {'title': '', 'content': 'Conteúdo não encontrado.'}
+            ];
           });
         }
       } else {
         setState(() {
-          _missaDiariaParts = ['Falha ao carregar o conteúdo.'];
+          _missaDiariaParts = [
+            {'title': '', 'content': 'Falha ao carregar o conteúdo.'}
+          ];
         });
       }
     } catch (e) {
       setState(() {
-        _missaDiariaParts = ['Erro: $e'];
+        _missaDiariaParts = [
+          {'title': '', 'content': 'Erro: $e'}
+        ];
       });
     }
   }
@@ -121,24 +129,86 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
     }
   }
 
-  List<String> _processContent(String content) {
-    final separators = const [
-      'Primeira Leitura',
-      'Segunda Leitura',
-      'Evangelho do Dia'
-    ];
-    List<String> parts = [];
-    if (content.contains('Segunda Leitura')) {
-      parts.add(content.split('Segunda Leitura')[0].trim());
-      parts.add(content
-          .split('Evangelho do Dia')[0]
-          .split('Segunda Leitura')[1]
-          .trim());
-      parts.add(content.split('Evangelho do Dia')[1].trim());
-    } else {
-      parts.add(content.split('Evangelho do Dia')[0].trim());
-      parts.add(content.split('Evangelho do Dia')[1].trim());
+  List<Map<String, String>> _processContent(String content) {
+    List<Map<String, String>> parts = [];
+
+    // Encontrar as posições das palavras-chave
+    int leituraIndex = content.indexOf('Primeira leitura');
+    if (leituraIndex == -1) {
+      // Se 'Primeira leitura' não for encontrado, procurar por 'Leitura'
+      leituraIndex = content.indexOf('Leitura');
     }
+
+    final salmoIndex = content.indexOf('Salmo Responsorial');
+    final segundaLeituraIndex = content.indexOf('Segunda leitura');
+    final evangelhoIndex = content.indexOf('Evangelho do Dia');
+    final palavrasSantoPadreIndex = content.indexOf('Palavras do Santo Padre');
+
+    // Processar Primeira Leitura
+    if (leituraIndex != -1) {
+      int endLeitura = content.length;
+
+      if (salmoIndex != -1 && salmoIndex > leituraIndex) {
+        endLeitura = salmoIndex;
+      } else if (segundaLeituraIndex != -1 &&
+          segundaLeituraIndex > leituraIndex) {
+        endLeitura = segundaLeituraIndex;
+      } else if (evangelhoIndex != -1 && evangelhoIndex > leituraIndex) {
+        endLeitura = evangelhoIndex;
+      }
+
+      parts.add({
+        'title': 'Primeira Leitura',
+        'content': content.substring(leituraIndex, endLeitura).trim()
+      });
+    }
+
+    // Processar Salmo Responsorial
+    if (salmoIndex != -1) {
+      int endSalmo = content.length;
+
+      if (segundaLeituraIndex != -1 && segundaLeituraIndex > salmoIndex) {
+        endSalmo = segundaLeituraIndex;
+      } else if (evangelhoIndex != -1 && evangelhoIndex > salmoIndex) {
+        endSalmo = evangelhoIndex;
+      }
+
+      parts.add({
+        'title': 'Salmo Responsorial',
+        'content': content.substring(salmoIndex, endSalmo).trim()
+      });
+    }
+
+    // Processar Segunda Leitura, se existir
+    if (segundaLeituraIndex != -1) {
+      int endSegundaLeitura = content.length;
+
+      if (evangelhoIndex != -1 && evangelhoIndex > segundaLeituraIndex) {
+        endSegundaLeitura = evangelhoIndex;
+      }
+
+      parts.add({
+        'title': 'Segunda Leitura',
+        'content':
+            content.substring(segundaLeituraIndex, endSegundaLeitura).trim()
+      });
+    }
+
+    // Processar Evangelho do Dia
+    if (evangelhoIndex != -1) {
+      int endEvangelho = content.length;
+
+      if (palavrasSantoPadreIndex != -1 &&
+          palavrasSantoPadreIndex > evangelhoIndex) {
+        endEvangelho = palavrasSantoPadreIndex;
+      }
+
+      parts.add({
+        'title': 'Evangelho',
+        'content': content.substring(evangelhoIndex, endEvangelho).trim()
+      });
+    }
+
     return parts;
   }
 
@@ -219,29 +289,16 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: _missaDiariaParts.length,
                     itemBuilder: (BuildContext context, int index) {
-                      String buttonText;
-                      if (_missaDiariaParts.length == 3) {
-                        if (index == 0) {
-                          buttonText = 'Primeira Leitura';
-                        } else if (index == 1) {
-                          buttonText = 'Segunda Leitura';
-                        } else {
-                          buttonText = 'Evangelho';
-                        }
-                      } else {
-                        if (index == 0) {
-                          buttonText = 'Primeira Leitura';
-                        } else {
-                          buttonText = 'Evangelho';
-                        }
-                      }
+                      String buttonText = _missaDiariaParts[index]['title'] ??
+                          'Parte ${index + 1}';
+
                       return ExpansionTile(
                         title: Text(buttonText),
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              _missaDiariaParts[index],
+                              _missaDiariaParts[index]['content'] ?? '',
                               style: TextStyle(
                                 fontSize: _fontSize,
                                 color: Colors.black,
@@ -275,9 +332,8 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
     return await showDatePicker(
       context: context,
       initialDate: currentDate,
-      firstDate: DateTime(currentDate.year, 1, 1),
-      lastDate:
-          DateTime(currentDate.year, currentDate.month, currentDate.day + 5),
+      firstDate: DateTime(currentDate.year - 1, 1, 1),
+      lastDate: DateTime(currentDate.year + 1, 12, 31),
     );
   }
 }

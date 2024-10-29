@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PedidoMissasPage extends StatefulWidget {
   @override
@@ -8,9 +9,16 @@ class PedidoMissasPage extends StatefulWidget {
 }
 
 class _PedidoMissasPageState extends State<PedidoMissasPage> {
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _pedidoController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _pedidoController = TextEditingController();
   bool _enviandoEmail = false;
+
+  @override
+  void dispose() {
+    _nomeController.dispose();
+    _pedidoController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,24 +62,33 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
-              maxLines: 3, // Para permitir várias linhas de texto
+              maxLines: 3,
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _enviandoEmail
                   ? null
                   : () async {
+                      if (_nomeController.text.isEmpty ||
+                          _pedidoController.text.isEmpty) {
+                        _mostrarDialogo(context, 'Erro',
+                            'Todos os campos devem ser preenchidos.');
+                        return;
+                      }
+
                       setState(() {
                         _enviandoEmail = true;
                       });
+
                       bool enviado = await _enviarPedidoPorEmail();
                       setState(() {
                         _enviandoEmail = false;
                       });
+
                       if (enviado) {
                         _mostrarDialogo(context, 'Email enviado',
                             'O pedido foi enviado com sucesso.');
-                        _limparCampos(); // Limpa os campos após o envio bem-sucedido
+                        _limparCampos();
                       } else {
                         _mostrarDialogo(context, 'Erro',
                             'Ocorreu um erro ao enviar o pedido.');
@@ -91,16 +108,14 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
   }
 
   Future<bool> _enviarPedidoPorEmail() async {
-    final smtpServer = SmtpServer(
-      'smtp.sendgrid.net',
-      username: 'apikey',
-      password: '',
-      port: 587,
+    final smtpServer = gmail(
+      dotenv.env['EMAIL_USERNAME']!,
+      dotenv.env['EMAIL_PASSWORD']!,
     );
 
     final message = Message()
-      ..from = Address('santoantoniolimao@gmail.com', 'Paroquia santo antonio')
-      ..recipients.add('santoantoniolimao@gmail.com')
+      ..from = Address(dotenv.env['EMAIL_USERNAME']!, 'eu')
+      ..recipients.add('santoantoniolimao@gmail.com') // Destinatário do .env
       ..subject = 'Novo pedido de missas'
       ..text = '''
         Nome do Solicitante: ${_nomeController.text}

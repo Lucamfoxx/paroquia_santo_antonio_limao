@@ -2,35 +2,37 @@ import 'dart:io';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cross_file/cross_file.dart'; // Adicione isso para usar XFile
+import 'package:cross_file/cross_file.dart'; // Para usar XFile
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EmailServiceAdulto {
-  final String username = 'apikey';
-  final String password = '';
-  final String fromEmail = 'santoantoniolimao@gmail.com';
+  final String username = dotenv.env['EMAIL_USERNAME']!;
+  final String password = dotenv.env['EMAIL_PASSWORD']!;
+  final String fromEmail = dotenv.env['EMAIL_USERNAME']!;
   final String toEmail = 'santoantoniolimao@gmail.com';
 
   Future<bool> enviarInscricaoPorEmail(
       Map<String, String> formData, List<XFile> documentos) async {
-    final smtpServer = SmtpServer('smtp.sendgrid.net',
-        username: username, password: password, port: 587);
+    // Configurando o servidor SMTP do Gmail
+    final smtpServer = gmail(username, password);
 
     final message = Message()
-      ..from = Address(fromEmail, 'Paroquia santo antonio')
-      ..recipients.add(toEmail)
+      ..from = Address(fromEmail, 'Paroquia Santo Antônio')
+      ..recipients.add(toEmail) // Destinatário do e-mail
       ..subject = 'Nova inscrição de Catequese Adulto'
       ..text = _buildEmailBody(formData);
 
+    // Adiciona os documentos como anexos
     for (final documento in documentos) {
       message.attachments.add(FileAttachment(File(documento.path)));
     }
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Menssagem enviada com sucesso! ${sendReport.toString()}');
+      print('Mensagem enviada com sucesso! ${sendReport.toString()}');
       return true;
     } catch (e) {
-      print('Error ao enviar o Email! $e');
+      print('Erro ao enviar o e-mail! $e');
       return false;
     }
   }
