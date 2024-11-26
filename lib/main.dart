@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
 import 'missa_diaria.dart';
 import 'biblia.dart';
 import 'santo_do_dia.dart';
@@ -13,26 +14,28 @@ import 'noticias.dart';
 import 'inscricoes.dart';
 import 'horarios.dart';
 import 'historiaparoquia.dart';
-import 'inscricoes_batismo.dart';
-import 'inscricoes_catequese_adulto.dart';
-import 'inscricoes_casamento.dart';
+import 'inscricoes/inscricoes_batismo.dart';
+import 'inscricoes/inscricoes_batismo_adult.dart';
+import 'inscricoes/inscricoes_catequese_adulto.dart';
+import 'inscricoes/inscricoes_casamento.dart';
 import 'missas_intencoes.dart';
-import 'pedido_missas.dart';
-import 'pedido_intencoes.dart';
+import 'missas/pedido_missas.dart';
+import 'missas/pedido_intencoes.dart';
 import 'santo_padroeiro.dart';
 import 'sacramentos.dart';
-import 'inscricoes_catequese_jovem.dart';
-import 'inscricoes_catequese_infantil.dart';
-import 'dizimista.dart';
+import 'inscricoes/inscricoes_catequese_jovem.dart';
+import 'inscricoes/inscricoes_catequese_infantil.dart';
+import 'inscricoes/dizimista.dart';
 import 'dizimosdoacoes.dart';
 import 'preparacao.dart';
-import 'terco_online.dart';
+import 'terco/terco_online.dart';
 import 'festas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/config/.env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeDateFormatting('pt_BR', null); // Adiciona esta linha
   runApp(MyApp());
 }
 
@@ -60,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/inscricoes_catequese_infantil': (context) => CatequeseInfantilPage(),
         '/inscricoes_catequese_jovem': (context) => CatequeseJovemPage(),
         '/inscricoes_batismo': (context) => InscricoesBatismoPage(),
+        '/inscricoes_batismo_adult': (context) => InscricoesBatismoAdultPage(),
         '/inscricoes_casamento': (context) => InscricoesCasamentoPage(),
         '/missas_intencoes': (context) => MissasIntencoesPage(),
         '/pedido_missas': (context) => PedidoMissasPage(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pedido_missas.dart'; // Importe a página pedido_missas.dart
-import 'pedido_intencoes.dart'; // Importe a página pedido_intencoes.dart
+import 'missas/pedido_missas.dart'; // Importe a página pedido_missas.dart
+import 'missas/pedido_intencoes.dart'; // Importe a página pedido_intencoes.dart
 import 'main.dart'; // Importe para acessar o widget MenuButton
 
 class MissasIntencoesPage extends StatelessWidget {
@@ -12,7 +12,8 @@ class MissasIntencoesPage extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // Define a mesma margem em todos os lados dos botões
+          padding: const EdgeInsets.all(
+              16.0), // Define a mesma margem em todos os lados dos botões
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

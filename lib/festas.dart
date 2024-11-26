@@ -9,18 +9,39 @@ class FestasPage extends StatefulWidget {
 
 class _FestasPageState extends State<FestasPage> {
   List<String> _bannerUrls = [];
+  String? _jsonUrl;
 
   @override
   void initState() {
     super.initState();
-    _fetchBannerUrls();
+    _fetchTxtFileUrl(); // Modificado para carregar a URL do arquivo .txt
   }
 
-  Future<void> _fetchBannerUrls() async {
-    final url =
-        'https://drive.google.com/uc?export=download&id=1vqhPMATqTliK9PrhsxflnP9zP35uGrGc';
+  // Função para obter a URL do JSON do arquivo .txt no Google Drive
+  Future<void> _fetchTxtFileUrl() async {
+    final txtUrl =
+        'https://drive.google.com/uc?id=1NJbSFGsj-Ux2Z6lYm-uhbcbWEciKJKyW&export=download'; // Link direto do Google Drive
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(txtUrl));
+      if (response.statusCode == 200) {
+        final txtContent = response.body;
+        setState(() {
+          _jsonUrl = txtContent.trim(); // Contém a URL do JSON
+        });
+        _fetchBannerUrls(); // Chama para buscar os banners
+      } else {
+        print('Erro ao carregar arquivo TXT: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao carregar arquivo TXT: $e');
+    }
+  }
+
+  // Função para buscar os URLs dos banners usando o JSON
+  Future<void> _fetchBannerUrls() async {
+    if (_jsonUrl == null) return;
+    try {
+      final response = await http.get(Uri.parse(_jsonUrl!));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
@@ -43,7 +64,9 @@ class _FestasPageState extends State<FestasPage> {
       ),
       body: Center(
         child: _bannerUrls.isEmpty
-            ? CircularProgressIndicator()
+            ? (_jsonUrl == null
+                ? CircularProgressIndicator()
+                : Text('Carregando banners...'))
             : SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -72,8 +95,8 @@ class BannerImage extends StatelessWidget {
           builder: (context, constraints) {
             return Image.network(
               imageUrl,
-              fit: BoxFit.fitWidth, // Ajusta a largura completa da tela
-              width: constraints.maxWidth, // Largura do container
+              fit: BoxFit.fitWidth,
+              width: constraints.maxWidth,
             );
           },
         ),

@@ -14,13 +14,20 @@ class InscricoesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              MenuButton('Catequese/1° Eucaristia de 6 a 11 anos', '/inscricoes_catequese_infantil'), // 
-              MenuButton('Catequese/Crisma de 12 a 17 anos', '/inscricoes_catequese_jovem'), // 
-              MenuButton('Catequese Adultos', '/inscricoes_catequese'), // Botão para inscrições de catequese
-              MenuButton('Batismo', '/inscricoes_batismo'),
-              MenuButton('Preparações e Batismos', '/preparacaobatismo'), // Botão para inscrições de batismo
+              MenuButton('Dizimista', '/dizimista'),
+              MenuButton('Catequese/1° Eucaristia de 6 a 11 anos',
+                  '/inscricoes_catequese_infantil'), //
+              MenuButton('Catequese/Crisma de 12 a 17 anos',
+                  '/inscricoes_catequese_jovem'), //
+              MenuButton('Catequese Adultos',
+                  '/inscricoes_catequese'), // Botão para inscrições de catequese
+              MenuButton('Batismo até 6 anos', '/inscricoes_batismo'),
+              MenuButton(
+                  'Batismo apartir de 6 anos', '/inscricoes_batismo_adult'),
+              MenuButton('Preparações e Batismos', '/preparacaobatismo'),
+              // Botão para inscrições de batismo
               MenuButton('Casamento', '/inscricoes_casamento'),
-              MenuButton('Dizimista', '/dizimista'), // Botão para inscrições de casamento
+              // Botão para inscrições de casamento
             ],
           ),
         ),
@@ -28,7 +35,6 @@ class InscricoesPage extends StatelessWidget {
     );
   }
 }
-
 
 class MenuButton extends StatelessWidget {
   final String text;

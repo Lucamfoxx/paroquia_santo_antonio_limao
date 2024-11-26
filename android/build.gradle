@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.8.0' // Define a versão do Kotlin para evitar incompatibilidade
+    ext.kotlin_version = '1.9.10' // Define a versão do Kotlin para evitar incompatibilidade
     repositories {
         google()
         mavenCentral()
