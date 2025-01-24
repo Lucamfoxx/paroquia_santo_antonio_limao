@@ -16,7 +16,6 @@ class _PreparacaoPageState extends State<PreparacaoPage> {
         curve: Curves.ease,
       );
     } catch (e) {
-      // Tratamento de erro
       print('Erro ao rolar para a esquerda: $e');
     }
   }
@@ -29,7 +28,6 @@ class _PreparacaoPageState extends State<PreparacaoPage> {
         curve: Curves.ease,
       );
     } catch (e) {
-      // Tratamento de erro
       print('Erro ao rolar para a direita: $e');
     }
   }
@@ -54,50 +52,38 @@ class _PreparacaoPageState extends State<PreparacaoPage> {
       appBar: AppBar(
         title: Text('Preparações e Batizados'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Calendário das preparações e Batizados 2024',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: buildDataTable(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: _scrollToLeft,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Calendário das Preparações e Batizados 2025',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                SizedBox(width: 20),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                  onPressed: _scrollToRight,
+              ),
+              SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+                child: buildDataTable(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -107,61 +93,13 @@ class _PreparacaoPageState extends State<PreparacaoPage> {
     return [
       DataColumn(
         label: Text(
-          'Sábado',
+          'Curso de Batismo (09h30)',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       DataColumn(
         label: Text(
-          'Abril',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Maio',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Junho',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Julho',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Agosto',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Setembro',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Outubro',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Novembro',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          'Dezembro',
+          'Batismo (10h)',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -171,28 +109,48 @@ class _PreparacaoPageState extends State<PreparacaoPage> {
   List<DataRow> _buildRows() {
     return [
       DataRow(cells: [
-        DataCell(Text('Preparação-9h30  ')),
-        DataCell(Text('20')),
-        DataCell(Text('11')),
-        DataCell(Text('15')),
-        DataCell(Text('13')),
-        DataCell(Text('10')),
-        DataCell(Text('14')),
-        DataCell(Text('19')),
-        DataCell(Text('9')),
-        DataCell(Text('14')),
+        DataCell(Text('08/02')),
+        DataCell(Text('22/02')),
       ]),
       DataRow(cells: [
-        DataCell(Text('Batismo      -10h  ')),
-        DataCell(Text('27')),
-        DataCell(Text('25')),
-        DataCell(Text('29')),
-        DataCell(Text('27')),
-        DataCell(Text('31')),
-        DataCell(Text('28')),
-        DataCell(Text('26')),
-        DataCell(Text('30')),
-        DataCell(Text('28')),
+        DataCell(Text('15/03')),
+        DataCell(Text('29/03')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('05/04')),
+        DataCell(Text('26/04')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('17/05')),
+        DataCell(Text('31/05')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('14/06')),
+        DataCell(Text('28/06')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('12/07')),
+        DataCell(Text('26/07')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('16/08')),
+        DataCell(Text('30/08')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('13/09')),
+        DataCell(Text('27/09')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('11/10')),
+        DataCell(Text('25/10')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('08/11')),
+        DataCell(Text('29/11')),
+      ]),
+      DataRow(cells: [
+        DataCell(Text('06/12')),
+        DataCell(Text('20/12')),
       ]),
     ];
   }

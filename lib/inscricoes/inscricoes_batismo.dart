@@ -54,8 +54,17 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
   String? _selectedDate;
 
   final List<String> _availableDates = [
-    '30 de Novembro de 2024',
-    '28 de Dezembro de 2024',
+    '22 de Fevereiro de 2025',
+    '29 de Março de 2025',
+    '26 de Abril de 2025',
+    '31 de Maio de 2025',
+    '28 de Junho de 2025',
+    '26 de Julho de 2025',
+    '30 de Agosto de 2025',
+    '27 de Setembro de 2025',
+    '25 de Outubro de 2025',
+    '29 de Novembro de 2025',
+    '20 de Dezembro de 2025',
   ];
 
   @override

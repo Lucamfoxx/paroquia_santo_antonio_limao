@@ -35,18 +35,14 @@ Pe. Aldenor Alves De Lima.
               ),
               SizedBox(height: 20),
               _buildHorario(
-                titulo: 'Padre Cooperador Pastoral',
-                texto: 'Pe. Adriano Robson',
-              ),
-              SizedBox(height: 20),
-              _buildHorario(
                 titulo: 'Horário de Missas',
                 texto: '''Segundas-feiras : 19h30
 Terças e Quartas : 12h
 Sexta-feira : 15h
 Sábado : 17h
 Domingo : 08h - 11h e 19h''',
-              ),              SizedBox(height: 20),
+              ),
+              SizedBox(height: 20),
               _buildHorario(
                 titulo: 'Confissões',
                 texto: '''De Terça a Sábado
@@ -73,7 +69,7 @@ Segunda-Feira: --NÃO HÁ ATENDIMENTO--
       ),
     );
   }
-  
+
   Widget _buildHorario({required String titulo, required String texto}) {
     return Card(
       elevation: 3,
@@ -87,7 +83,10 @@ Segunda-Feira: --NÃO HÁ ATENDIMENTO--
           children: [
             Text(
               titulo,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
             ),
             SizedBox(height: 10),
             RichText(
@@ -105,18 +104,20 @@ Segunda-Feira: --NÃO HÁ ATENDIMENTO--
   List<TextSpan> _richTextChildren(String texto) {
     final List<TextSpan> children = [];
     final List<String> lines = texto.split('\n');
-    
+
     for (String line in lines) {
       final List<String> splitLine = line.split(':');
       final String firstPart = splitLine[0];
-      final String secondPart = splitLine.length > 1 ? splitLine.sublist(1).join(':') : '';
+      final String secondPart =
+          splitLine.length > 1 ? splitLine.sublist(1).join(':') : '';
 
       // Adiciona as partes do texto
-      children.add(TextSpan(text: firstPart, style: TextStyle(fontWeight: FontWeight.bold)));
+      children.add(TextSpan(
+          text: firstPart, style: TextStyle(fontWeight: FontWeight.bold)));
       if (secondPart.isNotEmpty) {
         children.add(TextSpan(text: ':$secondPart'));
       }
-      
+
       // Adiciona quebra de linha entre as linhas
       children.add(TextSpan(text: '\n'));
     }
