@@ -139,7 +139,7 @@ class _PedidoMissasPageState extends State<PedidoMissasPage> {
           ),
           SizedBox(height: 4),
           Text(
-            'Selecione um dia disponível para a missa. As datas permitidas são de terça a sexta-feira.',
+            'Selecione um dia disponível para a missa para a ocasião. As datas permitidas no aplicativo são de terça a sexta-feira. Para demias datas deve-se procurar os responsaveis pela missa antes do horário da missa.',
             style: TextStyle(fontSize: 14, color: Colors.grey[700]),
           ),
         ],
