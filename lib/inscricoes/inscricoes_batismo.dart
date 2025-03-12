@@ -184,14 +184,11 @@ class _InscricoesBatismoPageState extends State<InscricoesBatismoPage> {
               _buildInfoContainer(
                   'Documentos Necessários \n(Tire foto de todos os documentos)',
                   [
+                    'RG da Criança',
+                    'RG do Padrinho',
+                    'RG do Madrinha',
+                    'Certidão de Nascimento da Criança',
                     'Comprovante do Pagamento da Taxa ',
-                    'RG Batizando',
-                    'RG Padrinho',
-                    'RG Madrinha',
-                    'Comprovante de Residência',
-                    'Certidão de Nascimento',
-                    'Certidão de Batismo Católico Padrinho',
-                    'Certidão de Batismo Católico Madrinha',
                   ]),
               _buildAddDocumentButton(),
               ..._buildDocumentPreviews(),

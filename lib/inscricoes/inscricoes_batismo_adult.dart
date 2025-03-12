@@ -228,14 +228,11 @@ class _InscricoesBatismoAdultPageState
               _buildInfoContainer(
                   'Documentos Necessários \n(Tire foto de todos os documentos)',
                   [
-                    'Comprovante do Pagamento da Taxa ',
-                    'RG Batizando',
+                    'RG de quem será Batizado',
                     'RG Padrinho',
                     'RG Madrinha',
-                    'Comprovante de Residência',
-                    'Certidão de Nascimento',
-                    'Certidão de Batismo Católico Padrinho',
-                    'Certidão de Batismo Católico Madrinha',
+                    'Certidão de Nascimento de quem será Batizado',
+                    'Comprovante do Pagamento da Taxa ',
                   ]),
               _buildInfoContainer(
                   'Dicas para tirar uma ótima foto do documento:', [
