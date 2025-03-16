@@ -1,11 +1,11 @@
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:intl/date_symbol_data_local.dart';
-import 'missa_diaria.dart';
+import 'liturgia_diaria.dart';
 import 'biblia.dart';
 import 'santo_do_dia.dart';
 import 'oracoes.dart';
@@ -30,6 +30,14 @@ import 'dizimosdoacoes.dart';
 import 'preparacao.dart';
 import 'terco/terco_online.dart';
 import 'festas.dart';
+
+// Novos imports para as funcionalidades escolhidas
+import 'mural_de_empregos/mural_empregos.dart';
+import 'perguntas/caixa_perguntas_padre.dart';
+import 'checkin_igreja.dart';
+import 'joguinhos_quizzes.dart';
+// Nova importação para a página de respostas do padre
+import 'respostas_padre.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,13 +76,19 @@ class MyApp extends StatelessWidget {
         '/missas_intencoes': (context) => MissasIntencoesPage(),
         '/pedido_missas': (context) => PedidoMissasPage(),
         '/pedido_intencoes': (context) => PedidoIntencoesPage(),
+        '/terco_online': (context) => TercoOlinePage(),
+        '/festas': (context) => FestasPage(),
         '/santo_padroeiro': (context) => SantoPadroeiro(),
         '/sacramentos': (context) => SacramentosPage(),
         '/dizimista': (context) => DizimistaPage(),
         '/dizimosdoacoes': (context) => DoacoesPage(),
-        '/terco_online': (context) => TercoOlinePage(),
         '/preparacaobatismo': (context) => PreparacaoPage(),
-        '/festas': (context) => FestasPage(),
+        // Funcionalidades interativas e extras:
+        '/mural_empregos': (context) => MuralEmpregosPage(),
+        '/caixa_perguntas_padre': (context) => CaixaPerguntasPadrePage(),
+        '/checkin_igreja': (context) => CheckinIgrejaPage(),
+        '/joguinhos_quizzes': (context) => JoguinhosQuizzesPage(),
+        '/respostas_padre': (context) => RespostasPadrePage(),
       },
     );
   }
@@ -113,22 +127,28 @@ class MissaDiariaApp extends StatelessWidget {
               children: [
                 Image.asset('assets/logo.png'),
                 SizedBox(height: 20),
+                // Ordem dos itens de menu reorganizada:
                 MenuButton('Inscrições', '/inscricoes'),
                 MenuButton('Missas e Intenções', '/missas_intencoes'),
-                MenuButton('Dízimo e Doações', '/dizimosdoacoes'),
+                MenuButton('Liturgia Diária', '/missa_diaria'),
                 MenuButton('Terço', '/terco_online'),
                 MenuButton('Eventos', '/festas'),
+                MenuButton('Avisos Paroquiais', '/noticias'),
+                MenuButton('Bíblia', '/biblia'),
+                MenuButton('Mural de Empregos Católico', '/mural_empregos'),
+                MenuButton('Caixa de Perguntas para o Padre',
+                    '/caixa_perguntas_padre'),
+                MenuButton('Mural de Respostas do padre', '/respostas_padre'),
+                MenuButton('Check-in na Igreja', '/checkin_igreja'),
                 MenuButton('Santo Padroeiro', '/santo_padroeiro'),
                 MenuButton('Sacramentos', '/sacramentos'),
-                MenuButton('Liturgia Diária', '/missa_diaria'),
-                MenuButton('Bíblia', '/biblia'),
+                //MenuButton('Joguinhos e Quizzes Bíblicos', '/joguinhos_quizzes'),
                 MenuButton('Santo do Dia', '/santo_do_dia'),
                 MenuButton('Orações', '/oracoes'),
                 MenuButton('Decanato São Pedro', '/paroquias'),
-                MenuButton('Avisos Paroquiais', '/noticias'),
                 MenuButton('Horários', '/horarios'),
                 MenuButton('História da Paróquia', '/historiaparoquia'),
-                SizedBox(height: 20),
+                // Widget de Contato adicionado no final da página
                 ContactInfo(),
               ],
             ),
@@ -175,9 +195,9 @@ class ContactInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      padding: EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             'assets/logo2.png',

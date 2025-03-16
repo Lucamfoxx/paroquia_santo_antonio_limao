@@ -1,7 +1,8 @@
 name: Paroquia_santo_antonio
 description: "Paroquia Santo Antonio"
 publish_to: 'none'
-version: 2.0.5+35
+version: 2.0.5+36
+
 
 
 environment:
@@ -18,7 +19,7 @@ dependencies:
   path_provider_foundation: ^2.4.0
   firebase_core: ^3.2.0
   firebase_database: ^11.0.3
-  intl: ^0.20.2
+  intl: ^0.19.0
   url_launcher: ^6.0.12
   image_picker: ^1.1.2
   image_picker_ios: ^0.8.12
@@ -28,7 +29,7 @@ dependencies:
   permission_handler: ^11.3.1 
   flutter_dotenv: ^5.0.2
   table_calendar: ^3.0.0
-
+  shared_preferences: ^2.0.0
   
 dev_dependencies:
   flutter_test:
