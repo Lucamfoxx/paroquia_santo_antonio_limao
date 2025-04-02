@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:google_fonts/google_fonts.dart';
 
 class SantoDoDia {
   final String text;
@@ -37,19 +38,21 @@ class _SantoDoDiaPageState extends State<SantoDoDiaPage> {
       String formattedDate =
           "${selectedDate.day.toString().padLeft(2, '0')}_${selectedDate.month.toString().padLeft(2, '0')}";
 
-      String santoDoDiaText =
-          await rootBundle.loadString('assets/santo_dia/txt/$formattedDate.txt');
+      String santoDoDiaText = await rootBundle
+          .loadString('assets/santo_dia/txt/$formattedDate.txt');
 
       Image? santoDoDiaImage;
       bool imageExists = await rootBundle
           .load('assets/santo_dia/jpg/$formattedDate.jpg')
           .then((value) {
-        santoDoDiaImage = Image.asset('assets/santo_dia/jpg/$formattedDate.jpg');
+        santoDoDiaImage =
+            Image.asset('assets/santo_dia/jpg/$formattedDate.jpg');
         return true;
       }).catchError((error) => false);
 
       setState(() {
-        _santoDoDia = SantoDoDia(text: santoDoDiaText, image: imageExists ? santoDoDiaImage : null);
+        _santoDoDia = SantoDoDia(
+            text: santoDoDiaText, image: imageExists ? santoDoDiaImage : null);
         _isLoading = false;
       });
     } catch (e) {
@@ -136,19 +139,32 @@ class _SantoDoDiaPageState extends State<SantoDoDiaPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            onPressed: _navigateToPreviousDay,
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue,
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              color: Colors.white,
+                              onPressed: _navigateToPreviousDay,
+                            ),
                           ),
                           Text(
                             '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          IconButton(
-                            icon: Icon(Icons.arrow_forward),
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            onPressed: _navigateToNextDay,
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue,
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_forward),
+                              color: Colors.white,
+                              onPressed: _navigateToNextDay,
+                            ),
                           ),
                         ],
                       ),
@@ -167,12 +183,19 @@ class _SantoDoDiaPageState extends State<SantoDoDiaPage> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: SingleChildScrollView(
                           child: Text(
                             _santoDoDia.text,
                             textAlign: TextAlign.justify,
-                            style: TextStyle(fontSize: _fontSize),
+                            style: GoogleFonts.nunito(fontSize: _fontSize),
                           ),
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Evento {
   final String titulo;
@@ -109,7 +110,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
               .where((evento) => DateTime.now().isBefore(evento.dataFim))
               .toList();
 
-          eventos.sort((a, b) => a.dataInicio.compareTo(b.dataInicio));
+          eventos.sort((a, b) => a.dataFim.compareTo(b.dataFim));
 
           return ListView.builder(
             itemCount: eventos.length,
@@ -173,6 +174,9 @@ class _EventoTileState extends State<EventoTile>
         DateFormat('dd/MM/yyyy').format(widget.evento.dataInicio);
     final formattedDataFim =
         DateFormat('dd/MM/yyyy').format(widget.evento.dataFim);
+    final diasRestantes =
+        widget.evento.dataFim.difference(DateTime.now()).inDays;
+    final mostrarUltimosDias = diasRestantes <= 2;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -183,7 +187,13 @@ class _EventoTileState extends State<EventoTile>
           curve: Curves.easeInOut,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: _expanded ? Colors.blue[50] : Colors.grey[100],
+            gradient: LinearGradient(
+              colors: _expanded
+                  ? [Colors.white, Colors.blue.shade50]
+                  : [Colors.white, Colors.grey.shade100],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
@@ -196,20 +206,34 @@ class _EventoTileState extends State<EventoTile>
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
+                if (mostrarUltimosDias)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Chip(
+                        label: const Text(
+                          'Últimos dias!',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: const Color.fromARGB(255, 220, 99, 33),
+                      ),
+                    ),
+                  ),
                 Row(
                   children: [
                     Expanded(
                       child: Text(
                         widget.evento.titulo,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: GoogleFonts.nunito(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     RotationTransition(
                       turns: _arrowAnimation,
-                      child: const Icon(Icons.expand_more, size: 24),
+                      child: const Icon(Icons.expand_more, size: 26),
                     ),
                   ],
                 ),

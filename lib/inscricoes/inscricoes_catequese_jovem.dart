@@ -42,6 +42,17 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
 
   List<File> documentos = [];
   bool _enviandoEmail = false;
+  final Map<String, File?> documentosNomeados = {
+    'RG': null,
+    'Comprovante de Residência': null,
+    'Certidão de Nascimento': null,
+    'Comprovante de 1° Eucaristia': null,
+    'Comprovante de Batismo': null,
+    'Foto 3x4 do Jovem': null,
+    'Certidão de Casamento dos Pais': null,
+    'RG dos Pais': null,
+    'Comprovante de Crisma': null,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -181,16 +192,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   controller: _controllers['horariomissa']!),
               _buildDocumentSection(),
               _buildPhotoTipsSection(),
-              ElevatedButton(
-                onPressed: () => _showImageSourceActionSheet(context),
-                child: Text('Adicionar Documento',
-                    style: TextStyle(color: Colors.white)),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue)),
-              ),
-              SizedBox(height: 20),
-              ..._buildDocumentPreviews(),
+              // "Adicionar Documento" button and document previews removed.
               ElevatedButton(
                 onPressed: _enviarInscricao,
                 child: _enviandoEmail
@@ -206,6 +208,80 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
         ),
       ),
     );
+  }
+
+  Widget _buildUploadBox(String nomeDoc) {
+    final file = documentosNomeados[nomeDoc];
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.insert_drive_file, size: 40, color: Colors.blueAccent),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  nomeDoc,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 4),
+                file != null
+                    ? Text(
+                        'Selecionado: ${file.path.split('/').last}',
+                        style: TextStyle(color: Colors.green[700]),
+                      )
+                    : Text(
+                        'Nenhum arquivo selecionado',
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
+                SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _selecionarDocumentoNomeado(nomeDoc),
+                    icon: Icon(Icons.upload_file),
+                    label: Text('Selecionar arquivo'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _selecionarDocumentoNomeado(String nomeDoc) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+    );
+
+    if (result != null) {
+      setState(() {
+        documentosNomeados[nomeDoc] = File(result.files.single.path!);
+      });
+    }
   }
 
   Widget _buildSectionTitle(String title) {
@@ -259,6 +335,10 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
           Text('- RG dos Pais', style: TextStyle(fontSize: 16)),
           Text('- Comprovante de Crisma \n  (se tiver feito)',
               style: TextStyle(fontSize: 16)),
+          SizedBox(height: 20),
+          ...documentosNomeados.keys
+              .map((nomeDoc) => _buildUploadBox(nomeDoc))
+              .toList(),
         ],
       ),
     );
@@ -397,14 +477,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   _selecionarImagem(ImageSource.gallery);
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.attach_file),
-                title: Text('Documento'),
-                onTap: () {
-                  Navigator.pop(context);
-                  _selecionarDocumento();
-                },
-              ),
+              // Removed generic Documento upload option.
             ],
           ),
         );
@@ -447,10 +520,25 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
         _enviandoEmail = true;
       });
 
+      // Verifica se todos os documentos foram enviados
+      if (documentosNomeados.values.any((doc) => doc == null)) {
+        _mostrarDialogo(
+          context,
+          'Documentos pendentes',
+          'Por favor, envie todos os documentos obrigatórios antes de prosseguir.',
+        );
+        setState(() {
+          _enviandoEmail = false;
+        });
+        return;
+      }
+
       Map<String, String> formData = {};
       _controllers.forEach((key, controller) {
         formData[key] = controller.text;
       });
+
+      final documentos = documentosNomeados.values.whereType<File>().toList();
 
       bool enviado =
           await _emailService.enviarInscricaoPorEmail(formData, documentos);
@@ -474,9 +562,8 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
       controller.clear();
     });
 
-    setState(() {
-      documentos.clear();
-    });
+    // Clear the documentosNomeados map by setting all values to null.
+    documentosNomeados.updateAll((key, value) => null);
   }
 
   void _mostrarDialogo(BuildContext context, String titulo, String mensagem) {

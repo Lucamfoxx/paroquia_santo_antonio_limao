@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HorariosPage extends StatelessWidget {
   @override
@@ -10,7 +11,11 @@ class HorariosPage extends StatelessWidget {
       body: Container(
         margin: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue.shade50],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(20.0),
           boxShadow: [
             BoxShadow(
@@ -46,8 +51,8 @@ Domingo : 08h - 11h e 19h''',
               _buildHorario(
                 titulo: 'Confissões',
                 texto: '''De Terça a Sábado
-                
--Confirmar horário com a Secretaria.''',
+
+Confirmar horário com a Secretaria.''',
               ),
               SizedBox(height: 20),
               _buildHorario(
@@ -72,7 +77,7 @@ Segunda-Feira: --NÃO HÁ ATENDIMENTO--
 
   Widget _buildHorario({required String titulo, required String texto}) {
     return Card(
-      elevation: 3,
+      elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -83,15 +88,20 @@ Segunda-Feira: --NÃO HÁ ATENDIMENTO--
           children: [
             Text(
               titulo,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
+              style: GoogleFonts.nunito(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
             ),
             SizedBox(height: 10),
             RichText(
               text: TextSpan(
-                style: TextStyle(fontSize: 16, color: Colors.black87),
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  color: Colors.black87,
+                  height: 1.4,
+                ),
                 children: _richTextChildren(texto),
               ),
             ),

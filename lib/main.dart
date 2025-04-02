@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,7 +9,7 @@ import 'biblia.dart';
 import 'santo_do_dia.dart';
 import 'oracoes.dart';
 import 'paroquias.dart';
-import 'noticias.dart';
+import 'avisos_paroquiais.dart';
 import 'inscricoes.dart';
 import 'horarios.dart';
 import 'historiaparoquia.dart';
@@ -37,14 +36,84 @@ import 'perguntas/caixa_perguntas_padre.dart';
 import 'checkin_igreja.dart';
 import 'joguinhos_quizzes.dart';
 // Nova importação para a página de respostas do padre
-import 'respostas_padre.dart';
+import 'perguntas/respostas_padre.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/config/.env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializeDateFormatting('pt_BR', null); // Adiciona esta linha
-  runApp(MyApp());
+
+  runApp(MaterialApp(
+    navigatorKey: navigatorKey,
+    home: MyApp(),
+  ));
+
+  verificarAtualizacao();
+}
+
+Future<void> verificarAtualizacao() async {
+  try {
+    final localJson = await rootBundle.loadString('assets/versao/versao.json');
+    final localData = json.decode(localJson);
+
+    final driveTxt = await http.get(Uri.parse(
+        'https://drive.google.com/uc?export=download&id=1PKl4A9gssIeAioQvM1722hfdwEdPHUhq'));
+    final gistUrl = driveTxt.body.trim();
+
+    final gistResponse = await http.get(Uri.parse(gistUrl));
+    final remoteData = json.decode(gistResponse.body);
+
+    final platform = Platform.isAndroid ? 'android' : 'ios';
+    final localVersion = platform == 'android'
+        ? localData['latest_version_android']
+        : localData['latest_version_ios'];
+    final remoteVersion = platform == 'android'
+        ? remoteData['latest_version_android']
+        : remoteData['latest_version_ios'];
+
+    if (localVersion != remoteVersion) {
+      await Future.delayed(Duration(seconds: 1));
+      showDialog(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Atualização disponível'),
+            content: Text(
+                remoteData['texto_novidades'] ?? 'Nova versão disponível!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Mais tarde'),
+              ),
+              TextButton(
+                onPressed: () {
+                  final url = platform == 'android'
+                      ? remoteData['link_android']
+                      : remoteData['link_ios'];
+                  print('Abrindo: $url');
+                  launchUrl(Uri.parse(url),
+                      mode: LaunchMode.externalApplication);
+                },
+                child: Text('Atualizar agora'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  } catch (e) {
+    // Em caso de falha, não impede o funcionamento do app
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -227,7 +296,7 @@ class ContactInfo extends StatelessWidget {
             url: "https://maps.app.goo.gl/tC6Tme5cTsyy5mDe6",
             icon: Icon(Icons.location_on, color: Colors.blue),
             label: '''
-Av. Prof. Celestino Bourroul, 715 
+Av. Prof. Celestino Bourroul, 715
 Limão, São Paulo - SP, 02710-001''',
           ),
         ],

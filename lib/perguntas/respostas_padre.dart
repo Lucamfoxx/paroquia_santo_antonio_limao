@@ -1,4 +1,3 @@
-// respostas_padre.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -35,6 +34,14 @@ class _RespostasPadrePageState extends State<RespostasPadrePage> {
   void initState() {
     super.initState();
     _fetchTxtFileUrl();
+  }
+
+  String _getQuestionTitle(String question) {
+    int index = question.indexOf('?');
+    if (index != -1) {
+      return question.substring(0, index + 1);
+    }
+    return question;
   }
 
   // Busca o arquivo TXT no Google Drive que contém a URL do gist
@@ -97,21 +104,24 @@ class _RespostasPadrePageState extends State<RespostasPadrePage> {
   Widget _buildRespostaCard(Resposta resposta) {
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Pergunta: ${resposta.pergunta}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text('Nome: ${resposta.nome}'),
-            SizedBox(height: 8),
-            Text('Resposta: ${resposta.resposta}'),
-          ],
+      child: ExpansionTile(
+        title: Text(
+          _getQuestionTitle(resposta.pergunta),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        children: [
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Nome: ${resposta.nome}'),
+                SizedBox(height: 8),
+                Text('Resposta: ${resposta.resposta}'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -123,7 +133,19 @@ class _RespostasPadrePageState extends State<RespostasPadrePage> {
         title: const Text('Respostas do padre'),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text(
+                    'Carregando novas perguntas e respostas...',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            )
           : _respostas.isEmpty
               ? Center(child: Text('Nenhuma resposta disponível.'))
               : ListView.builder(

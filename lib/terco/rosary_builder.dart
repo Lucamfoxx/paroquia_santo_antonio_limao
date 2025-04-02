@@ -26,7 +26,8 @@ class _BeadState extends State<Bead> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _currentColor = _currentColor == Colors.blue ? Colors.green : Colors.blue;
+          _currentColor =
+              _currentColor == Colors.blue ? Colors.green : Colors.blue;
         });
       },
       child: Container(
@@ -50,7 +51,8 @@ class RosaryPage extends StatefulWidget {
 
 class _RosaryPageState extends State<RosaryPage> {
   final ScrollController _scrollController = ScrollController();
-  String _selectedSantinho = 'assets/santinho.png'; // Caminho do santinho padrão
+  String _selectedSantinho =
+      'assets/santinho.png'; // Caminho do santinho padrão
 
   @override
   void initState() {
@@ -118,7 +120,7 @@ class _RosaryPageState extends State<RosaryPage> {
       Bead(size: 30, color: Colors.blue),
       Bead(size: 30, color: Colors.blue),
       Bead(size: 30, color: Colors.blue),
-      
+
       // Imagem do santinho que abre o popup
       GestureDetector(
         onTap: () {
@@ -132,26 +134,28 @@ class _RosaryPageState extends State<RosaryPage> {
                   children: [
                     _buildSantinhoItem('assets/maria.png', 'Maria'),
                     _buildSantinhoItem('assets/sao_jose.png', 'São José'),
-                    _buildSantinhoItem('assets/santo_antonio.png', 'Santo Antônio'),
+                    _buildSantinhoItem(
+                        'assets/santo_antonio.png', 'Santo Antônio'),
                   ],
                 ),
               );
             },
           );
         },
-        child: Image.asset(_selectedSantinho, height: 100), // Usando a imagem do santinho selecionado
+        child: Image.asset(_selectedSantinho,
+            height: 100), // Usando a imagem do santinho selecionado
       ),
-      
+
       SizedBox(height: 20),
-      
+
       Bead(size: 50, color: Colors.blue),
       Bead(size: 30, color: Colors.blue),
       Bead(size: 30, color: Colors.blue),
       Bead(size: 30, color: Colors.blue),
       Bead(size: 50, color: Colors.blue),
-      
+
       SizedBox(height: 20),
-      
+
       Image.asset('assets/cruz.png', height: 100),
     ];
   }
@@ -161,7 +165,8 @@ class _RosaryPageState extends State<RosaryPage> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedSantinho = imagePath; // Atualiza a imagem do santinho selecionado
+          _selectedSantinho =
+              imagePath; // Atualiza a imagem do santinho selecionado
         });
         Navigator.pop(context); // Fecha o popup ao selecionar um santinho
       },

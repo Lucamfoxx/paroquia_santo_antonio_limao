@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class SacramentosPage extends StatefulWidget {
@@ -83,42 +84,47 @@ class _SacramentosPageState extends State<SacramentosPage> {
     );
   }
 
-Widget _buildExpansiveButton(String title, Widget text) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(15.0),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 2,
-          blurRadius: 5,
-          offset: Offset(0, 2), // changes position of shadow
+  Widget _buildExpansiveButton(String title, Widget text) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, Colors.blue.shade50],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-      ],
-    ),
-    child: ExpansionTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.black, // Definindo a cor do título para preto
-        ),
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 2), // changes position of shadow
+          ),
+        ],
       ),
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DefaultTextStyle(
-            style: TextStyle(fontSize: _fontSize, color: Colors.black), // Definindo a cor do texto para preto
-            child: text,
+      child: ExpansionTile(
+        title: Text(
+          title,
+          style: GoogleFonts.nunito(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
-      ],
-    ),
-  );
-}
-
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DefaultTextStyle(
+              style: TextStyle(
+                  fontSize: _fontSize,
+                  color: Colors.black), // Definindo a cor do texto para preto
+              child: text,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildBatismoText() {
     return Text(

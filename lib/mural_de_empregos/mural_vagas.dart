@@ -1,4 +1,3 @@
-// mural_vagas.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -104,24 +103,21 @@ class _MuralVagasTabState extends State<MuralVagasTab> {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: TextField(
-            decoration: const InputDecoration(
-              labelText: 'Buscar vaga',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.search),
-            ),
-            onChanged: (value) {
-              setState(() {
-                _filterQuery = value;
-              });
-            },
-          ),
-        ),
         Expanded(
           child: _isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text(
+                        'Carregando vagas disponíveis...',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                )
               : vagasFiltradas.isEmpty
                   ? const Center(child: Text('Nenhuma vaga encontrada.'))
                   : ListView.builder(
