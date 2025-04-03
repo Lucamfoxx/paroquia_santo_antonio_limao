@@ -5,7 +5,7 @@ import 'firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'liturgia_diaria.dart';
-import 'biblia.dart';
+import 'biblia/biblia_page.dart';
 import 'santo_do_dia.dart';
 import 'oracoes.dart';
 import 'paroquias.dart';
