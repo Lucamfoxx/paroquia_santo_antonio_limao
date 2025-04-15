@@ -76,7 +76,14 @@ class _RespostasPadrePageState extends State<RespostasPadrePage> {
         final data = json.decode(response.body);
         // Supondo que o JSON possui um dicionário sob a chave "respostas"
         final respostasMap = data['respostas'] as Map<String, dynamic>;
-        final respostasList = respostasMap.values.toList();
+        final sortedKeys = respostasMap.keys.toList()
+          ..sort((a, b) {
+            final numA = int.tryParse(a.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+            final numB = int.tryParse(b.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+            return numB.compareTo(numA); // ordena do maior para o menor número
+          });
+        final respostasList =
+            sortedKeys.map((key) => respostasMap[key]).toList();
         setState(() {
           _respostas = respostasList
               .map((json) => Resposta(

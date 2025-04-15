@@ -230,6 +230,35 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
     return '${date.year}_${_formatTwoDigits(date.month)}_${_formatTwoDigits(date.day)}';
   }
 
+  List<InlineSpan> _buildFormattedText(String text, double fontSize) {
+    final List<InlineSpan> spans = [];
+    final RegExp regExp = RegExp(r'(\d+)|([^\d]+)');
+    final matches = regExp.allMatches(text);
+
+    for (final match in matches) {
+      final number = match.group(1);
+      final nonNumber = match.group(2);
+      if (number != null) {
+        spans.add(WidgetSpan(
+          child: Transform.translate(
+            offset: const Offset(1.5, -6),
+            child: Text(
+              number,
+              textScaleFactor: 0.7,
+              style: TextStyle(
+                fontSize: fontSize,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ));
+      } else if (nonNumber != null) {
+        spans.add(TextSpan(text: nonNumber));
+      }
+    }
+    return spans;
+  }
+
   void _increaseFontSize() {
     setState(() {
       _fontSize += 2.0;
@@ -335,11 +364,14 @@ class _MissaDiariaPageState extends State<MissaDiariaPage> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    content,
-                                    style: TextStyle(
-                                      fontSize: _fontSize,
-                                      color: Colors.black,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: _buildFormattedText(
+                                          content, _fontSize),
+                                      style: TextStyle(
+                                        fontSize: _fontSize,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
