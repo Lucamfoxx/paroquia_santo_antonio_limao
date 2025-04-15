@@ -1,0 +1,2 @@
+D:/PROJETOS/C#/paroquia_santo_antonio_limao/paroquia_santo_antonio_limao/android/app/.cxx/RelWithDebInfo/3c1r511d/x86_64/CMakeFiles/edit_cache.dir
+D:/PROJETOS/C#/paroquia_santo_antonio_limao/paroquia_santo_antonio_limao/android/app/.cxx/RelWithDebInfo/3c1r511d/x86_64/CMakeFiles/rebuild_cache.dir
