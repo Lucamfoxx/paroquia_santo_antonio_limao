@@ -1,0 +1,2 @@
+/Users/magao-/Documents/Projetos/paroquia_santo_antonio_limao/android/app/.cxx/RelWithDebInfo/5y4v4b20/x86/CMakeFiles/rebuild_cache.dir
+/Users/magao-/Documents/Projetos/paroquia_santo_antonio_limao/android/app/.cxx/RelWithDebInfo/5y4v4b20/x86/CMakeFiles/edit_cache.dir

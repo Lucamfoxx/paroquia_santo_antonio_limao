@@ -1,0 +1,123 @@
+{
+  "setor": "Decanato São Pedro",
+  "paroquias": {
+    "Paróquia Santo Antônio": {
+      "festa_liturgica": "Festa litúrgica: 13 de Junho",
+      "endereco": "Avenida Professor Celestino Bourroul - 715 \nLimão - São Paulo - SP - 02710-001",
+      "telefone": null,
+      "horario_missas": "\nSegundas-feiras : 19h30\nTerças e Quartas - 12hs\nSexta-feira : 15hs\nSábado : 17hs\nDomingo : 08hs - 11hs e 19hs",
+      "horario_atendimento": "\nSECRETARIA\nTerça a Sexta das 8hs ás 18hs\nSábado das 8hs ás 12hs e das 13hs às 17hs",
+      "paroco": "Pe. ALDO",
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia São Miguel Arcanjo": {
+      "festa_liturgica": "Festa litúrgica: 29 de Setembro",
+      "endereco": "Rua Maria Elisa Siqueira - 219 - - Vila Prado - São Paulo - - SP - 02558-000",
+      "telefone": "(11) 3858-3044",
+      "horario_missas": "\nSegundas e Terças - 19h30\nQuartas e Quintas - 07h30\nSextas - 19h30\nSábados - 07h30\nDomingos - 07h30 - 09h30 e 19 horas",
+      "horario_atendimento": "\nSegunda, Terça, Quinta e Sexta - das 09hs ás 12hs e das 13hs ás 18hs\nQuarta - NÃO TEM EXPEDIENTE\nSábado - 09hs ás 12hs e das 13hs ás 17hs\nDomingo - NÃO TEM EXPEDIENTE",
+      "paroco": "Pe. Edson Fernandes",
+      "email": "saomiguelarcanjovilaprado@gmail.com",
+      "redes_sociais": [
+        "Facebook.com/comunidadesmiguelarcanjo",
+        "Instagram.com/paroquiasaomiguela"
+      ]
+    },
+    "Paróquia São Luiz Gonzaga": {
+      "festa_liturgica": "Festa litúrgica: 21 de Junho",
+      "endereco": "Rua Orminda - 214 - - Vila Santa Maria - São Paulo - - SP - 02562-150",
+      "telefone": "(11) 3965-6299",
+      "horario_missas": "\n\nTerça Feira : 19h30\nQuinta Feira: 19h30\nSábado : 17:00 horas\nDomingo : 08h00, 10h00, 18h00",
+      "horario_atendimento": null,
+      "paroco": "Pe. Edson Fernandes\n\nDiác. Ailton Machado Mendes",
+      "email": null,
+      "redes_sociais": [
+        "https://www.instagram.com/paroquiasaoluizgonzagaoficial/",
+        "https://www.facebook.com/profile.php?id=100043050142383&ref=xav_ig_profile_web"
+      ]
+    },
+    "Paróquia Santa Luiza": {
+      "festa_liturgica": null,
+      "endereco": "Rua Vicente Soares da Costa, 81\nJardim Primavera - São Paulo - SP\nCEP: 55-000",
+      "telefone": "(11) 3936-2341",
+      "horario_missas": "\nDomingo: 08:00, 08:00 (Com. Sta. Isabel), 10:00, 10:00 (Com. Sta. Isabel), 10:00 (Com. Sta. Teresinha), 18:00\nTerça-feira: 19:30 (Com. Sta. Isabel)\nQuarta-feira: 19:30\nQuinta-feira: 19:30 (Com. Sta. Teresinha)\nSexta-feira: 08:00\nSábado: 18:00 (Com. Sta. Teresinha), 19:30\nPrimeira Sexta-feira: 19:30 (Com. Sta. Teresinha)",
+      "horario_atendimento": null,
+      "paroco": "Pe. Diogo Cassiano Maciel (Administrador Paroquial)",
+      "email": null,
+      "redes_sociais": [
+        "https://www.facebook.com/SantaLuziaSp/?locale=pt_BR"
+      ]
+    },
+    "Paróquia São José": {
+      "festa_liturgica": null,
+      "endereco": "R. Ribeirão das Almas, 337 - Freguesia do Ó, São Paulo - SP, 02728-100",
+      "telefone": "(11) 3931-5056",
+      "horario_missas": "\nSEGUNDA: 7h - 15h (Missa das Almas)\nTERÇA: 7h e 19h\nQUARTA: 7h - 19h\nQUINTA: 7h e 19h 18h\nSEXTA: 7h - 15h e 19h\nSÁBADO: 10h - 19h\nDOMINGO: 9h - 11h -  19h\nTODO DIA 19: 7h - 15h - 19h Missa Votiva à São José",
+      "horario_atendimento": null,
+      "paroco": "Pe. MARCIO Campos da Silva, CSCh\n(2016-Atual)",
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia Nossa Senhora das Graças": {
+      "festa_liturgica": null,
+      "endereco": "Rua Marcelino de Camargo, 152\nVila Carolina - São Paulo - SP\nCEP: 02724-040",
+      "telefone": "(11) 3936-1287",
+      "horario_missas": "\nDomingo: 07:30, 11:00, 18:30\nTerça-feira: 20:00\nQuinta-feira: 15:00\nSexta-feira: 20:00",
+      "horario_atendimento": null,
+      "paroco": "Pe. Edemilson Gonzaga de Camargo",
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia Santa Cruz": {
+      "festa_liturgica": null,
+      "endereco": "Av. Itaberaba 2093, São Paulo, SP, 02739-000",
+      "telefone": "+ 55 11 3924 0515",
+      "horario_missas": "\n3ª a 6ª feira às 19:30\nSábado às 15:00 (Missa das Crianças) e às 19:30\nDomingo às 08:00, às 10:00 (Missa dos Jovens) e às 18:00",
+      "horario_atendimento": null,
+      "paroco": "Pe. Beto - Pároco",
+      "email": "rocmoura@terra.com.br",
+      "redes_sociais": null
+    },
+    "Paróquia Nossa Senhora da Expectação": {
+      "festa_liturgica": null,
+      "endereco": "Largo da Matriz de Nossa Senhora do Ó , s/nº, Freguesia do Ó",
+      "telefone": null,
+      "horario_missas": "\nSegunda-feira às 15h\nMissa pelas Almas\n\nTerça, quarta e sexta-feira às 07h e 19h30\nQuinta-feira às 07h\nSábado às 16h\nDomingo às 07h, 09h, 11h e 18h\nTodo dia 18 às 07h, 15h e 19h30",
+      "horario_atendimento": "\nDe segunda a sexta-feira - das 08:00 as 12:00\nDe segunda a sexta-feira - das 14:00 as 17:00",
+      "paroco": null,
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia Nossa Senhora Do Carmo": {
+      "festa_liturgica": null,
+      "endereco": "Avenida Elísio Teixeira Leite , 1317 , Vila Brasilândia",
+      "telefone": "(11) 3975-2569",
+      "horario_missas": null,
+      "horario_atendimento": "\nTerça-feira - das 09:00 as 12:00 e das 13:00 as 18:00\nQuarta-feira - das 09:00 as 12:00 e das 13:00 as 18:00\nQuinta-feira - das 09:00 as 12:00 e das 13:00 as 18:00\nSexta-feira - das 09:00 as 12:00 e das 13:00 as 18:00\nSábado - das 09:00 as 12:00 e das 13:00 as 18:00",
+      "paroco": null,
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia Santo Antônio (Brasilandia)": {
+      "festa_liturgica": null,
+      "endereco": "R. Parapuã, 1903 - Brasilândia, São Paulo - SP, 02831-001",
+      "telefone": "(11) 3921-6046",
+      "horario_missas": null,
+      "horario_atendimento": "\nsábado: 09:00–12:00, 13:00–18:00\ndomingo: 11:00–18:00\nsegunda-feira: Fechado\nterça a sexta: 09:00–12:00, 13:00–18:00",
+      "paroco": null,
+      "email": null,
+      "redes_sociais": null
+    },
+    "Paróquia Nossa Senhora Mãe De Deus": {
+      "festa_liturgica": null,
+      "endereco": "Rua Manuel de Arzão, 85 - Vila Albertina, São Paulo - SP, 02730-020",
+      "telefone": "(11) 3931-4001",
+      "horario_missas": null,
+      "horario_atendimento": "\nTerça a Sábado - das 13:00 as 17:00",
+      "paroco": null,
+      "email": null,
+      "redes_sociais": null
+    }
+  }
+}

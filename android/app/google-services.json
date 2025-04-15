@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "831299082694",
+    "firebase_url": "https://psantoantoniolimao-default-rtdb.firebaseio.com",
+    "project_id": "psantoantoniolimao",
+    "storage_bucket": "psantoantoniolimao.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831299082694:android:e3b161ff58b1121517fac7",
+        "android_client_info": {
+          "package_name": "com.paroquia.paroquia_santo_antonio_limao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfSxUT3KvZuXqTFppNcHi1-tYa_87_Z4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
