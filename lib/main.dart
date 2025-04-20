@@ -199,6 +199,7 @@ class MissaDiariaApp extends StatelessWidget {
                 // Ordem dos itens de menu reorganizada:
                 MenuButton('Inscrições', '/inscricoes'),
                 MenuButton('Missas e Intenções', '/missas_intencoes'),
+                MenuButton('Dizimos e Doações', '/dizimosdoacoes'),
                 MenuButton('Liturgia Diária', '/missa_diaria'),
                 MenuButton('Terço', '/terco_online'),
                 MenuButton('Eventos', '/festas'),

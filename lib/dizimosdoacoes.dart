@@ -23,12 +23,12 @@ class DoacoesPage extends StatelessWidget {
         return AlertDialog(
           title: Text('Pix Copiado'),
           content: Text(
-                              '\n- Clique no botão de Fazer Doação ou Dizimo'
-                '\n- O Pix já será copiado. '
-                '\n- Abra o seu aplicativo de banco ou pagamentos'
-                '\n- Procure a opção Pix.',
-                 textAlign: TextAlign.left,
-                ),
+            '\n- Clique no botão de Fazer Doação ou Dizimo'
+            '\n- O Pix já será copiado. '
+            '\n- Abra o seu aplicativo de banco ou pagamentos'
+            '\n- Procure a opção Pix.',
+            textAlign: TextAlign.left,
+          ),
           actions: [
             TextButton(
               onPressed: () {
