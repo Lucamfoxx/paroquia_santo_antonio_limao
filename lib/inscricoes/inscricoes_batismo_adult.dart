@@ -438,7 +438,7 @@ class _InscricoesBatismoAdultPageState
           });
           if (enviado) {
             _mostrarDialogo(
-                context, 'Email enviado', 'O email foi enviado com sucesso.');
+                context, 'Cadastro enviado', 'Cadastro feito com sucesso.');
             _limparCampos();
           } else {
             _mostrarDialogo(

@@ -549,7 +549,7 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
 
       if (enviado) {
         _mostrarDialogo(
-            context, 'Email enviado', 'O email foi enviado com sucesso.');
+            context, 'Cadastro enviado', 'Cadastro feito com sucesso.');
         _limparCampos();
       } else {
         _mostrarDialogo(context, 'Erro', 'Ocorreu um erro ao enviar o email.');

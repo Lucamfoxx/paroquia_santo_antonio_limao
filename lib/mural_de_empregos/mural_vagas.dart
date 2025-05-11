@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'vaga_model.dart';
-import 'inscrever_vaga.dart';
 
 class MuralVagasTab extends StatefulWidget {
   final Function(Vaga) onCandidatar;

@@ -49,38 +49,45 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Future<void> _loadComments() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/comments.json');
-
-    if (await file.exists()) {
-      List<dynamic> allComments = json.decode(await file.readAsString());
-      setState(() {
-        comments = allComments
-            .where((comment) =>
-                comment['livro'] == _livro && comment['grade'] == _grade)
-            .toList();
-      });
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File file = File('${directory.path}/comments.json');
+      if (await file.exists()) {
+        List<dynamic> allComments = json.decode(await file.readAsString());
+        setState(() {
+          comments = allComments
+              .where((comment) =>
+                  comment['livro'] == _livro && comment['grade'] == _grade)
+              .toList();
+        });
+      }
+    } catch (e) {
+      // ignore or log error
     }
   }
 
   Future<void> _loadStatus() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File readFile = File('${directory.path}/read_chapters.json');
-    File favFile = File('${directory.path}/favorites.json');
-    List<dynamic> readChapters = [];
-    List<dynamic> favorites = [];
-    if (await readFile.exists()) {
-      readChapters = json.decode(await readFile.readAsString());
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File readFile = File('${directory.path}/read_chapters.json');
+      File favFile = File('${directory.path}/favorites.json');
+      List<dynamic> readChapters = [];
+      List<dynamic> favorites = [];
+      if (await readFile.exists()) {
+        readChapters = json.decode(await readFile.readAsString());
+      }
+      if (await favFile.exists()) {
+        favorites = json.decode(await favFile.readAsString());
+      }
+      setState(() {
+        _isRead = readChapters
+            .any((item) => item['livro'] == _livro && item['grade'] == _grade);
+        _isFavorite = favorites
+            .any((item) => item['livro'] == _livro && item['grade'] == _grade);
+      });
+    } catch (e) {
+      // ignore or log error
     }
-    if (await favFile.exists()) {
-      favorites = json.decode(await favFile.readAsString());
-    }
-    setState(() {
-      _isRead = readChapters
-          .any((item) => item['livro'] == _livro && item['grade'] == _grade);
-      _isFavorite = favorites
-          .any((item) => item['livro'] == _livro && item['grade'] == _grade);
-    });
   }
 
   void _increaseFontSize() {
@@ -112,35 +119,37 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   void _writeCommentToJson(Map<String, dynamic> commentMap) async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/comments.json');
-
-    List<dynamic> allComments = [];
-
-    if (await file.exists()) {
-      allComments = json.decode(await file.readAsString());
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File file = File('${directory.path}/comments.json');
+      List<dynamic> allComments = [];
+      if (await file.exists()) {
+        allComments = json.decode(await file.readAsString());
+      }
+      allComments.add(commentMap);
+      await file.writeAsString(json.encode(allComments));
+      _loadComments();
+    } catch (e) {
+      // ignore or log error
     }
-
-    allComments.add(commentMap);
-    await file.writeAsString(json.encode(allComments));
-
-    _loadComments();
   }
 
   void _deleteComment(int index) async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/comments.json');
-
-    List<dynamic> allComments = [];
-
-    if (await file.exists()) {
-      allComments = json.decode(await file.readAsString());
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File file = File('${directory.path}/comments.json');
+      if (await file.exists()) {
+        List<dynamic> allComments = json.decode(await file.readAsString());
+        allComments.removeWhere((c) =>
+            c['livro'] == _livro &&
+            c['grade'] == _grade &&
+            c['comentario'] == comments[index]['comentario']);
+        await file.writeAsString(json.encode(allComments));
+        _loadComments();
+      }
+    } catch (e) {
+      // ignore or log
     }
-
-    allComments.removeAt(index);
-    await file.writeAsString(json.encode(allComments));
-
-    _loadComments();
   }
 
   void _loadChapterText(int chapter) async {
@@ -172,41 +181,49 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Future<void> _toggleReadStatus() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File readFile = File('${directory.path}/read_chapters.json');
-    List<dynamic> readChapters = [];
-    if (await readFile.exists()) {
-      readChapters = json.decode(await readFile.readAsString());
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File readFile = File('${directory.path}/read_chapters.json');
+      List<dynamic> readChapters = [];
+      if (await readFile.exists()) {
+        readChapters = json.decode(await readFile.readAsString());
+      }
+      if (_isRead) {
+        readChapters.removeWhere(
+            (item) => item['livro'] == _livro && item['grade'] == _grade);
+      } else {
+        readChapters.add({'livro': _livro, 'grade': _grade});
+      }
+      await readFile.writeAsString(json.encode(readChapters));
+      setState(() {
+        _isRead = !_isRead;
+      });
+    } catch (e) {
+      // ignore or log error
     }
-    if (_isRead) {
-      readChapters.removeWhere(
-          (item) => item['livro'] == _livro && item['grade'] == _grade);
-    } else {
-      readChapters.add({'livro': _livro, 'grade': _grade});
-    }
-    await readFile.writeAsString(json.encode(readChapters));
-    setState(() {
-      _isRead = !_isRead;
-    });
   }
 
   Future<void> _toggleFavoriteStatus() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File favFile = File('${directory.path}/favorites.json');
-    List<dynamic> favorites = [];
-    if (await favFile.exists()) {
-      favorites = json.decode(await favFile.readAsString());
+    try {
+      Directory directory = await getApplicationDocumentsDirectory();
+      File favFile = File('${directory.path}/favorites.json');
+      List<dynamic> favorites = [];
+      if (await favFile.exists()) {
+        favorites = json.decode(await favFile.readAsString());
+      }
+      if (_isFavorite) {
+        favorites.removeWhere(
+            (item) => item['livro'] == _livro && item['grade'] == _grade);
+      } else {
+        favorites.add({'livro': _livro, 'grade': _grade});
+      }
+      await favFile.writeAsString(json.encode(favorites));
+      setState(() {
+        _isFavorite = !_isFavorite;
+      });
+    } catch (e) {
+      // ignore or log error
     }
-    if (_isFavorite) {
-      favorites.removeWhere(
-          (item) => item['livro'] == _livro && item['grade'] == _grade);
-    } else {
-      favorites.add({'livro': _livro, 'grade': _grade});
-    }
-    await favFile.writeAsString(json.encode(favorites));
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
   }
 
   @override
@@ -365,5 +382,11 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

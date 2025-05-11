@@ -15,10 +15,10 @@ class BibliaPage extends StatefulWidget {
 class _BibliaPageState extends State<BibliaPage> {
   late bool _velhoTestamentoExpanded;
   late bool _novoTestamentoExpanded;
-  late Map<String, int> limitesGrade;
-  late Map<String, String> menuTitles;
-  late Map<String, int> limitesGradeNovo;
-  late Map<String, String> menuNovo;
+  Map<String, int> limitesGrade = {};
+  Map<String, String> menuTitles = {};
+  Map<String, int> limitesGradeNovo = {};
+  Map<String, String> menuNovo = {};
 
   // Variáveis para favoritos e capítulos lidos
   List<dynamic> _favorites = [];
@@ -35,22 +35,36 @@ class _BibliaPageState extends State<BibliaPage> {
   }
 
   Future<void> _loadData() async {
-    final limitesGradeJsonString =
-        await rootBundle.loadString('assets/mapas/limites_grade.json');
-    final menuTitlesJsonString =
-        await rootBundle.loadString('assets/mapas/menu_titles.json');
-    final limitesGradeNovoJsonString =
-        await rootBundle.loadString('assets/mapas/limites_grade_novo.json');
-    final menuNovoJsonString =
-        await rootBundle.loadString('assets/mapas/menu_novo.json');
+    try {
+      final limitesGradeJsonString =
+          await rootBundle.loadString('assets/mapas/limites_grade.json');
+      final menuTitlesJsonString =
+          await rootBundle.loadString('assets/mapas/menu_titles.json');
+      final limitesGradeNovoJsonString =
+          await rootBundle.loadString('assets/mapas/limites_grade_novo.json');
+      final menuNovoJsonString =
+          await rootBundle.loadString('assets/mapas/menu_novo.json');
 
-    setState(() {
-      limitesGrade = Map<String, int>.from(json.decode(limitesGradeJsonString));
-      menuTitles = Map<String, String>.from(json.decode(menuTitlesJsonString));
-      limitesGradeNovo =
-          Map<String, int>.from(json.decode(limitesGradeNovoJsonString));
-      menuNovo = Map<String, String>.from(json.decode(menuNovoJsonString));
-    });
+      setState(() {
+        limitesGrade =
+            Map<String, int>.from(json.decode(limitesGradeJsonString));
+        menuTitles =
+            Map<String, String>.from(json.decode(menuTitlesJsonString));
+        limitesGradeNovo =
+            Map<String, int>.from(json.decode(limitesGradeNovoJsonString));
+        menuNovo = Map<String, String>.from(json.decode(menuNovoJsonString));
+      });
+    } catch (e) {
+      setState(() {
+        limitesGrade = {};
+        menuTitles = {};
+        limitesGradeNovo = {};
+        menuNovo = {};
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao carregar dados da Bíblia: $e')),
+      );
+    }
   }
 
   Future<void> _loadFavorites() async {
@@ -100,86 +114,48 @@ class _BibliaPageState extends State<BibliaPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 148, 203, 252),
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _velhoTestamentoExpanded = !_velhoTestamentoExpanded;
-                    _novoTestamentoExpanded = false;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Velho Testamento',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        children: [
+          ExpansionTile(
+            key: const Key('velho_testamento'),
+            title: Text(
+              'Velho Testamento',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            if (_velhoTestamentoExpanded)
-              Column(
-                children: limitesGrade.keys.map((livro) {
-                  return _buildBookItem(livro, limitesGrade, menuTitles);
-                }).toList(),
-              ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 148, 203, 252),
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    _novoTestamentoExpanded = !_novoTestamentoExpanded;
-                    _velhoTestamentoExpanded = false;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Novo Testamento',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            collapsedBackgroundColor: Color.fromARGB(255, 148, 203, 252),
+            initiallyExpanded: _velhoTestamentoExpanded,
+            onExpansionChanged: (expanded) {
+              setState(() {
+                _velhoTestamentoExpanded = expanded;
+                if (expanded) _novoTestamentoExpanded = false;
+              });
+            },
+            children: limitesGrade.keys.map((livro) {
+              return _buildBookItem(livro, limitesGrade, menuTitles);
+            }).toList(),
+          ),
+          ExpansionTile(
+            key: const Key('novo_testamento'),
+            title: Text(
+              'Novo Testamento',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            if (_novoTestamentoExpanded)
-              Column(
-                children: limitesGradeNovo.keys.map((livro) {
-                  return _buildBookItem(livro, limitesGradeNovo, menuNovo);
-                }).toList(),
-              ),
-          ],
-        ),
+            backgroundColor: Color.fromARGB(255, 148, 203, 252),
+            collapsedBackgroundColor: Color.fromARGB(255, 148, 203, 252),
+            initiallyExpanded: _novoTestamentoExpanded,
+            onExpansionChanged: (expanded) {
+              setState(() {
+                _novoTestamentoExpanded = expanded;
+                if (expanded) _velhoTestamentoExpanded = false;
+              });
+            },
+            children: limitesGradeNovo.keys.map((livro) {
+              return _buildBookItem(livro, limitesGradeNovo, menuNovo);
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
@@ -189,7 +165,7 @@ class _BibliaPageState extends State<BibliaPage> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 202, 227, 249),
+        color: Color.fromARGB(255, 148, 203, 252),
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
@@ -201,6 +177,7 @@ class _BibliaPageState extends State<BibliaPage> {
         ],
       ),
       child: ListTile(
+        key: Key(livro),
         title: Text(menu[livro] ?? livro.replaceAll('_', ' ').capitalize()),
         onTap: () {
           _openBook(livro, limites, menu);

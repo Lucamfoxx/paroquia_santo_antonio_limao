@@ -38,25 +38,30 @@ class _PublicPerguntaFormState extends State<PublicPerguntaForm> {
         _enviando = true;
       });
       final emailService = EmailService();
-      // Passa e-mail como vazio para perguntas públicas
-      bool enviado = await emailService.sendEmail(
-        'Perguntas para o padre',
-        _nomeController.text,
-        '',
-        _perguntaController.text,
-      );
+      bool enviado = false;
+      try {
+        enviado = await emailService.sendEmail(
+          'Perguntas para o padre',
+          _nomeController.text,
+          '',
+          _perguntaController.text,
+        );
+      } catch (e) {
+        debugPrint('Erro ao enviar email: $e');
+        enviado = false;
+      }
       setState(() {
         _enviando = false;
       });
       if (enviado) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Pergunta enviada com sucesso!')),
+          const SnackBar(content: Text('Pergunta enviada com sucesso!')),
         );
         _nomeController.clear();
         _perguntaController.clear();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao enviar pergunta.')),
+          const SnackBar(content: Text('Erro ao enviar pergunta.')),
         );
       }
     }
@@ -65,40 +70,49 @@ class _PublicPerguntaFormState extends State<PublicPerguntaForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Envie sua pergunta para o padre',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _nomeController,
+              enabled: !_enviando,
               decoration:
                   _buildInputDecoration('Nome (apenas o primeiro nome)'),
               validator: (value) => value == null || value.isEmpty
                   ? 'Por favor, insira seu nome'
                   : null,
+              keyboardType: TextInputType.name,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.name],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _perguntaController,
+              enabled: !_enviando,
               decoration: _buildInputDecoration('Pergunta para o padre'),
               maxLines: 3,
               validator: (value) => value == null || value.isEmpty
                   ? 'Por favor, insira sua pergunta'
                   : null,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              autofillHints: const [],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _enviando ? null : _enviar,
               child: _enviando
-                  ? CircularProgressIndicator()
-                  : Text('Enviar Pergunta'),
+                  ? const CircularProgressIndicator()
+                  : const Text('Enviar Pergunta'),
             ),
           ],
         ),
@@ -145,25 +159,33 @@ class _ConfidencialPerguntaFormState extends State<ConfidencialPerguntaForm> {
         _enviando = true;
       });
       final emailService = EmailService();
-      bool enviado = await emailService.sendEmail(
-        'Perguntas confidenciais para o padre',
-        _nomeController.text,
-        _emailController.text,
-        _perguntaController.text,
-      );
+      bool enviado = false;
+      try {
+        enviado = await emailService.sendEmail(
+          'Perguntas confidenciais para o padre',
+          _nomeController.text,
+          _emailController.text,
+          _perguntaController.text,
+        );
+      } catch (e) {
+        debugPrint('Erro ao enviar email: $e');
+        enviado = false;
+      }
       setState(() {
         _enviando = false;
       });
       if (enviado) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Pergunta confidencial enviada com sucesso!')),
+          const SnackBar(
+              content: Text('Pergunta confidencial enviada com sucesso!')),
         );
         _nomeController.clear();
         _emailController.clear();
         _perguntaController.clear();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao enviar pergunta confidencial.')),
+          const SnackBar(
+              content: Text('Erro ao enviar pergunta confidencial.')),
         );
       }
     }
@@ -172,62 +194,80 @@ class _ConfidencialPerguntaFormState extends State<ConfidencialPerguntaForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Envie sua pergunta confidencial para o padre',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             // Aviso adicional para perguntas confidenciais
             Container(
-              margin: EdgeInsets.only(top: 8, bottom: 16),
-              padding: EdgeInsets.all(12),
+              margin: const EdgeInsets.only(top: 8, bottom: 16),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
+              child: const Text(
                 'Todas as perguntas feitas aqui serão respondidas diretamente no seu e-mail. '
                 'E não serão enviadas para o mural de perguntas públicas.',
                 style: TextStyle(fontSize: 14),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _nomeController,
+              enabled: !_enviando,
               decoration: _buildInputDecoration('Nome'),
               validator: (value) => value == null || value.isEmpty
                   ? 'Por favor, insira seu nome'
                   : null,
+              keyboardType: TextInputType.name,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.name],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _emailController,
+              enabled: !_enviando,
               decoration: _buildInputDecoration('E-mail'),
-              validator: (value) => value == null || value.isEmpty
-                  ? 'Por favor, insira seu e-mail'
-                  : null,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.email],
+              validator: (value) {
+                if (value == null || value.isEmpty)
+                  return 'Por favor, insira seu e-mail';
+                final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                if (!emailRegex.hasMatch(value))
+                  return 'Por favor, insira um e-mail válido';
+                return null;
+              },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _perguntaController,
+              enabled: !_enviando,
               decoration:
                   _buildInputDecoration('Pergunta confidencial para o padre'),
               maxLines: 3,
               validator: (value) => value == null || value.isEmpty
                   ? 'Por favor, insira sua pergunta confidencial'
                   : null,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              autofillHints: const [],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _enviando ? null : _enviar,
               child: _enviando
-                  ? CircularProgressIndicator()
-                  : Text('Enviar Pergunta Confidencial'),
+                  ? const CircularProgressIndicator()
+                  : const Text('Enviar Pergunta Confidencial'),
             ),
           ],
         ),

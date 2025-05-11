@@ -1,5 +1,6 @@
 // inscrever_vaga.dart
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -48,14 +49,16 @@ class _InscreverVagaPageState extends State<InscreverVagaPage> {
   }
 
   Future<bool> _enviarInscricaoPorEmail() async {
-    final smtpServer = gmail(
-      dotenv.env['EMAIL_USERNAME']!,
-      dotenv.env['EMAIL_PASSWORD']!,
-    );
+    final username = dotenv.env['EMAIL_USERNAME'];
+    final password = dotenv.env['EMAIL_PASSWORD'];
+    if (username == null || password == null) {
+      log('SMTP credentials not configured');
+      return false;
+    }
+    final smtpServer = gmail(username, password);
 
     final message = Message()
-      ..from = Address(
-          dotenv.env['EMAIL_USERNAME']!, 'Paróquia Santo Antônio do Limão')
+      ..from = Address(username, 'Paróquia Santo Antônio do Limão')
       ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Inscrição para vaga de ${widget.vaga.titulo}'
       ..text = '''
@@ -81,10 +84,16 @@ Contato: ${widget.vaga.contato}
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Email enviado: ${sendReport.toString()}');
+      log('Email enviado: ${sendReport.toString()}');
       return true;
-    } catch (e) {
-      print('Erro ao enviar e-mail: $e');
+    } on MailerException catch (e) {
+      log('MailerException: ${e.message}');
+      for (var p in e.problems) {
+        log('Problem: ${p.code}: ${p.msg}');
+      }
+      return false;
+    } catch (e, stack) {
+      log('Erro inesperado ao enviar e-mail: $e', stackTrace: stack);
       return false;
     }
   }
@@ -103,12 +112,13 @@ Contato: ${widget.vaga.contato}
 
       if (enviado) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Inscrição enviada com sucesso!')),
+          const SnackBar(content: Text('Inscrição enviada com sucesso!')),
         );
         _limparCampos();
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao enviar inscrição.')),
+          const SnackBar(content: Text('Erro ao enviar inscrição.')),
         );
       }
     }
@@ -129,7 +139,7 @@ Contato: ${widget.vaga.contato}
   InputDecoration _buildInputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      border: OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       fillColor: Colors.white,
       filled: true,
     );
@@ -138,11 +148,12 @@ Contato: ${widget.vaga.contato}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text('Inscrição para ${widget.vaga.titulo}'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -150,12 +161,14 @@ Contato: ${widget.vaga.contato}
             children: [
               Text(
                 'Inscreva-se para a vaga de ${widget.vaga.titulo} na empresa ${widget.vaga.empresa}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _nomeController,
                 decoration: _buildInputDecoration('Nome'),
+                enabled: !_enviandoEmail,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira seu nome';
@@ -163,54 +176,73 @@ Contato: ${widget.vaga.contato}
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _emailController,
                 decoration: _buildInputDecoration('E-mail'),
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                autofillHints: const [AutofillHints.email],
+                enabled: !_enviandoEmail,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null || value.isEmpty)
                     return 'Por favor, insira seu e-mail';
+                  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                  if (!emailRegex.hasMatch(value))
+                    return 'Por favor, insira um e-mail válido';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _telefoneController,
+                decoration: _buildInputDecoration('Telefone'),
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.next,
+                autofillHints: const [AutofillHints.telephoneNumber],
+                enabled: !_enviandoEmail,
+                validator: (value) {
+                  if (value != null && value.isNotEmpty) {
+                    final phoneRegex = RegExp(r'^\+?\d{7,15}$');
+                    if (!phoneRegex.hasMatch(value))
+                      return 'Por favor, insira um telefone válido';
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _telefoneController,
-                decoration: _buildInputDecoration('Telefone'),
-              ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _mensagemController,
                 decoration: _buildInputDecoration('Mensagem (opcional)'),
                 maxLines: 3,
+                enabled: !_enviandoEmail,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: _selecionarArquivo,
-                      child: Text('Anexar Currículo'),
+                      onPressed: _enviandoEmail ? null : _selecionarArquivo,
+                      child: const Text('Anexar Currículo'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   if (_nomeArquivo != null)
                     Expanded(
                       child: Text(
                         _nomeArquivo!,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontStyle: FontStyle.italic),
+                        style: const TextStyle(fontStyle: FontStyle.italic),
                       ),
                     ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _enviandoEmail ? null : _enviarInscricao,
                 child: _enviandoEmail
-                    ? CircularProgressIndicator()
-                    : Text('Inscrever-se'),
+                    ? const CircularProgressIndicator()
+                    : const Text('Inscrever-se'),
               ),
             ],
           ),

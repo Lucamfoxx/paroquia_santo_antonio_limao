@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class SantoDoDia {
   final String text;
@@ -21,11 +24,24 @@ class _SantoDoDiaPageState extends State<SantoDoDiaPage> {
   double _fontSize = 16.0;
   late DateTime _selectedDate;
   bool _isLoading = false;
+  late FlutterLocalNotificationsPlugin _notificationsPlugin;
 
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
+    // Initialize timezone and notifications
+    tz.initializeTimeZones();
+    _notificationsPlugin = FlutterLocalNotificationsPlugin();
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iosSettings = DarwinInitializationSettings();
+    _notificationsPlugin.initialize(
+      const InitializationSettings(
+        android: androidSettings,
+        iOS: iosSettings,
+      ),
+    );
     _loadSantoDoDiaContent(_selectedDate);
   }
 
@@ -55,6 +71,32 @@ class _SantoDoDiaPageState extends State<SantoDoDiaPage> {
             text: santoDoDiaText, image: imageExists ? santoDoDiaImage : null);
         _isLoading = false;
       });
+
+      // Schedule notification for next midnight
+      final saintName = santoDoDiaText.split('\n').first;
+      final now = tz.TZDateTime.now(tz.local);
+      final nextMidnight =
+          tz.TZDateTime(tz.local, now.year, now.month, now.day + 1);
+      _notificationsPlugin.zonedSchedule(
+        0,
+        'Santo do Dia: $saintName',
+        'Abra o app para saber mais.',
+        nextMidnight,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'santo_dia_channel',
+            'Santo do Dia',
+            channelDescription: 'Lembrete diário do Santo do Dia',
+            importance: Importance.high,
+            priority: Priority.high,
+          ),
+          iOS: DarwinNotificationDetails(),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.wallClockTime,
+        matchDateTimeComponents: DateTimeComponents.time, // daily
+      );
     } catch (e) {
       setState(() {
         _santoDoDia = SantoDoDia(text: 'Erro ao carregar o conteúdo.');

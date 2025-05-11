@@ -1,5 +1,6 @@
 // cadastrar_vaga.dart
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -52,14 +53,16 @@ class _CadastrarVagaTabState extends State<CadastrarVagaTab> {
   }
 
   Future<bool> _enviarVagaPorEmail() async {
-    final smtpServer = gmail(
-      dotenv.env['EMAIL_USERNAME']!,
-      dotenv.env['EMAIL_PASSWORD']!,
-    );
+    final username = dotenv.env['EMAIL_USERNAME'];
+    final password = dotenv.env['EMAIL_PASSWORD'];
+    if (username == null || password == null) {
+      log('SMTP credentials not configured');
+      return false;
+    }
+    final smtpServer = gmail(username, password);
 
     final message = Message()
-      ..from = Address(
-          dotenv.env['EMAIL_USERNAME']!, 'Paróquia Santo Antônio do Limão')
+      ..from = Address(username, 'Paróquia Santo Antônio do Limão')
       ..recipients.add('santoantoniolimao@gmail.com')
       ..subject = 'Novo Cadastro de Vaga'
       ..text = '''
@@ -79,22 +82,30 @@ Contato: ${_contatoController.text}
 
     try {
       final sendReport = await send(message, smtpServer);
-      print('Email enviado: ${sendReport.toString()}');
+      log('Email enviado: ${sendReport.toString()}');
       return true;
-    } catch (e) {
-      print('Erro ao enviar e-mail: $e');
+    } on MailerException catch (e) {
+      log('MailerException: ${e.message}');
+      for (var p in e.problems) {
+        log('Problem: ${p.code}: ${p.msg}');
+      }
+      return false;
+    } catch (e, stack) {
+      log('Erro inesperado ao enviar e-mail: $e', stackTrace: stack);
       return false;
     }
   }
 
   Future<void> _cadastrarVaga() async {
     if (_formKey.currentState!.validate()) {
+      if (!mounted) return;
       setState(() {
         _enviandoEmail = true;
       });
 
       bool enviado = await _enviarVagaPorEmail();
 
+      if (!mounted) return;
       setState(() {
         _enviandoEmail = false;
       });
@@ -103,16 +114,6 @@ Contato: ${_contatoController.text}
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Vaga enviada por e-mail com sucesso!')),
         );
-        // Se desejar também atualizar uma lista interna, descomente a linha abaixo:
-        // widget.onVagaCadastrada?.call(Vaga(
-        //   titulo: _tituloController.text,
-        //   empresa: _empresaController.text,
-        //   descricao: _descricaoController.text,
-        //   localizacao: _localizacaoController.text,
-        //   tipoTrabalho: _selectedTipoTrabalho,
-        //   salario: _salarioController.text,
-        //   contato: _contatoController.text,
-        // ));
         _limparCampos();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -159,16 +160,16 @@ Contato: ${_contatoController.text}
     }
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
-            Text(
+            const Text(
               'Cadastrar Vaga',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: _tituloController,
               decoration: _buildInputDecoration('Título da Vaga'),
@@ -179,7 +180,7 @@ Contato: ${_contatoController.text}
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _empresaController,
               decoration:
@@ -191,7 +192,7 @@ Contato: ${_contatoController.text}
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _descricaoController,
               decoration: _buildInputDecoration('Descrição da Vaga'),
@@ -203,7 +204,7 @@ Contato: ${_contatoController.text}
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _localizacaoController,
               decoration: _buildInputDecoration('Localização'),
@@ -214,7 +215,7 @@ Contato: ${_contatoController.text}
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             DropdownButtonFormField<String>(
               value: _selectedTipoTrabalho,
               decoration: _buildInputDecoration('Tipo de Trabalho'),
@@ -230,49 +231,59 @@ Contato: ${_contatoController.text}
                 });
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _salarioController,
               decoration: _buildInputDecoration('Salário (opcional)'),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              autofillHints: const [AutofillHints.telephoneNumber],
+              enabled: !_enviandoEmail,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _contatoController,
               decoration: _buildInputDecoration('Contato (E-mail ou WhatsApp)'),
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.done,
+              autofillHints: const [AutofillHints.email],
+              enabled: !_enviandoEmail,
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                if (value == null || value.isEmpty)
                   return 'Por favor, insira um contato';
-                }
+                final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                if (!emailRegex.hasMatch(value))
+                  return 'Por favor, insira um contato válido';
                 return null;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Botão para selecionar um arquivo
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton(
                     onPressed: _selecionarArquivo,
-                    child: Text('Anexar Arquivo'),
+                    child: const Text('Anexar Arquivo'),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 if (_nomeArquivo != null)
                   Expanded(
                     child: Text(
                       _nomeArquivo!,
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                      style: const TextStyle(fontStyle: FontStyle.italic),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _enviandoEmail ? null : _cadastrarVaga,
               child: _enviandoEmail
-                  ? CircularProgressIndicator()
-                  : Text('Cadastrar Vaga'),
+                  ? const CircularProgressIndicator()
+                  : const Text('Cadastrar Vaga'),
             ),
           ],
         ),

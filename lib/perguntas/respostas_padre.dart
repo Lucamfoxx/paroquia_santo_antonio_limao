@@ -1,6 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:developer'; // For logging
+
+class RespostaCard extends StatelessWidget {
+  final Resposta resposta;
+  const RespostaCard({required this.resposta, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ExpansionTile(
+        title: Text(
+          resposta.pergunta,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        subtitle: Text(
+          resposta.nome,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              'Resposta: ${resposta.resposta}',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class RespostasService {
   static const String _txtUrl =
@@ -17,11 +49,13 @@ class RespostasService {
       if (response.statusCode != 200) {
         throw Exception('Falha ao carregar respostas');
       }
-      final data = json.decode(response.body) as Map<String, dynamic>;
-      if (!data.containsKey('respostas')) {
-        throw Exception('Formato de dados inválido');
+      final data = json.decode(response.body);
+      if (data is! Map<String, dynamic> ||
+          data['respostas'] is! Map<String, dynamic>) {
+        throw Exception('Formato de dados inválido para respostas');
       }
       final respostasMap = data['respostas'] as Map<String, dynamic>;
+      // TODO: Consider using a JSON list instead of a map to simplify sorting
       final sortedKeys = respostasMap.keys.toList()
         ..sort((a, b) {
           final numA = int.tryParse(a.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
@@ -36,7 +70,8 @@ class RespostasService {
           resposta: item['resposta'] ?? '',
         );
       }).toList();
-    } catch (e) {
+    } catch (e, stack) {
+      log('Erro ao buscar respostas: $e', stackTrace: stack);
       rethrow;
     }
   }
@@ -64,39 +99,6 @@ class RespostasPadrePage extends StatefulWidget {
 class _RespostasPadrePageState extends State<RespostasPadrePage> {
   String _getQuestionTitle(String question) {
     return question;
-  }
-
-  Widget _buildRespostaCard(Resposta resposta) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ExpansionTile(
-        title: Text(
-          _getQuestionTitle(resposta.pergunta),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        subtitle: Text(
-          resposta.nome,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        children: [
-          AnimatedSwitcher(
-            duration: Duration(milliseconds: 200),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Resposta: ${resposta.resposta}',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -139,10 +141,11 @@ class _RespostasPadrePageState extends State<RespostasPadrePage> {
           }
           final respostas = snapshot.data!;
           return SafeArea(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: respostas.length,
+              separatorBuilder: (_, __) => const Divider(),
               itemBuilder: (context, index) =>
-                  _buildRespostaCard(respostas[index]),
+                  RespostaCard(resposta: respostas[index]),
             ),
           );
         },

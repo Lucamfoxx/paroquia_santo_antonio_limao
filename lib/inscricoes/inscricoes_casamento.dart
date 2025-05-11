@@ -46,7 +46,7 @@ class InscricoesCasamentoPage extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                                        Text(
+                    Text(
                       ' Horário de Atendimento\n           da Secretaria',
                       style: TextStyle(
                         fontSize: 20,
@@ -67,7 +67,6 @@ Sábado: 08h as 12h e 14h as 18h
                         fontSize: 16,
                       ),
                     ),
-
                   ],
                 ),
               ),
