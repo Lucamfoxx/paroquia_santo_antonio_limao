@@ -1,7 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'emailservice/email_service_jovem.dart'; // Atualize com o nome correto do seu projeto
 import 'dateform/date_formatter_jovem.dart'; // Atualize com o nome correto do seu projeto
@@ -42,17 +42,70 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
 
   List<File> documentos = [];
   bool _enviandoEmail = false;
-  final Map<String, File?> documentosNomeados = {
-    'RG': null,
-    'Comprovante de Residência': null,
-    'Certidão de Nascimento': null,
-    'Comprovante de 1° Eucaristia': null,
-    'Comprovante de Batismo': null,
-    'Foto 3x4 do Jovem': null,
-    'Certidão de Casamento dos Pais': null,
-    'RG dos Pais': null,
-    'Comprovante de Crisma': null,
-  };
+
+  @override
+  void dispose() {
+    // Libera os controllers para evitar vazamento de memória
+    _controllers.values.forEach((c) => c.dispose());
+    super.dispose();
+  }
+
+  // Método utilitário para criar botões padronizados
+  Widget _buildPrimaryButton({
+    required String label,
+    required IconData icon,
+    required VoidCallback onPressed,
+    required Color color,
+    bool isLoading = false,
+  }) {
+    return ElevatedButton(
+      onPressed: isLoading ? null : onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        minimumSize: Size(double.infinity, 48),
+      ),
+      child: isLoading
+          ? SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                  color: Colors.white, strokeWidth: 2),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon),
+                SizedBox(width: 6),
+                Text(label),
+              ],
+            ),
+    );
+  }
+
+  // Método utilitário para mostrar prévia ou ícone, conforme extensão do arquivo
+  Widget _previewWidget(File documento) {
+    final ext = documento.path.split('.').last.toLowerCase();
+    if (['jpg', 'jpeg', 'png'].contains(ext)) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(4),
+        child: Image.file(
+          documento,
+          width: 80,
+          height: 80,
+          fit: BoxFit.cover,
+          cacheWidth: 100,
+          cacheHeight: 100,
+        ),
+      );
+    } else if (ext == 'pdf') {
+      return Icon(Icons.picture_as_pdf, size: 50, color: Colors.red);
+    } else if (['doc', 'docx'].contains(ext)) {
+      return Icon(Icons.insert_drive_file, size: 50, color: Colors.blue);
+    } else {
+      return Icon(Icons.insert_drive_file, size: 50, color: Colors.grey);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +120,15 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
             children: [
               _buildSectionTitle('Catequese Jovem'),
               CustomTextFormFieldJovem(
-                  label: 'Nome do Jovem',
-                  controller: _controllers['nome']!,
-                  isRequired: true),
+                label: 'Nome do Jovem',
+                controller: _controllers['nome']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Local de Nascimento',
-                  controller: _controllers['localnasc']!,
-                  isRequired: true),
+                label: 'Local de Nascimento',
+                controller: _controllers['localnasc']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
                 label: 'Data de Nascimento DD/MM/AAAA',
                 controller: _controllers['data']!,
@@ -81,17 +136,20 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                 inputFormatters: [DateFormatterJovem()],
               ),
               CustomTextFormFieldJovem(
-                  label: 'Idade atual',
-                  controller: _controllers['idade']!,
-                  isRequired: true),
+                label: 'Idade atual',
+                controller: _controllers['idade']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Endereço atual',
-                  controller: _controllers['endereco']!,
-                  isRequired: true),
+                label: 'Endereço atual',
+                controller: _controllers['endereco']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Bairro',
-                  controller: _controllers['bairro']!,
-                  isRequired: true),
+                label: 'Bairro',
+                controller: _controllers['bairro']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
                 label: 'CEP',
                 controller: _controllers['cep']!,
@@ -100,13 +158,15 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               CustomTextFormFieldJovem(
-                  label: 'Cidade',
-                  controller: _controllers['cidade']!,
-                  isRequired: true),
+                label: 'Cidade',
+                controller: _controllers['cidade']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Jovem Estuda?',
-                  controller: _controllers['estuda']!,
-                  isRequired: true),
+                label: 'Jovem Estuda?',
+                controller: _controllers['estuda']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
                 label: 'Periodo Escolar (manhã/tarde/noite)',
                 controller: _controllers['periodo']!,
@@ -114,9 +174,10 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
               ),
               _buildSectionTitle('Batismo, 1° Eucaristia e Crisma'),
               CustomTextFormFieldJovem(
-                  label: 'Jovem é Batizado?',
-                  controller: _controllers['batismoJovem']!,
-                  isRequired: true),
+                label: 'Jovem é Batizado?',
+                controller: _controllers['batismoJovem']!,
+                isRequired: true,
+              ),
               Text(
                 'Caso o jovem não seja batizado, ele será preparado e receberá o Batismo antes da 1° Eucaristia',
                 style: TextStyle(fontSize: 16),
@@ -137,13 +198,15 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
               ),
               _buildSectionTitle('Pais'),
               CustomTextFormFieldJovem(
-                  label: 'Nome do Pai',
-                  controller: _controllers['nomePai']!,
-                  isRequired: true),
+                label: 'Nome do Pai',
+                controller: _controllers['nomePai']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Nome da Mãe',
-                  controller: _controllers['nomeMae']!,
-                  isRequired: true),
+                label: 'Nome da Mãe',
+                controller: _controllers['nomeMae']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
                 label: 'E-mail do Responsável',
                 controller: _controllers['email']!,
@@ -176,112 +239,49 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                 ],
               ),
               CustomTextFormFieldJovem(
-                  label: 'Estado Civil dos Pais',
-                  controller: _controllers['estadoCivil']!,
-                  isRequired: true),
+                label: 'Estado Civil dos Pais',
+                controller: _controllers['estadoCivil']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Casados no Religioso?',
-                  controller: _controllers['casadosReligioso']!,
-                  isRequired: true),
+                label: 'Casados no Religioso?',
+                controller: _controllers['casadosReligioso']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Participa da Santa Missa Dominical?',
-                  controller: _controllers['missadominical']!,
-                  isRequired: true),
+                label: 'Participa da Santa Missa Dominical?',
+                controller: _controllers['missadominical']!,
+                isRequired: true,
+              ),
               CustomTextFormFieldJovem(
-                  label: 'Horário da Missa que você Participa',
-                  controller: _controllers['horariomissa']!),
+                label: 'Horário da Missa que você Participa',
+                controller: _controllers['horariomissa']!,
+              ),
               _buildDocumentSection(),
               _buildPhotoTipsSection(),
-              // "Adicionar Documento" button and document previews removed.
-              ElevatedButton(
+              // Pré-visualização de cada documento anexado
+              ..._buildDocumentPreviews(),
+              SizedBox(height: 20),
+              _buildPrimaryButton(
+                label: 'Adicionar Documento',
+                icon: Icons.attach_file,
+                onPressed: () => _showImageSourceActionSheet(context),
+                color: Colors.blue,
+                isLoading: false,
+              ),
+              SizedBox(height: 10),
+              _buildPrimaryButton(
+                label: 'Enviar Inscrição',
+                icon: Icons.send,
                 onPressed: _enviarInscricao,
-                child: _enviandoEmail
-                    ? CircularProgressIndicator()
-                    : Text('Enviar Inscrição',
-                        style: TextStyle(color: Colors.white)),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.green)),
+                color: Colors.green,
+                isLoading: _enviandoEmail,
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget _buildUploadBox(String nomeDoc) {
-    final file = documentosNomeados[nomeDoc];
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.insert_drive_file, size: 40, color: Colors.blueAccent),
-          SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nomeDoc,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 4),
-                file != null
-                    ? Text(
-                        'Selecionado: ${file.path.split('/').last}',
-                        style: TextStyle(color: Colors.green[700]),
-                      )
-                    : Text(
-                        'Nenhum arquivo selecionado',
-                        style: TextStyle(color: Colors.redAccent),
-                      ),
-                SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: ElevatedButton.icon(
-                    onPressed: () => _selecionarDocumentoNomeado(nomeDoc),
-                    icon: Icon(Icons.upload_file),
-                    label: Text('Selecionar arquivo'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _selecionarDocumentoNomeado(String nomeDoc) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
-    );
-
-    if (result != null) {
-      setState(() {
-        documentosNomeados[nomeDoc] = File(result.files.single.path!);
-      });
-    }
   }
 
   Widget _buildSectionTitle(String title) {
@@ -335,10 +335,6 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
           Text('- RG dos Pais', style: TextStyle(fontSize: 16)),
           Text('- Comprovante de Crisma \n  (se tiver feito)',
               style: TextStyle(fontSize: 16)),
-          SizedBox(height: 20),
-          ...documentosNomeados.keys
-              .map((nomeDoc) => _buildUploadBox(nomeDoc))
-              .toList(),
         ],
       ),
     );
@@ -373,27 +369,19 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
           SizedBox(height: 10),
           Text(
             '- Tire a foto em um ambiente bem iluminado;',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           Text(
             '- Evite sombras que possam obscurecer o documento;',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           Text(
             '- Mantenha o documento reto e bem enquadrado na foto;',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
           Text(
             '- Certifique-se de que o texto do documento está nítido e legível.',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+            style: TextStyle(fontSize: 16),
           ),
         ],
       ),
@@ -401,56 +389,31 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
   }
 
   List<Widget> _buildDocumentPreviews() {
-    return documentos.map((documento) {
-      int index = documentos.indexOf(documento);
-      Widget preview;
-      if (documento.path.endsWith('.jpg') ||
-          documento.path.endsWith('.jpeg') ||
-          documento.path.endsWith('.png')) {
-        preview = Image.file(
-          File(documento.path),
-          width: 100,
-          height: 200,
-          fit: BoxFit.cover,
-        );
-      } else {
-        preview = Icon(Icons.insert_drive_file, size: 50);
-      }
-
+    return documentos.asMap().entries.map((entry) {
+      int index = entry.key;
+      File documento = entry.value;
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            _previewWidget(documento),
+            SizedBox(width: 10),
             Expanded(
-              child: InkWell(
-                onTap: () {
-                  // Adicione a funcionalidade para visualizar a imagem
-                },
-                child: preview,
+              child: Text(
+                documento.path.split('/').last,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                _removerDocumento(index);
-              },
+              icon: Icon(Icons.delete, color: Colors.red),
+              onPressed: () => _removerDocumento(index),
+              tooltip: 'Remover',
             ),
           ],
         ),
       );
     }).toList();
-  }
-
-  Widget _buildSubmitButton() {
-    return ElevatedButton(
-      onPressed: _enviarInscricao,
-      child: _enviandoEmail
-          ? CircularProgressIndicator()
-          : Text('Enviar Inscrição'),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-      ),
-    );
   }
 
   Future<void> _showImageSourceActionSheet(BuildContext context) async {
@@ -477,7 +440,14 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
                   _selecionarImagem(ImageSource.gallery);
                 },
               ),
-              // Removed generic Documento upload option.
+              ListTile(
+                leading: Icon(Icons.attach_file),
+                title: Text('Documento'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _selecionarDocumento();
+                },
+              ),
             ],
           ),
         );
@@ -489,8 +459,16 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
+      // Limitar tamanho até 5 MB
+      final file = File(pickedFile.path);
+      final fileSize = await file.length();
+      if (fileSize > 5 * 1024 * 1024) {
+        _mostrarDialogo(
+            context, 'Arquivo grande demais', 'Envie imagens de até 5 MB.');
+        return;
+      }
       setState(() {
-        documentos.add(File(pickedFile.path));
+        documentos.add(file);
       });
     }
   }
@@ -500,10 +478,17 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
       type: FileType.custom,
       allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx'],
     );
-
     if (result != null) {
+      final file = File(result.files.single.path!);
+      // Limitar tamanho até 5 MB
+      final fileSize = await file.length();
+      if (fileSize > 5 * 1024 * 1024) {
+        _mostrarDialogo(
+            context, 'Arquivo grande demais', 'Envie arquivos de até 5 MB.');
+        return;
+      }
       setState(() {
-        documentos.add(File(result.files.single.path!));
+        documentos.add(file);
       });
     }
   }
@@ -520,12 +505,11 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
         _enviandoEmail = true;
       });
 
-      // Verifica se todos os documentos foram enviados
-      if (documentosNomeados.values.any((doc) => doc == null)) {
+      if (documentos.isEmpty) {
         _mostrarDialogo(
           context,
           'Documentos pendentes',
-          'Por favor, envie todos os documentos obrigatórios antes de prosseguir.',
+          'Por favor, anexe os documento antes de prosseguir.',
         );
         setState(() {
           _enviandoEmail = false;
@@ -533,26 +517,64 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
         return;
       }
 
+      // Validação extra de e-mail
+      final emailTexto = _controllers['email']!.text.trim();
+      final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
+      if (!emailRegex.hasMatch(emailTexto)) {
+        _mostrarDialogo(context, 'E-mail inválido', 'Digite um e-mail válido.');
+        setState(() {
+          _enviandoEmail = false;
+        });
+        return;
+      }
+
+      // Show waiting dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Expanded(child: Text('Aguarde até o cadastro ser enviado...')),
+              ],
+            ),
+          );
+        },
+      );
+
       Map<String, String> formData = {};
       _controllers.forEach((key, controller) {
         formData[key] = controller.text;
       });
 
-      final documentos = documentosNomeados.values.whereType<File>().toList();
+      try {
+        bool enviado =
+            await _emailService.enviarInscricaoPorEmail(formData, documentos);
 
-      bool enviado =
-          await _emailService.enviarInscricaoPorEmail(formData, documentos);
+        // Close waiting dialog
+        Navigator.of(context, rootNavigator: true).pop();
+        setState(() {
+          _enviandoEmail = false;
+        });
 
-      setState(() {
-        _enviandoEmail = false;
-      });
-
-      if (enviado) {
-        _mostrarDialogo(
-            context, 'Cadastro enviado', 'Cadastro feito com sucesso.');
-        _limparCampos();
-      } else {
-        _mostrarDialogo(context, 'Erro', 'Ocorreu um erro ao enviar o email.');
+        if (enviado) {
+          _mostrarDialogo(context, 'Cadastro enviado',
+              'Obrigado! Cadastro feito com sucesso.');
+          _limparCampos();
+        } else {
+          _mostrarDialogo(
+              context, 'Erro', 'Ocorreu um erro ao enviar o email.');
+        }
+      } catch (e) {
+        // Em caso de exceção, feche o dialog de espera e mostre erro
+        Navigator.of(context, rootNavigator: true).pop();
+        setState(() {
+          _enviandoEmail = false;
+        });
+        _mostrarDialogo(context, 'Erro de envio', 'Falha: ${e.toString()}');
       }
     }
   }
@@ -561,9 +583,8 @@ class _CatequeseJovemPageState extends State<CatequeseJovemPage> {
     _controllers.forEach((key, controller) {
       controller.clear();
     });
-
-    // Clear the documentosNomeados map by setting all values to null.
-    documentosNomeados.updateAll((key, value) => null);
+    documentos.clear();
+    setState(() {});
   }
 
   void _mostrarDialogo(BuildContext context, String titulo, String mensagem) {
